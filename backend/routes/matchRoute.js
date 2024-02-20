@@ -4,11 +4,11 @@ const router = express.Router();
 
 router.post('/addMatch', matchController.addMatch);
 router.get('/getAllMatch', matchController.getAllMatch);
-router.get('/getMatchById', matchController.getMatchById);
+router.get('/getMatchById/:id', matchController.getMatchById);
 router.get('/getMatchByDateAndTime', matchController.getMatchByDateAndTime);
-router.get('/getMatchByGameId', matchController.getMatchByGameId);
-router.put('/updateMatch', matchController.updateMatch);
-router.delete('/deleteMatch', matchController.deleteMatch);
+router.get('/getMatchByGameId/:id', matchController.getMatchByGameId);
+router.put('/updateMatch/:id', matchController.updateMatch);
+router.delete('/deleteMatch/:id', matchController.deleteMatch);
 
 export default router;
 

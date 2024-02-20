@@ -57,7 +57,8 @@ class EmployeeController {
     static async updateEmployee(req, res) {
         try {
             //can still refactor, dont update unchanged fields
-            const { id, username, email, password, roleId } = req.body;
+            const id = req.params.id;
+            const { username, email, password, roleId } = req.body;
             if (!id || !username || !email || !password || !roleId) {
                 return res.status(400).json({ message: "All fields are required" });
             }

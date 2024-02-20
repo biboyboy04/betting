@@ -3,12 +3,12 @@ import matchModel from '../models/matchModel.js';
 class MatchController {
     static async addMatch(req, res) {
         try {
-            const { game_id, team1_id, team2_id, match_date, match_time, winner_id } = req.body;
-            console.log(req.body)
-            if (!game_id || !team1_id || !team2_id || !match_date || !match_time) {
+            const id = req.params.id;
+            const { team1_id, team2_id, match_date, match_time, winner_id } = req.body;
+            if (!id || !team1_id || !team2_id || !match_date || !match_time) {
                 return res.status(400).json({ message: "All fields are required" });
             }
-            const result = await matchModel.addMatch(game_id, team1_id, team2_id, match_date, match_time, winner_id);
+            const result = await matchModel.addMatch(id, team1_id, team2_id, match_date, match_time, winner_id);
             if (result) {
                 res.status(201).json(result);
             }
@@ -37,11 +37,11 @@ class MatchController {
 
     static async getMatchById(req, res) {
         try {
-            const { match_id } = req.body;
-            if (!match_id) {
+            const id = req.params.id;
+            if (!id) {
                 return res.status(400).json({ message: "Id is required" });
             }
-            const result = await matchModel.getMatchById(match_id);
+            const result = await matchModel.getMatchById(id);
             if (result) {
                 return res.status(200).json(result);
             }
@@ -74,11 +74,11 @@ class MatchController {
 
     static async getMatchByGameId(req, res) {
         try {
-            const { game_id } = req.body;
-            if (!game_id) {
+            const id = req.params.id;
+            if (!id) {
                 return res.status(400).json({ message: "Id is required" });
             }
-            const result = await matchModel.getMatchByGameId(game_id);
+            const result = await matchModel.getMatchByGameId(id);
             if (result) {
                 return res.status(200).json(result);
             }
@@ -93,11 +93,12 @@ class MatchController {
 
     static async updateMatch(req, res) {
         try {
-            const { match_id, game_id, team1_id, team2_id, match_date, match_time, winner_id } = req.body;
-            if (!match_id || !game_id || !team1_id || !team2_id || !match_date || !match_time) {
+            const id = req.params.id;
+            const { game_id, team1_id, team2_id, match_date, match_time, winner_id } = req.body;
+            if (!id || !game_id || !team1_id || !team2_id || !match_date || !match_time) {
                 return res.status(400).json({ message: "All fields are required" });
             }
-            const result = await matchModel.updateMatch(match_id, game_id, team1_id, team2_id, match_date, match_time, winner_id);
+            const result = await matchModel.updateMatch(id, game_id, team1_id, team2_id, match_date, match_time, winner_id);
             if (result) {
                 return res.status(200).json(result);
             }
@@ -108,11 +109,11 @@ class MatchController {
 
     static async deleteMatch(req, res) {
         try {
-            const { match_id } = req.body;
-            if (!match_id) {
+            const id = req.params.id;
+            if (!id) {
                 return res.status(400).json({ message: "Id is required" });
             }
-            const result = await matchModel.deleteMatch(match_id);
+            const result = await matchModel.deleteMatch(id);
             if (result) {
                 return res.status(200).json(result);
             }

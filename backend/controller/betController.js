@@ -36,11 +36,11 @@ class BetController {
 
     static async getBetById(req, res) {
         try {
-            const { bet_id } = req.body;
-            if (!bet_id) {
+            const id = req.params.id;
+            if (!id) {
                 return res.status(400).json({ message: "Id is required" });
             }
-            const result = await betModel.getBetById(bet_id);
+            const result = await betModel.getBetById(id);
             if (result) {
                 return res.status(200).json(result);
             }
@@ -54,11 +54,11 @@ class BetController {
 
     static async getBetByPlayerId(req, res) {
         try {
-            const { player_id } = req.body;
-            if (!player_id) {
+            const id = req.params.id;
+            if (!id) {
                 return res.status(400).json({ message: "Id is required" });
             }
-            const result = await betModel.getBetByPlayerId(player_id);
+            const result = await betModel.getBetByPlayerId(id);
             if (result) {
                 return res.status(200).json(result);
             }
@@ -72,11 +72,11 @@ class BetController {
 
     static async getBetByMatchId(req, res) {
         try {
-            const { match_id } = req.body;
-            if (!match_id) {
+            const id = req.params.id;
+            if (!id) {
                 return res.status(400).json({ message: "Id is required" });
             }
-            const result = await betModel.getBetByMatchId(match_id);
+            const result = await betModel.getBetByMatchId(id);
             if (result) {
                 return res.status(200).json(result);
             }
@@ -90,11 +90,12 @@ class BetController {
 
     static async updateBet(req, res) {
         try {
-            const { bet_id, player_id, match_id, amount, bet_on_team_id, bet_time } = req.body;
-            if (!bet_id || !player_id || !match_id || !amount || !bet_on_team_id || !bet_time) {
+            const id = req.params.id;
+            const { player_id, match_id, amount, bet_on_team_id, bet_time } = req.body;
+            if (!id || !player_id || !match_id || !amount || !bet_on_team_id || !bet_time) {
                 return res.status(400).json({ message: "All fields are required" });
             }
-            const result = await betModel.updateBet(bet_id, player_id, match_id, amount, bet_on_team_id, bet_time);
+            const result = await betModel.updateBet(id, player_id, match_id, amount, bet_on_team_id, bet_time);
             if (result) {
                 return res.status(200).json(result);
             }
@@ -108,11 +109,11 @@ class BetController {
 
     static async deleteBet(req, res) {
         try {
-            const { bet_id } = req.body;
-            if (!bet_id) {
+            const id = req.params.id;
+            if (!id) {
                 return res.status(400).json({ message: "Id is required" });
             }
-            const result = await betModel.deleteBet(bet_id);
+            const result = await betModel.deleteBet(id);
             if (result) {
                 return res.status(200).json(result);
             }

@@ -19,7 +19,7 @@ class Employee {
                                 if (err) {
                                     reject(err);
                                 } else {
-                                    resolve("Employee added successfully");
+                                    resolve(result);
                                 }
                             }
                         );
@@ -37,7 +37,7 @@ class Employee {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve('Employees retrieved successfully');
+                    resolve(result);
                 }
             });
         });
@@ -49,7 +49,7 @@ class Employee {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve('Employee retrieved successfully');
+                    resolve(result);
                 }
             });
         });
@@ -63,7 +63,7 @@ class Employee {
                     if (err) {
                         reject(err);
                     } else {
-                        resolve('Employee updated successfully');
+                        resolve(result);
                     }
                 }
             );
@@ -76,7 +76,7 @@ class Employee {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve('Employee deleted successfully');
+                    resolve(result);
                 }
             });
         });

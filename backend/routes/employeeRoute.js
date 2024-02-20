@@ -5,7 +5,7 @@ const router = express.Router();
 router.post('/addEmployee', employeeController.addEmployee);
 router.get('/getAllEmployee', employeeController.getAllEmployee);
 router.get('/getEmployeeById/:id', employeeController.getEmployeeById);
-router.put('/updateEmployee', employeeController.updateEmployee);
+router.put('/updateEmployee/:id', employeeController.updateEmployee);
 router.delete('/deleteEmployee/:id', employeeController.deleteEmployee);
 
 export default router;

@@ -19,8 +19,7 @@ class Player {
                                 if (err) {
                                     reject(err);
                                 } else {
-                                    console.log(result, "result")
-                                    resolve("Player added successfully");
+                                    resolve(result);
                                 }
                             }
                         );
@@ -37,7 +36,7 @@ class Player {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve("Players retrieved successfully");
+                    resolve(result);
                 }
             });
         });
@@ -49,7 +48,7 @@ class Player {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve("Player retrieved successfully");
+                    resolve(result);
                 }
             });
         });
@@ -63,7 +62,7 @@ class Player {
                     if (err) {
                         reject(err);
                     } else {
-                        resolve("Player updated successfully");
+                        resolve(result);
                     }
                 }
             );
@@ -76,7 +75,7 @@ class Player {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve("Player deleted successfully");
+                    resolve(result);
                 }
             });
         });
@@ -91,7 +90,7 @@ class Player {
                     if (err) {
                         reject(err);
                     } else {
-                        resolve("Balance added successfully");
+                        resolve(result);
                     }
                 }
             );
@@ -106,7 +105,7 @@ class Player {
                     if (err) {
                         reject(err);
                     } else {
-                        resolve("Balance deducted successfully");
+                        resolve(result);
                     }
                 }
             );

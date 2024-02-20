@@ -36,11 +36,11 @@ class TeamController {
 
     static async getTeamById(req, res) {
         try {
-            const { team_id } = req.body;
-            if (!team_id) {
+            const id = req.params.id;
+            if (!id) {
                 return res.status(400).json({ message: "Id is required" });
             }
-            const result = await teamModel.getTeamById(team_id);
+            const result = await teamModel.getTeamById(id);
             if (result) {
                 return res.status(200).json(result);
             }
@@ -54,11 +54,12 @@ class TeamController {
 
     static async updateTeam(req, res) {
         try {
-            const { team_id, name } = req.body;
-            if (!team_id || !name) {
+            const id = req.params.id;
+            const { name } = req.body;
+            if (!id || !name) {
                 return res.status(400).json({ message: "All fields are required" });
             }
-            const result = await teamModel.updateTeam(team_id, name);
+            const result = await teamModel.updateTeam(id, name);
             if (result) {
                 return res.status(200).json(result);
             }
@@ -72,13 +73,13 @@ class TeamController {
 
     static async deleteTeam(req, res) {
         try {
-            const { team_id } = req.body;
-            if (!team_id) {
+            const id = req.params.id;
+            if (!id) {
                 return res.status(400).json({
                     message: "Id is required"
                 });
             }
-            const result = await teamModel.deleteTeam(team_id);
+            const result = await teamModel.deleteTeam(id);
             if (result) {
                 return res.status(200).json(result);
             }

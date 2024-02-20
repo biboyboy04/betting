@@ -4,11 +4,11 @@ const router = express.Router();
 
 router.post('/addBet', betController.addBet);
 router.get('/getAllBet', betController.getAllBet);
-router.get('/getBetById', betController.getBetById);
-router.get('/getBetByPlayerId', betController.getBetByPlayerId);
-router.get('/getBetByMatchId', betController.getBetByMatchId);
-router.put('/updateBet', betController.updateBet);
-router.delete('/deleteBet', betController.deleteBet);
+router.get('/getBetById/:id', betController.getBetById);
+router.get('/getBetByPlayerId/:id', betController.getBetByPlayerId);
+router.get('/getBetByMatchId/:id', betController.getBetByMatchId);
+router.put('/updateBet/:id', betController.updateBet);
+router.delete('/deleteBet/:id', betController.deleteBet);
 
 //refactor
 router.get('/getTotalMatchBets', betController.getTotalMatchBets);

@@ -9,7 +9,7 @@ class Match {
                     if (err) {
                         reject(err);
                     } else {
-                        resolve('Match added successfully');
+                        resolve(result);
                     }
                 }
             );
@@ -21,7 +21,7 @@ class Match {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve('Matches retrieved successfully');
+                    resolve(result);
                 }
             });
         });
@@ -32,7 +32,7 @@ class Match {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve('Match retrieved successfully');
+                    resolve(result);
                 }
             });
         });
@@ -44,7 +44,7 @@ class Match {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve('Match retrieved successfully');
+                    resolve(result);
                 }
             }
             );
@@ -57,7 +57,7 @@ class Match {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve('Match retrieved successfully');
+                    resolve(result);
                 }
             }
             );
@@ -72,7 +72,7 @@ class Match {
                     if (err) {
                         reject(err);
                     } else {
-                        resolve('Match updated successfully');
+                        resolve(result);
                     }
                 }
             );
@@ -85,7 +85,7 @@ class Match {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve('Match deleted successfully');
+                    resolve(result);
                 }
             });
         });
