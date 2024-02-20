@@ -1,4 +1,5 @@
 import employeeModel from '../models/employeeModel.js';
+import bcrypt from 'bcrypt';
 
 class EmployeeController {
     static async addEmployee(req, res) {

@@ -1,18 +1,32 @@
 import db from '../config/db.js';
+import bcrypt from 'bcrypt';
 
 class Player {
-    static addPlayer(username, password, email, firstName, lastName, dateOfBirth, nationality, balance) {
+    static addPlayer(username, password, email, firstName, lastName, dateOfBirth, nationality, balance = 0) {
         return new Promise((resolve, reject) => {
-            console.log(firstName, lastName)
-            db.query('INSERT INTO player (username, password, email, first_name, last_name, date_of_birth, nationality, balance) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-                [username, password, email, firstName, lastName, dateOfBirth, nationality, balance],
-                (err, result) => {
-                    if (err) {
-                        reject(err);
+            // check if username and email already exist
+            db.query('SELECT * FROM player WHERE username = ? OR email = ?', [username, email], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    if (result.length > 0) {
+                        reject('Username or email already exist');
                     } else {
-                        resolve(result);
+                        const hashedPassword = bcrypt.hashSync(password, 10);
+                        db.query('INSERT INTO player (username, password, email, first_name, last_name, date_of_birth, nationality, balance) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+                            [username, hashedPassword, email, firstName, lastName, dateOfBirth, nationality, balance]
+                            , (err, result) => {
+                                if (err) {
+                                    reject(err);
+                                } else {
+                                    console.log(result, "result")
+                                    resolve("Player added successfully");
+                                }
+                            }
+                        );
                     }
                 }
+            }
             );
         });
     }
@@ -23,7 +37,7 @@ class Player {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(result);
+                    resolve("Players retrieved successfully");
                 }
             });
         });
@@ -35,7 +49,7 @@ class Player {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(result);
+                    resolve("Player retrieved successfully");
                 }
             });
         });
@@ -49,7 +63,7 @@ class Player {
                     if (err) {
                         reject(err);
                     } else {
-                        resolve(result);
+                        resolve("Player updated successfully");
                     }
                 }
             );
@@ -62,7 +76,7 @@ class Player {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(result);
+                    resolve("Player deleted successfully");
                 }
             });
         });
@@ -77,7 +91,7 @@ class Player {
                     if (err) {
                         reject(err);
                     } else {
-                        resolve(result);
+                        resolve("Balance added successfully");
                     }
                 }
             );
@@ -92,7 +106,7 @@ class Player {
                     if (err) {
                         reject(err);
                     } else {
-                        resolve(result);
+                        resolve("Balance deducted successfully");
                     }
                 }
             );

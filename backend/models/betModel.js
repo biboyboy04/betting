@@ -14,7 +14,7 @@ class Bet {
                     } else {
                         playerModel.deductBalance(player_id, amount);
                         this.getMatchBets(match_id);
-                        resolve(result);
+                        resolve('Bet added successfully');
                     }
                 }
             );
@@ -27,7 +27,7 @@ class Bet {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(result);
+                    resolve('Bets retrieved successfully');
                 }
             });
         });
@@ -39,7 +39,7 @@ class Bet {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(result);
+                    resolve('Bet retrieved successfully');
                 }
             });
         });
@@ -51,7 +51,7 @@ class Bet {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(result);
+                    resolve('Bet retrieved successfully');
                 }
             });
         });
@@ -63,7 +63,7 @@ class Bet {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(result);
+                    resolve('Bet retrieved successfully');
                 }
             });
         });
@@ -77,7 +77,7 @@ class Bet {
                     if (err) {
                         reject(err);
                     } else {
-                        resolve(result);
+                        resolve('Bet updated successfully');
                     }
                 }
             );
@@ -90,7 +90,7 @@ class Bet {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(result);
+                    resolve('Bet deleted successfully');
                 }
             });
         });
@@ -122,7 +122,7 @@ class Bet {
                         // oddsModel.addOdds(match_id, newResult[0]["odds"], newResult[1]["odds"]);
 
                         // resolve(newResult);
-                        resolve(result);
+                        resolve('Match bets retrieved successfully');
 
                     }
                 }
@@ -137,12 +137,11 @@ class Bet {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(result);
+                    resolve('Bet paid successfully');
                 }
             });
         });
     }
-
 
 
 }

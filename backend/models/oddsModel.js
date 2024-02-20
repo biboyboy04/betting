@@ -43,7 +43,7 @@ class Odds {
                     if (err) {
                         reject(err);
                     } else {
-                        resolve(result);
+                        resolve('Odds added successfully');
                     }
                 }
             );
@@ -56,7 +56,7 @@ class Odds {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(result);
+                    resolve('Odds retrieved successfully');
                 }
             });
         });
@@ -68,7 +68,7 @@ class Odds {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(result);
+                    resolve('Odds retrieved successfully');
                 }
             });
         });
@@ -80,7 +80,7 @@ class Odds {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(result);
+                    resolve('Odds retrieved successfully');
                 }
             });
         });

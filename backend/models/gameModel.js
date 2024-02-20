@@ -10,7 +10,7 @@ class Game {
                     if (err) {
                         reject(err);
                     } else {
-                        resolve(result);
+                        resolve('Game added successfully');
                     }
                 }
             );
@@ -23,7 +23,7 @@ class Game {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(result);
+                    resolve('Games retrieved successfully');
                 }
             });
         });
@@ -35,7 +35,7 @@ class Game {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(result);
+                    resolve('Game retrieved successfully');
                 }
             });
         });
@@ -49,7 +49,7 @@ class Game {
                     if (err) {
                         reject(err);
                     } else {
-                        resolve(result);
+                        resolve('Game updated successfully');
                     }
                 }
             );
@@ -62,7 +62,7 @@ class Game {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(result);
+                    resolve('Game deleted successfully');
                 }
             });
         });

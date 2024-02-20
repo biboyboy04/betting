@@ -3,9 +3,9 @@ import playerModel from '../models/playerModel.js';
 class PlayerController {
     static async addPlayer(req, res) {
         try {
-            const { username, password, email, first_name, last_name, dateOfBirth, nationality, balance } = req.body;
+            const { username, password, email, first_name, last_name, dateOfBirth, nationality } = req.body;
             console.log(req.body)
-            const result = await playerModel.addPlayer(username, password, email, first_name, last_name, dateOfBirth, nationality, balance);
+            const result = await playerModel.addPlayer(username, password, email, first_name, last_name, dateOfBirth, nationality);
             if (result) {
                 return res.status(201).json(result);
             }

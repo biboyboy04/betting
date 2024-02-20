@@ -1,18 +1,33 @@
 import db from '../config/db.js';
+import bcrypt from 'bcrypt';
 
 class Employee {
     static addEmployee(username, email, password, roleId) {
         return new Promise((resolve, reject) => {
-            db.query('INSERT INTO employee (username, email, password, role_id) VALUES (?, ?, ?, ?)',
-                [username, email, password, roleId],
-                (err, result) => {
-                    if (err) {
-                        reject(err);
+            // check if username and email already exist
+            db.query('SELECT * FROM employee WHERE username = ? OR email = ?', [username, email], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    if (result.length > 0) {
+                        reject('Username or email already exist');
                     } else {
-                        resolve(result);
+                        const hashedPassword = bcrypt.hashSync(password, 10);
+                        db.query('INSERT INTO employee (username, email, password, role_id) VALUES (?, ?, ?, ?)',
+                            [username, email, hashedPassword, roleId]
+                            , (err, result) => {
+                                if (err) {
+                                    reject(err);
+                                } else {
+                                    resolve("Employee added successfully");
+                                }
+                            }
+                        );
                     }
                 }
+            }
             );
+
         });
     }
 
@@ -22,7 +37,7 @@ class Employee {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(result);
+                    resolve('Employees retrieved successfully');
                 }
             });
         });
@@ -34,7 +49,7 @@ class Employee {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(result);
+                    resolve('Employee retrieved successfully');
                 }
             });
         });
@@ -48,7 +63,7 @@ class Employee {
                     if (err) {
                         reject(err);
                     } else {
-                        resolve(result);
+                        resolve('Employee updated successfully');
                     }
                 }
             );
@@ -61,7 +76,7 @@ class Employee {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(result);
+                    resolve('Employee deleted successfully');
                 }
             });
         });
