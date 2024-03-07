@@ -1,165 +1,85 @@
 import betModel from '../models/betModel.js';
+import { handleResponse } from '../utility.js';
 
 class BetController {
-    static async addBet(req, res) {
-        try {
-            const { player_id, match_id, amount, bet_on_team_id, bet_time } = req.body;
-            if (!player_id || !match_id || !amount || !bet_on_team_id || !bet_time) {
-                return res.status(400).json({ message: "All fields are required" });
-            }
-            const result = await betModel.addBet(player_id, match_id, amount, bet_on_team_id, bet_time);
-            if (result) {
-                res.status(201).json(result);
-            }
-            else {
-                return res.status(400).json({ message: "Bet already exist" });
-            }
-        } catch (error) {
-            res.status(500).json(error);
+    static async add(req, res) {
+        const { player_id, match_id, amount, bet_on_team_id } = req.body;
+        if (!player_id || !match_id || !amount || !bet_on_team_id) {
+            return res.status(400).json({ message: "All fields are required" });
         }
+        handleResponse(res, betModel.add(player_id, match_id, amount, bet_on_team_id), 201);
     }
 
-    static async getAllBet(req, res) {
-        try {
-            const result = await betModel.getAllBet();
-            if (result) {
-                return res.status(200).json(result);
-            }
-            else {
-                return res.status(400).json({ message: "No Bet found" });
-            }
-
-        } catch (error) {
-            res.status(500).json(error);
-        }
+    static async getAll(req, res) {
+        handleResponse(res, betModel.getAll())
     }
 
-    static async getBetById(req, res) {
-        try {
-            const id = req.params.id;
-            if (!id) {
-                return res.status(400).json({ message: "Id is required" });
-            }
-            const result = await betModel.getBetById(id);
-            if (result) {
-                return res.status(200).json(result);
-            }
-            else {
-                return res.status(400).json({ message: "No Bet found" });
-            }
-        } catch (error) {
-            res.status(500).json(error);
+    static async getById(req, res) {
+        const bet_id = req.params.id;
+        if (!bet_id) {
+            return res.status(400).json({ message: "Id is required" });
         }
+        handleResponse(res, betModel.getById(bet_id));
     }
 
-    static async getBetByPlayerId(req, res) {
-        try {
-            const id = req.params.id;
-            if (!id) {
-                return res.status(400).json({ message: "Id is required" });
-            }
-            const result = await betModel.getBetByPlayerId(id);
-            if (result) {
-                return res.status(200).json(result);
-            }
-            else {
-                return res.status(400).json({ message: "No Bet found" });
-            }
-        } catch (error) {
-            res.status(500).json(error);
+    static async getByPlayerId(req, res) {
+        const player_id = req.params.id;
+        if (!player_id) {
+            return res.status(400).json({ message: "Id is required" });
         }
+        handleResponse(res, betModel.getByPlayerId(player_id));
+
     }
 
-    static async getBetByMatchId(req, res) {
-        try {
-            const id = req.params.id;
-            if (!id) {
-                return res.status(400).json({ message: "Id is required" });
-            }
-            const result = await betModel.getBetByMatchId(id);
-            if (result) {
-                return res.status(200).json(result);
-            }
-            else {
-                return res.status(400).json({ message: "No Bet found" });
-            }
-        } catch (error) {
-            res.status(500).json(error);
+    static async getByMatchId(req, res) {
+        const match_id = req.params.id;
+        if (!match_id) {
+            return res.status(400).json({ message: "Id is required" });
         }
+        handleResponse(res, betModel.getByMatchId(match_id));
+
     }
 
-    static async updateBet(req, res) {
-        try {
-            const id = req.params.id;
-            const { player_id, match_id, amount, bet_on_team_id, bet_time } = req.body;
-            if (!id || !player_id || !match_id || !amount || !bet_on_team_id || !bet_time) {
-                return res.status(400).json({ message: "All fields are required" });
-            }
-            const result = await betModel.updateBet(id, player_id, match_id, amount, bet_on_team_id, bet_time);
-            if (result) {
-                return res.status(200).json(result);
-            }
-            else {
-                return res.status(400).json({ message: "No Bet found" });
-            }
-        } catch (error) {
-            res.status(500).json(error);
+    static async update(req, res) {
+        const bet_id = req.params.id;
+        const { player_id, match_id, amount, bet_on_team_id, bet_time } = req.body;
+        if (!bet_id || !player_id || !match_id || !amount || !bet_on_team_id || !bet_time) {
+            return res.status(400).json({ message: "All fields are required" });
         }
+        handleResponse(res, betModel.update(bet_id, player_id, match_id, amount, bet_on_team_id, bet_time));
+
+
     }
 
-    static async deleteBet(req, res) {
-        try {
-            const id = req.params.id;
-            if (!id) {
-                return res.status(400).json({ message: "Id is required" });
-            }
-            const result = await betModel.deleteBet(id);
-            if (result) {
-                return res.status(200).json(result);
-            }
-            else {
-                return res.status(400).json({ message: "No Bet found" });
-            }
-        } catch (error) {
-            res.status(500).json(error);
+    static async delete(req, res) {
+        const bet_id = req.params.id;
+        if (!bet_id) {
+            return res.status(400).json({ message: "Id is required" });
         }
+        handleResponse(res, betModel.delete(bet_id));
+
     }
 
     static async getTotalMatchBets(req, res) {
-        try {
-            const { match_id } = req.body;
-            if (!match_id) {
-                return res.status(400).json({ message: "Id is required" });
-            }
-            const result = await betModel.getTotalMatchBets(match_id);
-            if (result) {
-                return res.status(200).json(result);
-            }
-            else {
-                return res.status(400).json({ message: "No Bet found" });
-            }
-        } catch (error) {
-            res.status(500).json(error);
+        const match_id = req.params.id;
+        if (!match_id) {
+            return res.status(400).json({ message: "Id is required" });
         }
+        handleResponse(res, betModel.getTotalMatchBets(match_id));
     }
 
-    static async payBet(req, res) {
-        try {
-            const { bet_id, player_id, match_id, amount, bet_on_team_id, bet_time } = req.body;
-            if (!bet_id || !player_id || !match_id || !amount || !bet_on_team_id || !bet_time) {
-                return res.status(400).json({ message: "All fields are required" });
-            }
-            const result = await betModel.payBet(bet_id, player_id, match_id, amount, bet_on_team_id, bet_time);
-            if (result) {
-                return res.status(200).json(result);
-            }
-            else {
-                return res.status(400).json({ message: "No Bet found" });
-            }
-        } catch (error) {
-            res.status(500).json(error);
+    static async getMatchWithBets(req, res) {
+        handleResponse(res, betModel.getMatchWithBets());
+    }
+
+    static async payout(req, res) {
+        const { match_id, winner_id } = req.body;
+        if (!match_id, !winner_id) {
+            return res.status(400).json({ message: "Id is required" });
         }
+        handleResponse(res, betModel.payout(match_id, winner_id));
     }
 
 }
+
 export default BetController;

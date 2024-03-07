@@ -1,95 +1,42 @@
 import teamModel from '../models/teamModel.js';
+import { handleResponse } from '../utility.js';
 
 class TeamController {
-    static async addTeam(req, res) {
-        try {
-            const { name } = req.body;
-            if (!name) {
-                return res.status(400).json({ message: "All fields are required" });
-            }
-            const result = await teamModel.addTeam(team_id, name);
-            if (result) {
-                return res.status(201).json(result);
-            }
-            else {
-                return res.status(400).json({ message: "Team already exist" });
-            }
-        } catch (error) {
-            res.status(500).json(error);
+    static async add(req, res) {
+        const { name, description, logo_url } = req.body;
+        if (!name || !description || !logo_url) {
+            return res.status(400).json({ message: "All fields are required" });
         }
+        handleResponse(res, teamModel.add(name, description, logo_url), 201);
     }
 
-    static async getAllTeam(req, res) {
-        try {
-            const result = await teamModel.getAllTeam();
-            if (result) {
-                return res.status(200).json(result);
-            }
-            else {
-                return res.status(400).json({ message: "No Team found" });
-            }
-
-        } catch (error) {
-            res.status(500).json(error);
-        }
+    static async getAll(req, res) {
+        handleResponse(res, teamModel.getAll());
     }
 
-    static async getTeamById(req, res) {
-        try {
-            const id = req.params.id;
-            if (!id) {
-                return res.status(400).json({ message: "Id is required" });
-            }
-            const result = await teamModel.getTeamById(id);
-            if (result) {
-                return res.status(200).json(result);
-            }
-            else {
-                return res.status(400).json({ message: "No Team found" });
-            }
-        } catch (error) {
-            res.status(500).json(error);
+    static async getById(req, res) {
+        const id = req.params.id;
+        if (!id) {
+            return res.status(400).json({ message: "Id is required" });
         }
+        handleResponse(res, teamModel.getById(id));
     }
 
-    static async updateTeam(req, res) {
-        try {
-            const id = req.params.id;
-            const { name } = req.body;
-            if (!id || !name) {
-                return res.status(400).json({ message: "All fields are required" });
-            }
-            const result = await teamModel.updateTeam(id, name);
-            if (result) {
-                return res.status(200).json(result);
-            }
-            else {
-                return res.status(400).json({ message: "No Team found" });
-            }
-        } catch (error) {
-            res.status(500).json(error);
+    static async update(req, res) {
+        const id = req.params.id;
+        const { name } = req.body;
+        if (!id || !name) {
+            return res.status(400).json({ message: "All fields are required" });
         }
+        handleResponse(res, teamModel.update(id, name));
     }
 
-    static async deleteTeam(req, res) {
-        try {
-            const id = req.params.id;
-            if (!id) {
-                return res.status(400).json({
-                    message: "Id is required"
-                });
-            }
-            const result = await teamModel.deleteTeam(id);
-            if (result) {
-                return res.status(200).json(result);
-            }
-            else {
-                return res.status(400).json({ message: "No Team found" });
-            }
-        } catch (error) {
-            res.status(500).json(error);
+    static async delete(req, res) {
+        const id = req.params.id;
+        if (!id) {
+            return res.status(400).json({ message: "Id is required" });
         }
-
+        handleResponse(res, teamModel.delete(id));
     }
 }
 export default TeamController;

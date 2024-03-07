@@ -3,6 +3,9 @@ import passport from 'passport';
 
 const authRoute = express.Router();
 
+// each auth route automatically gets the sent user and pass details 
+
+
 authRoute.post('/employee/login', (req, res, next) => {
     passport.authenticate('employee', (err, user, info) => {
         if (err) {
@@ -15,7 +18,6 @@ authRoute.post('/employee/login', (req, res, next) => {
             if (err) {
                 return next(err);
             }
-            console.log(user, "user auth");
             return res.status(200).json({ message: "Login successful", user: user });
         });
     })(req, res, next);
@@ -33,10 +35,11 @@ authRoute.post('/player/login', (req, res, next) => {
             if (err) {
                 return next(err);
             }
-            console.log(user, "user auth");
             return res.status(200).json({ message: "Login successful", user: user });
         });
     })(req, res, next);
 });
+
+
 
 export default authRoute;

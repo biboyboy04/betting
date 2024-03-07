@@ -1,128 +1,63 @@
 import matchModel from '../models/matchModel.js';
+import { handleResponse } from '../utility.js';
+
 
 class MatchController {
-    static async addMatch(req, res) {
-        try {
-            const id = req.params.id;
-            const { team1_id, team2_id, match_date, match_time, winner_id } = req.body;
-            if (!id || !team1_id || !team2_id || !match_date || !match_time) {
-                return res.status(400).json({ message: "All fields are required" });
-            }
-            const result = await matchModel.addMatch(id, team1_id, team2_id, match_date, match_time, winner_id);
-            if (result) {
-                res.status(201).json(result);
-            }
-            else {
-                return res.status(400).json({ message: "Match already exist" });
-            }
-        } catch (error) {
-            res.status(500).json(error);
+    static async add(req, res) {
+        const { game_id, team1_id, team2_id, match_date_time } = req.body;
+        if (!game_id || !team1_id || !team2_id || !match_date_time) {
+            return res.status(400).json({ message: "All fields are required" });
         }
+        handleResponse(res, matchModel.add(game_id, team1_id, team2_id, match_date_time), 201);
+
     }
 
-    static async getAllMatch(req, res) {
-        try {
-            const result = await matchModel.getAllMatch();
-            if (result) {
-                return res.status(200).json(result);
-            }
-            else {
-                return res.status(400).json({ message: "No Match found" });
-            }
-
-        } catch (error) {
-            res.status(500).json(error);
-        }
+    static async getAll(req, res) {
+        handleResponse(res, matchModel.getAll())
     }
 
-    static async getMatchById(req, res) {
-        try {
-            const id = req.params.id;
-            if (!id) {
-                return res.status(400).json({ message: "Id is required" });
-            }
-            const result = await matchModel.getMatchById(id);
-            if (result) {
-                return res.status(200).json(result);
-            }
-            else {
-                return res.status(400).json({ message: "No Match found" });
-            }
-        } catch (error) {
-            res.status(500).json(error);
+    static async getById(req, res) {
+        const match_id = req.params.id;
+        if (!match_id) {
+            return res.status(400).json({ message: "Id is required" });
         }
+        handleResponse(res, matchModel.getById(match_id));
     }
 
-
-    static async getMatchByDateAndTime(req, res) {
-        try {
-            const { match_date, match_time } = req.body;
-            if (!match_date || !match_time) {
-                return res.status(400).json({ message: "Date and Time is required" });
-            }
-            const result = await matchModel.getMatchByDateAndTime(match_date, match_time);
-            if (result) {
-                return res.status(200).json(result);
-            }
-            else {
-                return res.status(400).json({ message: "No Match found" });
-            }
-        } catch (error) {
-            res.status(500).json(error);
+    static async getByDateAndTime(req, res) {
+        const match_date_time = req.params.dateTime;
+        if (!match_date_time) {
+            return res.status(400).json({ message: "Date and time are required" });
         }
+        handleResponse(res, matchModel.getByDateAndTime(match_date_time));
     }
 
-    static async getMatchByGameId(req, res) {
-        try {
-            const id = req.params.id;
-            if (!id) {
-                return res.status(400).json({ message: "Id is required" });
-            }
-            const result = await matchModel.getMatchByGameId(id);
-            if (result) {
-                return res.status(200).json(result);
-            }
-            else {
-                return res.status(400).json({ message: "No Match found" });
-            }
-        } catch (error) {
-            res.status(500).json(error);
+    static async getByGameId(req, res) {
+        const game_id = req.params.id;
+        if (!game_id) {
+            return res.status(400).json({ message: "Id is required" });
         }
+        handleResponse(res, matchModel.getByGameId(game_id));
+
     }
 
+    //do i need to uincluide getAllPendingMatchId, getallPendingMatchWithBets
 
-    static async updateMatch(req, res) {
-        try {
-            const id = req.params.id;
-            const { game_id, team1_id, team2_id, match_date, match_time, winner_id } = req.body;
-            if (!id || !game_id || !team1_id || !team2_id || !match_date || !match_time) {
-                return res.status(400).json({ message: "All fields are required" });
-            }
-            const result = await matchModel.updateMatch(id, game_id, team1_id, team2_id, match_date, match_time, winner_id);
-            if (result) {
-                return res.status(200).json(result);
-            }
-        } catch (error) {
-            res.status(500).json(error);
+    static async update(req, res) {
+        const match_id = req.params.id;
+        const { game_id, team1_id, team2_id, match_date_time, winner_id } = req.body;
+        if (!match_id || !game_id || !team1_id || !team2_id || !match_date_time || !winner_id) {
+            return res.status(400).json({ message: "All fields are required" });
         }
+        handleResponse(res, matchModel.update(match_id, game_id, team1_id, team2_id, match_date_time, winner_id));
     }
 
-    static async deleteMatch(req, res) {
-        try {
-            const id = req.params.id;
-            if (!id) {
-                return res.status(400).json({ message: "Id is required" });
-            }
-            const result = await matchModel.deleteMatch(id);
-            if (result) {
-                return res.status(200).json(result);
-            }
-            else {
-                return res.status(400).json({ message: "No Match found" });
-            }
-        } catch (error) {
-            res.status(500).json(error);
+    static async delete(req, res) {
+        const match_id = req.params.id;
+        if (!match_id) {
+            return res.status(400).json({ message: "Id is required" });
         }
+        handleResponse(res, matchModel.delete(match_id));
     }
 
 }

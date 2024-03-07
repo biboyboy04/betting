@@ -1,19 +1,16 @@
 import db from '../config/db.js';
 import playerModel from './playerModel.js';
-import oddsModel from './oddsModel.js';
 
 class Bet {
-    //bet_id, player_id, match_id, amount, bet_on_team_id, bet_time
-    static addBet(player_id, match_id, amount, bet_on_team_id, bet_time) {
+    static add(player_id, match_id, amount, bet_on_team_id, bet_time) {
         return new Promise((resolve, reject) => {
-            db.query('INSERT INTO bet (player_id, match_id, amount, bet_on_team_id, bet_time) VALUES (?, ?, ?, ?, ?)',
-                [player_id, match_id, amount, bet_on_team_id, bet_time],
+            db.query('INSERT INTO bet (player_id, match_id, amount, bet_on_team_id) VALUES (?, ?, ?, ?)',
+                [player_id, match_id, amount, bet_on_team_id],
                 (err, result) => {
                     if (err) {
                         reject(err);
                     } else {
                         playerModel.deductBalance(player_id, amount);
-                        this.getMatchBets(match_id);
                         resolve(result);
                     }
                 }
@@ -21,7 +18,25 @@ class Bet {
         });
     }
 
-    static getAllBet() {
+    static addMany(bets) {
+        // bets data format doenst match withe the data format of db
+        // so there's a need to transform the data format from [{}, {}] to [[], []]
+        const betsArray = bets.map((bet) => {
+            return [bet.player_id, bet.match_id, bet.amount, bet.bet_on_team_id]
+        })
+        return new Promise((resolve, reject) => {
+            db.query('INSERT INTO bet (player_id, match_id, amount, bet_on_team_id) VALUES ?', [betsArray], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        })
+    }
+
+
+    static getAll() {
         return new Promise((resolve, reject) => {
             db.query('SELECT * FROM bet', (err, result) => {
                 if (err) {
@@ -33,9 +48,9 @@ class Bet {
         });
     }
 
-    static getBetById(id) {
+    static getById(bet_id) {
         return new Promise((resolve, reject) => {
-            db.query('SELECT * FROM bet WHERE bet_id = ?', [id], (err, result) => {
+            db.query('SELECT * FROM bet WHERE bet_id = ?', [bet_id], (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -45,9 +60,9 @@ class Bet {
         });
     }
 
-    static getBetByPlayerId(id) {
+    static getByPlayerId(player_id) {
         return new Promise((resolve, reject) => {
-            db.query('SELECT * FROM bet WHERE player_id = ?', [id], (err, result) => {
+            db.query('SELECT * FROM bet WHERE player_id = ?', [player_id], (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -57,9 +72,9 @@ class Bet {
         });
     }
 
-    static getBetByMatchId(id) {
+    static getByMatchId(match_id) {
         return new Promise((resolve, reject) => {
-            db.query('SELECT * FROM bet WHERE match_id = ?', [id], (err, result) => {
+            db.query('SELECT * FROM bet WHERE match_id = ?', [match_id], (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -69,7 +84,7 @@ class Bet {
         });
     }
 
-    static updateBet(bet_id, player_id, match_id, amount, bet_on_team_id, bet_time) {
+    static update(bet_id, player_id, match_id, amount, bet_on_team_id, bet_time) {
         return new Promise((resolve, reject) => {
             db.query('UPDATE bet SET player_id = ?, match_id = ?, amount = ?, bet_on_team_id = ?, bet_time = ? WHERE bet_id = ?',
                 [player_id, match_id, amount, bet_on_team_id, bet_time, bet_id],
@@ -84,9 +99,9 @@ class Bet {
         });
     }
 
-    static deleteBet(id) {
+    static delete(bet_id) {
         return new Promise((resolve, reject) => {
-            db.query('DELETE FROM bet WHERE bet_id = ?', [id], (err, result) => {
+            db.query('DELETE FROM bet WHERE bet_id = ?', [bet_id], (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -96,9 +111,11 @@ class Bet {
         });
     }
 
-    //get how many bets placed on team 1 and team 2 and calculate odds and amount
+    //get how many bets placed on team 1 and team 2 calc count and amount
     // REFACTOR: count can be removed?
-    static getMatchBets(match_id) {
+    //refactor name to withouth bets?
+    // refactor double check if reject is supposed to be an error
+    static getTotalMatchBets(match_id) {
         return new Promise((resolve, reject) => {
             db.query('SELECT bet_on_team_id, COUNT(bet_on_team_id) as bet_count, SUM(amount) as total_amount FROM bet WHERE match_id = ? GROUP BY bet_on_team_id',
                 [match_id],
@@ -106,34 +123,25 @@ class Bet {
                     if (err) {
                         reject(err);
                     } else {
-                        // const newResult = result;
-                        // const team1Total = newResult[0]["total_amount"]
-                        // const team2Total = newResult[1]["total_amount"]
-
-                        // // Calculate odds round to 2 decimal places
-                        // const team1Odds = 1 / (1 - (team1Total / (team1Total + team2Total)))
-                        // const team2Odds = 1 / (1 - (team2Total / (team2Total + team1Total)))
-
-                        // // Add odds to data
-                        // newResult[0]["odds"] = Math.round(team1Odds * 100) / 100
-                        // newResult[1]["odds"] = Math.round(team2Odds * 100) / 100
-
-                        // // store the odds to the odds table
-                        // oddsModel.addOdds(match_id, newResult[0]["odds"], newResult[1]["odds"]);
-
-                        // resolve(newResult);
-                        resolve(result);
-
+                        if (!result) {
+                            reject(new Error("No bets found for this match."))
+                        }
+                        else if (result.length < 1) {
+                            reject(new Error("No bets found on other team for this match."))
+                        }
+                        else {
+                            resolve(result);
+                        }
                     }
                 }
             );
         });
     }
-    // paybet = update the table where bet id then  
-    // Player  Table where player id is 
-    static payBet(match_id, winner_id) {
+
+    // bets here = bets on 2 sides
+    static getMatchWithBets() {
         return new Promise((resolve, reject) => {
-            db.query("UPDATE player p JOIN bet b ON p.PlayerID = b.PlayerID JOIN match m ON b.MatchID = m.MatchID SET p.Balance = p.Balance + (CASE WHEN b.BetOnTeamID = m.WinnerID THEN b.Amount ELSE -b.Amount END) WHERE m.MatchID = '?' AND m.WinnerID = '?", [match_id, winner_id], (err, result) => {
+            db.query('SELECT match_id FROM bet GROUP BY match_id HAVING COUNT(DISTINCT bet_on_team_id) = 2;', (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -143,7 +151,34 @@ class Bet {
         });
     }
 
-
+    static payout(match_id, winner_id) {
+        return new Promise((resolve, reject) => {
+            // pay the player who bet on the match winner 
+            // payout =  bet amount * odds
+            // updates the player balance
+            // update the bet table with the amount after the payout
+            const sql = `
+            UPDATE player p
+            JOIN bet b ON p.player_id = b.player_id
+            JOIN game_match m ON b.match_id = m.match_id
+            JOIN odds o ON o.team_id = m.winner_id
+            SET p.Balance = p.Balance + (b.amount * o.odds),
+            b.amount_after = b.amount * o.odds
+            WHERE m.match_id = ? 
+            AND m.winner_id = ? 
+            AND b.bet_on_team_id = m.winner_id;
+          `;
+            db.query(
+                sql,
+                [match_id, winner_id], (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result);
+                    }
+                });
+        });
+    }
 
 }
 export default Bet;

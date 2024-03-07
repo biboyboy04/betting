@@ -1,98 +1,51 @@
 import gameModel from '../models/gameModel.js';
+import { handleResponse } from '../utility.js';
 
 class GameController {
-    static async addGame(req, res) {
-        try {
-            //figure the platform data type
-            const { name, genre, description } = req.body;
-            if (!name || !genre || !description) {
-                return res.status(400).json({ message: "All fields are required" });
-            }
-            const result = await gameModel.addGame(name, genre, description);
-            if (result) {
-                return res.status(201).json(result);
-            }
-            else {
-                return res.status(400).json({ message: "Game already exist" });
-            }
-        } catch (error) {
-            res.status(500).json(error);
+    static async add(req, res) {
+        const { name, genre, description } = req.body;
+        if (!name || !genre || !description) {
+            return res.status(400).json({ message: "All fields are required" });
         }
+        handleResponse(res, gameModel.add(name, genre, description), 201);
     }
 
-    static async getAllGame(req, res) {
-        try {
-            const result = await gameModel.getAllGame();
-            if (result) {
-                return res.status(200).json(result);
-            }
-            else {
-                return res.status(400).json({ message: "No Game found" });
-            }
+    static async getAll(req, res) {
+        handleResponse(res, gameModel.getAll());
 
-        } catch (error) {
-            res.status(500).json(error);
-        }
     }
 
-    static async getGameById(req, res) {
-        try {
-            const id = req.params.id;
-            if (!id) {
-                return res.status(400).json({ message: "Id is required" });
-            }
-            const result = await gameModel.getGameById(id);
-            if (result) {
-                return res.status(200).json(result);
-            }
-            else {
-                return res.status(400).json({ message: "No Game found" });
-            }
-        } catch (error) {
-            res.status(500).json(error);
-        }
+    static async getAllId(req, res) {
+        handleResponse(res, gameModel.getAllId())
     }
 
-    static async updateGame(req, res) {
-        try {
-            const id = req.params.id;
-            const { name, genre, description } = req.body;
-            if (!id || !name || !genre || !description) {
-                return res.status(400).json({ message: "All fields are required" });
-            }
-            const result = await gameModel.updateGame(id, name, genre, description);
-            if (result) {
-                return res.status(200).json(result);
-            }
-            else {
-                return res.status(400).json({ message: "No Game found" });
-            }
-        } catch (error) {
-            res.status(500).json(error);
+    static async getById(req, res) {
+        const game_id = req.params.id;
+        if (!game_id) {
+            return res.status(400).json({ message: "Id is required" });
         }
+        handleResponse(res, gameModel.getById(game_id));
+
     }
 
-    static async deleteGame(req, res) {
-        try {
-            const id = req.params.id;
+    static async update(req, res) {
+        const game_id = req.params.id;
+        const { name, genre, description } = req.body;
+        if (!game_id || !name || !genre || !description) {
+            return res.status(400).json({ message: "All fields are required" });
+        }
+        handleResponse(res, gameModel.update(game_id, name, genre, description));
 
-            if (!id) {
-                return res.status(400).json({
-                    message: "Id is required"
-                });
-            }
-            const result = await gameModel.deleteGame(id);
-            if (result) {
-                return res.status(200).json(result);
-            }
-            else {
-                return res.status(400).json({ message: "No Game found" });
-            }
+    }
+
+    static async delete(req, res) {
+        const game_id = req.params.id;
+        if (!game_id) {
+            return res.status(400).json({ message: "Id is required" });
         }
-        catch (error) {
-            res.status(500).json(error);
-        }
+        handleResponse(res, gameModel.delete(game_id));
     }
 
 }
+
 export default GameController;

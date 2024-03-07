@@ -1,10 +1,10 @@
 import db from '../config/db.js';
 
-class Team {
-    static add(name) {
+class Transaction {
+    static add(player_id, type, description, amount, balance) {
         return new Promise((resolve, reject) => {
-            db.query('INSERT INTO team (name) VALUES (?)',
-                [name],
+            db.query('INSERT INTO transaction (player_id, type, description, amount, balance) VALUES (?,?,?,?,?)',
+                [player_id, type, description, amount, balance],
                 (err, result) => {
                     if (err) {
                         reject(err);
@@ -18,7 +18,7 @@ class Team {
 
     static getAll() {
         return new Promise((resolve, reject) => {
-            db.query('SELECT * FROM team', (err, result) => {
+            db.query('SELECT * FROM transaction', (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -28,22 +28,9 @@ class Team {
         });
     }
 
-    static getAllId() {
+    static getById(transaction_id) {
         return new Promise((resolve, reject) => {
-            db.query('SELECT team_id from team', (err, result) => {
-                if(err){
-                    reject(err);
-                }
-                else{
-                    resolve(result);
-                }
-            });
-        });
-    }
-
-    static getById(team_id) {
-        return new Promise((resolve, reject) => {
-            db.query('SELECT * FROM team WHERE team_id = ?', [team_id], (err, result) => {
+            db.query('SELECT * FROM transaction WHERE transaction_id = ?', [transaction_id], (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -53,10 +40,22 @@ class Team {
         });
     }
 
-    static update(team_id, name) {
+    static getByPlayerId(player_id) {
         return new Promise((resolve, reject) => {
-            db.query('UPDATE team SET name = ? WHERE team_id = ?',
-                [name, team_id],
+            db.query('SELECT * FROM transaction WHERE player_id = ?', [player_id], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
+
+    static update(transaction_id, player_id, type, description, amount, balance) {
+        return new Promise((resolve, reject) => {
+            db.query('UPDATE transaction SET player_id = ?, type = ?, description = ?, amount = ?, balance = ? WHERE transaction_id = ?',
+                [player_id, type, description, amount, balance, transaction_id],
                 (err, result) => {
                     if (err) {
                         reject(err);
@@ -68,9 +67,9 @@ class Team {
         });
     }
 
-    static delete(team_id) {
+    static delete(transaction_id) {
         return new Promise((resolve, reject) => {
-            db.query('DELETE FROM team WHERE team_id = ?', [team_id], (err, result) => {
+            db.query('DELETE FROM transaction WHERE transaction_id = ?', [transaction_id], (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -81,4 +80,4 @@ class Team {
     }
 
 }
-export default Team;
+export default Transaction;

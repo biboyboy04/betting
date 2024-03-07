@@ -1,131 +1,91 @@
 import playerModel from '../models/playerModel.js';
+import { handleResponse } from '../utility.js';
 
 class PlayerController {
-    static async addPlayer(req, res) {
+    static async add(req, res) {
+        const { username, password, email, first_name, last_name, date_of_birth, nationality, balance } = req.body;
+        if (!username || !password || !email || !first_name || !last_name || !date_of_birth || !nationality || !balance) {
+            return res.status(400).json({ message: "All fields are required" });
+        }
+        handleResponse(res, playerModel.add(username, email, password, first_name, last_name, date_of_birth, nationality, balance), 201);
+    }
+
+    static async addMany(req, res) {
+        const players = req.body.players;
+        if (!players || !Array.isArray(players)) {
+            return res.status(400).json({ message: "Invalid players data" });
+        }
+        const promises = players.map(player => {
+            const { username, password, email, first_name, last_name, date_of_birth, nationality, balance } = player;
+            if (!username || !password || !email || !first_name || !last_name || !date_of_birth || !nationality || !balance) {
+                return Promise.reject({ message: "Invalid player data" });
+            }
+            return playerModel.add(username, email, password, first_name, last_name, date_of_birth, nationality, balance);
+        });
         try {
-            const { username, password, email, first_name, last_name, dateOfBirth, nationality } = req.body;
-            console.log(req.body)
-            const result = await playerModel.addPlayer(username, password, email, first_name, last_name, dateOfBirth, nationality);
-            if (result) {
-                return res.status(201).json({ message: "Player added successfully", data: result });
-            }
-            else {
-                return res.status(400).json({ message: "Player already exist" });
-            }
+            const results = await Promise.all(promises);
+            handleResponse(res, results, 201);
         } catch (error) {
-            res.status(500).json(error);
+            handleResponse(res, error, 400);
         }
     }
 
-    static async getAllPlayer(req, res) {
-        try {
-            const result = await playerModel.getAllPlayer();
-            if (result) {
-                return res.status(200).json({ message: "Players retrieved successfully", data: result });
-            }
-            else {
-                return res.status(400).json({ message: "No Player found" });
-            }
 
-        } catch (error) {
-            res.status(500).json(error);
-        }
+    static async getAll(req, res) {
+        handleResponse(res, playerModel.getAll());
     }
 
-    static async getPlayerById(req, res) {
-        try {
-            const id = req.params.id;
-            if (!id) {
-                return res.status(400).json({ message: "Id is required" });
-            }
-            const result = await playerModel.getPlayerById(id);
-            console.log(result)
-            if (result) {
-                return res.status(200).json({ message: "Player retrieved successfully", data: result });
-            }
-            else {
-                return res.status(400).json({ message: "No Player found" });
-            }
-        } catch (error) {
-            res.status(500).json(error);
+    static async getById(req, res) {
+        const id = req.params.id;
+        if (!id) {
+            return res.status(400).json({ message: "Id is required" });
         }
+        handleResponse(res, playerModel.getById(id));
     }
 
-    static async updatePlayer(req, res) {
-        try {
-            //can still refactor, dont update unchanged fields
-            const id = req.params.id;
-            const { username, password, firstName, lastName, dateOfBirth, nationality, balance } = req.body;
-
-            if (!id || !username || !password || !firstName || !lastName || !dateOfBirth || !nationality || !balance) {
-                return res.status(400).json({ message: "All fields are required" });
-            }
-            const result = await playerModel.updatePlayer(id, username, password, firstName, lastName, dateOfBirth, nationality, balance);
-            if (result) {
-                return res.status(200).json({ message: "Player updated successfully", data: result });
-            }
-            else {
-                return res.status(400).json({ message: "No Player found" });
-            }
-        } catch (error) {
-            res.status(500).json(error);
+    static async getByUsername(req, res) {
+        const username = req.params.username;
+        if (!username) {
+            return res.status(400).json({ message: "Username is required" });
         }
+        handleResponse(res, playerModel.getByUsername(username));
     }
 
-    static async deletePlayer(req, res) {
-        try {
-            const id = req.params.id;
-            if (!id) {
-                return res.status(400).json({ message: "Id is required" });
-            }
-            const result = await playerModel.deletePlayer(id);
-            if (result) {
-                return res.status(200).json({ message: "Player deleted successfully", data: result });
-            }
-            else {
-                return res.status(400).json({ message: "No Player found" });
-            }
-        } catch (error) {
-            res.status(500).json(error);
+
+    static async update(req, res) {
+        const player_id = req.params.id;
+        const { username, email, password, first_name, last_name, date_of_birth } = req.body;
+        if (!player_id || !username || !email || !password || !first_name || !last_name || !date_of_birth) {
+            return res.status(400).json({ message: "All fields are required" });
         }
+        handleResponse(res, playerModel.update(player_id, username, email, password, first_name, last_name, date_of_birth));
+    }
+
+    static async delete(req, res) {
+        const player_id = req.params.id;
+        if (!player_id) {
+            return res.status(400).json({ message: "Id is required" });
+        }
+        handleResponse(res, playerModel.delete(player_id));
+
     }
 
     static async addBalance(req, res) {
-        try {
-            const id = req.params.id;
-            const amount = req.body.amount;
-            if (!id || !amount) {
-                return res.status(400).json({ message: "Id and amount is required" });
-            }
-            const result = await playerModel.addBalance(id, amount);
-            if (result) {
-                return res.status(200).json({ message: "Balance added successfully", data: result });
-            }
-            else {
-                return res.status(400).json({ message: "No Player found" });
-            }
-        } catch (error) {
-            res.status(500).json(error);
+        const player_id = req.params.id;
+        const amount = req.body.amount;
+        if (!player_id || !amount) {
+            return res.status(400).json({ message: "player_id and amount are required" });
         }
+        handleResponse(res, playerModel.addBalance(player_id, amount));
     }
 
     static async deductBalance(req, res) {
-        try {
-            const id = req.params.id;
-            const amount = req.body.amount;
-            if (!id || !amount) {
-                return res.status(400).json({ message: "Id and amount is required" });
-            }
-            const result = await playerModel.deductBalance(id, amount);
-            if (result) {
-                return res.status(200).json({ message: "Balance deducted successfully", data: result });
-            }
-            else {
-                return res.status(400).json({ message: "No Player found" });
-            }
-        } catch (error) {
-            res.status(500).json(error);
+        const player_id = req.params.id;
+        const amount = req.body.amount;
+        if (!player_id || !amount) {
+            return res.status(400).json({ message: "player_id and amount are required" });
         }
+        handleResponse(res, playerModel.deductBalance(player_id, amount));
     }
 
 }

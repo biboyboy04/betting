@@ -1,40 +1,38 @@
-import db from "./db.js";
 import bcrypt from "bcrypt";
+import { Strategy as localStrategy } from "passport-local";
 import playerModel from "../models/playerModel.js";
 import employeeModel from "../models/employeeModel.js";
-import { Strategy as localStrategy } from "passport-local";
 
 export default (passport) => {
     passport.use('player', new localStrategy((username, password, done) => {
-        db.query('SELECT * FROM player WHERE username = ?', [username], (err, result) => {
-            if (err) {
-                return done(err);
-            }
-            if (!result) {
+        playerModel.getByUsername(username).then((result) => {
+            // the !result is not working as the return value is an empty array
+            // so we need to check the length of the array
+            if (result.length === 0) {
                 return done(null, false, { message: 'Incorrect username' });
             }
             if (!bcrypt.compareSync(password, result[0].password)) {
                 return done(null, false, { message: 'Incorrect password' });
             }
             return done(null, result[0]);
+        }).catch((err) => {
+            return done(err);
         });
-
     }));
 
     passport.use('employee', new localStrategy((username, password, done) => {
-        db.query('SELECT * FROM employee WHERE username = ?', [username], (err, result) => {
-            if (err) {
-                return done(err);
-            }
-            if (!result) {
+        employeeModel.getByUsername(username).then((result) => {
+            if (result.length === 0) {
                 return done(null, false, { message: 'Incorrect username' });
             }
             if (!bcrypt.compareSync(password, result[0].password)) {
                 return done(null, false, { message: 'Incorrect password' });
             }
             return done(null, result[0]);
-        });
-
+        }).catch((err) => {
+            return done(err);
+        }
+        );
     }));
 
     passport.serializeUser((user, done) => {
@@ -45,16 +43,19 @@ export default (passport) => {
         }
     });
 
+    //refactor: is it ok to add userType on deserialization
     passport.deserializeUser((user, done) => {
         if (user.userType === "player") {
-            playerModel.getPlayerById(user.id).then((result) => {
+            playerModel.getById(user.id).then((result) => {
+                result[0].user_type = "player";
                 done(null, result[0]);
             }).catch((err) => {
                 done(err);
             });
         }
         else {
-            employeeModel.getEmployeeById(user.id).then((result) => {
+            employeeModel.getById(user.id).then((result) => {
+                result[0].user_type = "employee";
                 done(null, result[0]);
             }).catch((err) => {
                 done(err);
