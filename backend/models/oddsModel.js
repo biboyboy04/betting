@@ -1,21 +1,47 @@
 import db from '../config/db.js';
 import betModel from './betModel.js';
+import matchModel from './matchModel.js';
 
 class Odds {
     //refactor this add: pattern is not the same as others
     // must have parameters for maybe team1id and team2id, and odds?
     static async add(match_id) {
-        //add check if alreadyt exist
         try {
             const totalBets = await betModel.getTotalMatchBets(match_id);
 
-            const team1Total = totalBets[0]["total_amount"];
-            const team2Total = totalBets[1]["total_amount"];
+            // if theres any team without bets, there's no way the other
+            // team can win, as each betters gets their winnings from the losers
 
-            const [team1Odds, team2Odds] = this.calculateOdds(team1Total, team2Total);
+            // So, if either team doesn't have bets, then the odds are 1 (no winners)
+            // pseudo refund
+            if (totalBets.length < 2) {
 
-            await this.insertOdds(match_id, totalBets[0]["bet_on_team_id"], team1Odds);
-            await this.insertOdds(match_id, totalBets[1]["bet_on_team_id"], team2Odds);
+                const team_ids = await matchModel.getTeamsByMatchId(match_id);
+
+                const team1_id = team_ids[0]["team1_id"];
+                const team2_id = team_ids[0]["team2_id"];
+
+                //odds = 1 means that there are no bets on that team
+                // 1 * their bet = pseudo refund
+                const team1Odds = 1;
+                const team2Odds = 1;
+
+                await this.insertOdds(match_id, team1_id, team1Odds);
+                await this.insertOdds(match_id, team2_id, team2Odds);
+            }
+            else {
+                //refactor
+                const team1Total = totalBets[0]?.total_amount || 1;
+                const team2Total = totalBets[1]?.total_amount || 1;
+
+                const team1Id = totalBets[0]?.bet_on_team_id;
+                const team2Id = totalBets[1]?.bet_on_team_id;
+
+                const [team1Odds, team2Odds] = this.calculateOdds(team1Total, team2Total);
+
+                await this.insertOdds(match_id, team1Id, team1Odds);
+                await this.insertOdds(match_id, team2Id, team2Odds);
+            }
 
             return "Odds added successfully";
         } catch (error) {
@@ -25,17 +51,32 @@ class Odds {
 
     static insertOdds(match_id, team_id, odds) {
         return new Promise((resolve, reject) => {
-            db.query('INSERT INTO odds (match_id, team_id, odds) VALUES (?, ?, ?)', [match_id, team_id, odds], (err, result) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(result);
+            this.getByMatchAndTeamId(match_id, team_id).then((result) => {
+                if (result.length > 0) {
+                    db.query('UPDATE odds SET odds = ? WHERE match_id = ? AND team_id = ?', [odds, match_id, team_id], (err, result) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve(result);
+                        }
+                    }
+                    );
                 }
-            });
+                else {
+                    db.query('INSERT INTO odds (match_id, team_id, odds) VALUES (?, ?, ?)', [match_id, team_id, odds], (err, result) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve(result);
+                        }
+                    });
+                }
+            })
         });
     }
 
     static calculateOdds(team1_total, team2_total) {
+
         let team1Odds = 1 / (1 - (team1_total / (team1_total + team2_total)))
         let team2Odds = 1 / (1 - (team2_total / (team2_total + team1_total)))
 
@@ -73,6 +114,18 @@ class Odds {
     static getByMatchId(match_id) {
         return new Promise((resolve, reject) => {
             db.query('SELECT * FROM odds WHERE match_id = ?', [match_id], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
+
+    static getByMatchAndTeamId(match_id, team_id) {
+        return new Promise((resolve, reject) => {
+            db.query('SELECT * FROM odds WHERE match_id = ? AND team_id = ?', [match_id, team_id], (err, result) => {
                 if (err) {
                     reject(err);
                 } else {

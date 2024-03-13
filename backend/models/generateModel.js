@@ -119,7 +119,10 @@ class Generate {
             const randomWinnerId = (i % 2 == 0) ? team1_id : team2_id;
             await matchModel.setWinnerAllPendingMatches(match_id, randomWinnerId);
             await oddsModel.add(match_id);
-            await betModel.payout(match_id, randomWinnerId);
+            // const testt = await betModel.getWinnersId(match_id, randomWinnerId);
+            const test = await betModel.payout(match_id, randomWinnerId);
+            console.log(test, "test")
+            
         }
         return "Generated Winners Sucessfully";
     }

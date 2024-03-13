@@ -70,6 +70,33 @@ class Match {
         });
     }
 
+
+    static getAllPendingMatch() {
+        return new Promise((resolve, reject) => {
+            db.query('SELECT * from game_match WHERE winner_id IS NULL', (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve(result);
+                }
+            });
+        });
+    }
+
+    static getAllFinishedMatch() {
+        return new Promise((resolve, reject) => {
+            db.query('SELECT * from game_match WHERE winner_id IS NOT NULL', (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve(result);
+                }
+            });
+        });
+    }
+
     // This is to handle defects when adding odds and payout to the matches
     // that are not pending and withouth or incomplete bets e.g(only one team has a bet)
 

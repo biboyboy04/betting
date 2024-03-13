@@ -70,22 +70,30 @@ class PlayerController {
 
     }
 
-    static async addBalance(req, res) {
+    static async deposit(req, res) {
         const player_id = req.params.id;
         const amount = req.body.amount;
         if (!player_id || !amount) {
             return res.status(400).json({ message: "player_id and amount are required" });
         }
-        handleResponse(res, playerModel.addBalance(player_id, amount));
+        if(isNaN(amount) || amount < 1) {
+            return res.status(400).json({ message: "Invalid amount"});
+        }
+
+        handleResponse(res, playerModel.deposit(player_id, amount));
     }
 
-    static async deductBalance(req, res) {
+    static async withdraw(req, res) {
         const player_id = req.params.id;
         const amount = req.body.amount;
         if (!player_id || !amount) {
             return res.status(400).json({ message: "player_id and amount are required" });
         }
-        handleResponse(res, playerModel.deductBalance(player_id, amount));
+        if(isNaN(amount) || amount < 1) {
+            return res.status(400).json({ message: "Invalid amount"});
+        }
+
+        handleResponse(res, playerModel.withdraw(player_id, amount));
     }
 
 }

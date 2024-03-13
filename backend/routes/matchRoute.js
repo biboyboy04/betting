@@ -4,6 +4,9 @@ const router = express.Router();
 
 router.post('/', matchController.add);
 router.get('/', matchController.getAll);
+router.get('/pending', matchController.getAllPendingMatch);
+router.get('/pendingId', matchController.getAllPendingMatchId);
+router.get('/finished', matchController.getAllFinishedMatch);
 router.get('/:id', matchController.getById);
 router.get('/byDateAndTime/:dateTime', matchController.getByDateAndTime);
 router.get('/byGameId/:id', matchController.getByGameId);

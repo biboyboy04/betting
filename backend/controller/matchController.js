@@ -1,4 +1,5 @@
 import matchModel from '../models/matchModel.js';
+import oddsModel from '../models/oddsModel.js';
 import { handleResponse } from '../utility.js';
 
 
@@ -8,7 +9,10 @@ class MatchController {
         if (!game_id || !team1_id || !team2_id || !match_date_time) {
             return res.status(400).json({ message: "All fields are required" });
         }
-        handleResponse(res, matchModel.add(game_id, team1_id, team2_id, match_date_time), 201);
+
+        const a = await handleResponse(res, matchModel.add(game_id, team1_id, team2_id, match_date_time), 201);
+        console.log(a, "asd")
+        // handleResponse(res, oddsModel.insertOdds(game_id, team1_id, team2_id, match_date_time), 201);
 
     }
 
@@ -22,6 +26,18 @@ class MatchController {
             return res.status(400).json({ message: "Id is required" });
         }
         handleResponse(res, matchModel.getById(match_id));
+    }
+
+    static async getAllPendingMatchId(req, res) {
+        handleResponse(res, matchModel.getAllPendingMatchId());
+    }
+
+    static async getAllPendingMatch(req, res) {
+        handleResponse(res, matchModel.getAllPendingMatch());
+    }
+
+    static getAllFinishedMatch(req, res) {
+        handleResponse(res, matchModel.getAllFinishedMatch());
     }
 
     static async getByDateAndTime(req, res) {

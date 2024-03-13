@@ -1,10 +1,10 @@
 import db from '../config/db.js';
 
 class Transaction {
-    static add(player_id, type, description, amount, balance) {
+    static add(player_id, type, amount, balance) {
         return new Promise((resolve, reject) => {
-            db.query('INSERT INTO transaction (player_id, type, description, amount, balance) VALUES (?,?,?,?,?)',
-                [player_id, type, description, amount, balance],
+            db.query('INSERT INTO transaction (player_id, type, amount, balance) VALUES (?,?,?,?)',
+                [player_id, type, amount, balance],
                 (err, result) => {
                     if (err) {
                         reject(err);
@@ -13,6 +13,21 @@ class Transaction {
                     }
                 }
             );
+        });
+    }
+    
+    static addMany(transactions) {
+        const transactionsArray = transactions.map(transaction => {
+            return [transaction.player_id, transaction.type, transaction.amount, transaction.balance];
+        });
+        return new Promise((resolve, reject) => {
+            db.query('INSERT INTO transaction (player_id, type, amount, balance) VALUES ?', [transactionsArray], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
         });
     }
 
@@ -52,10 +67,10 @@ class Transaction {
         });
     }
 
-    static update(transaction_id, player_id, type, description, amount, balance) {
+    static update(transaction_id, player_id, type, amount, balance) {
         return new Promise((resolve, reject) => {
-            db.query('UPDATE transaction SET player_id = ?, type = ?, description = ?, amount = ?, balance = ? WHERE transaction_id = ?',
-                [player_id, type, description, amount, balance, transaction_id],
+            db.query('UPDATE transaction SET player_id = ?, type = ?, amount = ?, balance = ? WHERE transaction_id = ?',
+                [player_id, type, amount, balance, transaction_id],
                 (err, result) => {
                     if (err) {
                         reject(err);

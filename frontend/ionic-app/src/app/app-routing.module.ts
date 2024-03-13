@@ -34,6 +34,26 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/landing/landing.module').then((m) => m.LandingPageModule),
   },
+  {
+    path: 'player-dashboard',
+    loadChildren: () =>
+      import('./pages/player-dashboard/player-dashboard.module').then(
+        (m) => m.PlayerDashboardPageModule
+      ),
+  },
+  {
+    path: 'employee-dashboard',
+    loadChildren: () =>
+      import('./pages/employee-dashboard/employee-dashboard.module').then(
+        (m) => m.EmployeeDashboardPageModule
+      ),
+  },
+  {
+    path: 'player-account',
+    loadChildren: () => import('./pages/player-account/player-account.module').then( m => m.PlayerAccountPageModule)
+  },
+
+
 ];
 
 @NgModule({

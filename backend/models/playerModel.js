@@ -1,6 +1,7 @@
 import db from '../config/db.js';
 import bcrypt from 'bcrypt';
-
+import transactionModel from './transactionModel.js';
+import betModel from './betModel.js';
 class Player {
     static add(username, password, email, first_name, last_name, date_of_birth, nationality, balance = 0) {
         return new Promise((resolve, reject) => {
@@ -47,7 +48,6 @@ class Player {
             });
         });
     }
-
 
     static getAll() {
         return new Promise((resolve, reject) => {
@@ -98,7 +98,19 @@ class Player {
         });
     }
 
-    static update(player_id, username, password, email, first_name, last_name, date_of_birth, nationality, balance = 0) {
+    static getBalance(player_id) {
+        return new Promise((resolve, reject) => {
+            db.query('SELECT balance FROM player WHERE player_id = ?', [player_id], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
+
+    static update(player_id, username, password, email, first_name, last_name, date_of_birth, nationality, balance) {
         return new Promise((resolve, reject) => {
             db.query('UPDATE player SET username = ?, password = ?, email = ?, first_name = ?, last_name = ?, date_of_birth = ?, nationality = ?, balance = ? WHERE player_id = ?',
                 [username, password, email, first_name, last_name, date_of_birth, nationality, balance, player_id],
@@ -125,34 +137,111 @@ class Player {
         });
     }
 
-    static addBalance(player_id, amount) {
-        return new Promise((resolve, reject) => {
-            db.query('UPDATE player SET balance = balance + ? WHERE player_id = ?',
-                [amount, player_id],
-                (err, result) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        resolve(result);
+    // refactor bqalance
+
+    static async bet(player_id, amount) {
+        try {
+            const currentBalance = await this.getBalance(player_id);
+            if (currentBalance[0].balance < amount) {
+                throw new Error('Insufficient balance');
+            }
+            await new Promise((resolve, reject) => {
+                db.query('UPDATE player SET balance = balance - ? WHERE player_id = ? AND balance >= (balance - ?)',
+                    [amount, player_id, amount],
+                    (err, result) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve(result);
+                        }
                     }
-                }
-            );
-        });
+                );
+            });
+
+            const type = "bet";
+            const playerBalance = await this.getBalance(player_id);
+            const balance = playerBalance[0].balance;
+            await transactionModel.add(player_id, type, amount, balance);
+
+            return "Bet successfully";
+        } catch (error) {
+            throw error;
+        }
     }
 
-    static deductBalance(player_id, amount) {
-        return new Promise((resolve, reject) => {
-            db.query('UPDATE player SET balance = balance - ? WHERE player_id = ?',
-                [amount, player_id],
-                (err, result) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        resolve(result);
+    static async winBet (player_id, amount) {
+        try {
+            await new Promise((resolve, reject) => {
+                db.query('UPDATE player SET balance = balance + ? WHERE player_id = ?',
+                    [amount, player_id],
+                    (err, result) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve(result);
+                        }
                     }
-                }
-            );
-        });
+                );
+            });
+            const type = "win_bet";
+            const playerBalance = await this.getBalance(player_id);
+            const balance = playerBalance[0].balance;
+            await transactionModel.add(player_id, type, amount, balance);
+
+            return "Win successfully";
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static async deposit(player_id, amount) {
+        try {
+            await new Promise((resolve, reject) => {
+                db.query('UPDATE player SET balance = balance + ? WHERE player_id = ?',
+                    [amount, player_id],
+                    (err, result) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve(result);
+                        }
+                    }
+                );
+            });
+            const type = "deposit";
+            const playerBalance = await this.getBalance(player_id);
+            const balance = playerBalance[0].balance;
+            await transactionModel.add(player_id, type, amount, balance);
+
+            return "Deposited successfully";
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static async withdraw(player_id, amount) {
+        try {
+            await new Promise((resolve, reject) => {
+                db.query('UPDATE player SET balance = balance - ? WHERE player_id = ? AND balance >= ?',
+                    [amount, player_id, amount],
+                    (err, result) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve(result);
+                        }
+                    }
+                );
+            });
+            const type = "withdraw";
+            const playerBalance = await this.getBalance(player_id);
+            const balance = playerBalance[0].balance;
+            await transactionModel.add(player_id, type, amount, balance);
+
+            return "Withraw successfully";
+        } catch (error) {
+            throw error;
+        }
     }
 }
 

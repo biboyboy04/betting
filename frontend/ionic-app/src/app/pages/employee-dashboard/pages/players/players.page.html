@@ -1,0 +1,45 @@
+
+<ion-button (click)="addPlayer()" expand="block" fill="clear" shape="round">
+  + Add Player
+</ion-button>
+@if (playerData && playerData.length > 0) {
+  <ion-list>
+    @for (player of playerData; track $index) {
+      <ion-card>
+        <ion-card-header>
+          {{ player.first_name }} {{ player.last_name }}
+        </ion-card-header>
+        <ion-card-content>
+          <ion-item>
+            <ion-label>Username:</ion-label>
+            <ion-text>{{ player.username }}</ion-text>
+          </ion-item>
+          <ion-item>
+            <ion-label>Email:</ion-label>
+            <ion-text>{{ player.email }}</ion-text>
+          </ion-item>
+          <ion-item>
+            <ion-label>Date of Birth:</ion-label>
+            <ion-text>{{ player.date_of_birth }}</ion-text>
+          </ion-item>
+          <ion-item>
+            <ion-label>Nationality:</ion-label>
+            <ion-text>{{ player.nationality }}</ion-text>
+          </ion-item>
+          <ion-item>
+            <ion-label>Balance:</ion-label>
+            <ion-text>{{ player.balance }}</ion-text>
+          </ion-item>
+          <ion-item [routerLink]="['/employee-dashboard', 'update', player.player_id]"> 
+            <ion-icon name="create-outline" slot="start"></ion-icon>
+            <ion-label >Edit</ion-label>
+          </ion-item>
+          <ion-item (click)="handleDelete(player.player_id)"> 
+            <ion-icon name="create-outline" slot="start"></ion-icon>
+            <ion-label >Delete</ion-label>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+    }
+  </ion-list>
+}

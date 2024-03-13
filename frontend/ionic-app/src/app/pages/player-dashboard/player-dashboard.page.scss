@@ -1,0 +1,51 @@
+swiper-container {
+  width: 100%;
+  height: 200px;
+  padding: 1rem;
+}
+
+swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+ion-card {
+  width: 300px;
+  background-color: rgb(201, 196, 196);
+  border-radius: 0;
+  box-shadow: none;
+  height: 100%;
+  color: black;
+}
+
+
+.custom-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+ion-card-content {
+  margin-top: 100px;
+}
+
+.match-container {
+  margin-top: 200px;
+
+}
+
+.matches {
+  display: flex;
+  flex-wrap: wrap;
+}

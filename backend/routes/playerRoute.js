@@ -8,8 +8,8 @@ router.get('/:id', playerController.getById);
 router.get('/byUsername/:username', playerController.getByUsername);
 router.put('/:id', playerController.update);
 router.delete('/:id', playerController.delete);
-router.put('/addBalance/:id', playerController.addBalance);
-router.put('/deductBalance/:id', playerController.deductBalance);
+router.put('/deposit/:id', playerController.deposit);
+router.put('/withdraw/:id', playerController.withdraw);
 
 
 export default router;

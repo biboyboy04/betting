@@ -1,0 +1,32 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <ion-item>
+    <ion-label position="floating">Balance</ion-label>
+    <ion-input formControlName="balance" type="number"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Date of Birth</ion-label>
+    <ion-input formControlName="date_of_birth" type="date"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Email</ion-label>
+    <ion-input formControlName="email" type="email"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">First Name</ion-label>
+    <ion-input formControlName="first_name" type="text"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Last Name</ion-label>
+    <ion-input formControlName="last_name" type="text"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">National
+      <ion-input formControlName="nationality" type="text"></ion-input>
+    </ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Username</ion-label>
+    <ion-input formControlName="username" type="text"></ion-input>
+  </ion-item>
+  <ion-button type="submit" expand="full">Submit</ion-button>
+</form>

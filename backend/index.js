@@ -23,7 +23,7 @@ const PORT = 5555;
 let app = express();
 //refeactor: check if methods and credentials are working even if they are not used
 app.use(cors({
-    origin: 'http://localhost:4200',
+    origin: ['http://localhost:4200', "http://localhost:8100"],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE']
 }));
