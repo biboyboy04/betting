@@ -10,7 +10,7 @@ class Employee {
                     reject('Username already exist');
                 } else {
                     const hashed_password = bcrypt.hashSync(password, 10);
-                    db.query('INSERT INTO employee (username, password, email, first_name, last_name, date_of_birth,  role_id) VALUES (?, ?, ?, ?, ?, ?, ?)',
+                    db.query('INSERT INTO employee (username, password, email, first_name, last_name, date_of_birth, role_id) VALUES (?, ?, ?, ?, ?, ?, ?)',
                         [username, hashed_password, email, first_name, last_name, date_of_birth, role_id]
                         , (err, result) => {
                             if (err) {

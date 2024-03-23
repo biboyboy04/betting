@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title>Welcome</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [strong]="true">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="dark">
+  <div class="modal-container">
+    <img class="logo" src="assets/logo.png" alt="logo" />
+    <form class="login-form-container">
+      <ion-item class="border-radius">
+        <ion-input
+          label="Email"
+          labelPlacement="stacked"
+          type="text"
+          placeholder="Your name"
+          [(ngModel)]="name"
+        ></ion-input>
+      </ion-item>
+      <div class="password-go-container">
+        <ion-item >
+          <ion-input
+          fill="extend"
+            label="Password"
+            labelPlacement="stacked"
+            type="text"
+            placeholder="Your name"
+            [(ngModel)]="name"
+          ></ion-input>
+        </ion-item>
+        <ion-button type="submit">
+          Go!
+        </ion-button>
+      </div>
+
+
+    </form>
+  </div>
+</ion-content>
