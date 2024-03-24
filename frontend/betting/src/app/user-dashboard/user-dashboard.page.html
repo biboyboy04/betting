@@ -1,10 +1,26 @@
 <ion-menu contentId="main-content">
   <ion-header>
     <ion-toolbar color="dark">
-      <ion-title>Logo</ion-title>
+      <div class="logo-container">
+        <img class="logo" src="assets/logo.png" alt="logo" />
+      </div>
     </ion-toolbar>
   </ion-header>
-  <ion-content class="ion-padding">
+  <ion-content color="dark" class="ion-padding">
+    <ion-card (click)="navigateToValorant()" class="ion-no-border menu-card">
+      <ion-card-content class="menu-card-content">
+        <img class="menu-img" src="assets/images/valorant.png" alt="logo" />
+        <p class="menu-title">Valorant</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card (click)="navigateToValorant2()" class="ion-no-border menu-card">
+      <ion-card-content class="menu-card-content">
+        <img class="menu-img" src="assets/images/valorant.png" alt="logo" />
+        <p class="menu-title">Valorant</p>
+      </ion-card-content>
+    </ion-card>
+
     @if (gameData && gameData.length > 0) { @for (game of gameData; track game)
     {
     <ion-item class="ion-padding">
@@ -19,142 +35,40 @@
   </ion-content>
 </ion-menu>
 
-<ion-header id="main-content">
-  <ion-toolbar color="dark">
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>Player Dashboard</ion-title>
-    <ion-buttons slot="end">
-      <ion-button>
-        <ion-icon slot="icon-only" name="search"></ion-icon>
-      </ion-button>
-      <ion-button>
-        <ion-icon slot="icon-only" name="person"></ion-icon>
-      </ion-button>
-      <ion-popover #popover [isOpen]="isOpen" (didDismiss)="isOpen = false">
-        <ng-template>
-          <ion-content class="ion-padding">
-            <!-- <ion-button (click)="navigateTo('deposit')">Deposit</ion-button>
-            <ion-button (click)="navigateTo('withdraw')">Withdraw</ion-button>
-            <ion-button (click)="navigateTo('account')">Account</ion-button>
-            <ion-button (click)="navigateTo('profile')">Profile</ion-button>
-            <ion-button (click)="navigateTo('transaction-history')"
-              >Transaction History</ion-button
-            >
-            <ion-button (click)="navigateTo('bet-history')"
-              >Bet History</ion-button
-            > -->
-          </ion-content>
-        </ng-template>
-      </ion-popover>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content color="dark" class="ion-padding">
-  <ion-grid style="margin-top: 50px">
-    <ion-row>
-      <ion-col size="4">
-        <ion-card class="bonus-1">
-          <ion-card-content>
-            <p>Welcome Bonus</p>
-            <p>200% UP TO</p>
-            <p>₱2000</p>
-            <ion-button shape="round" color="light" fill="outline"
-              >Claim Now</ion-button
-            >
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-
-      <ion-col size="4">
-        <ion-card class="bonus-2">
-          <ion-card-content>
-            <p>Free Bet</p>
-            <p>200% UP TO</p>
-            <p>₱2000</p>
-            <ion-button shape="round" color="light" fill="outline"
-              >Claim Now</ion-button
-            >
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-
-      <ion-col size="4">
-        <ion-card class="bonus-3">
-          <ion-card-content>
-            <p>First Deposit Bonus</p>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-  <div class="match-container">
-    <h1>Upcoming Events</h1>
-    <div class="matches">
-      <!-- integrate api data -->
-      <app-match-card></app-match-card>
-      <app-match-card></app-match-card>
-      <app-match-card></app-match-card>
-      <app-match-card></app-match-card>
-      <app-match-card></app-match-card>
-      <app-match-card></app-match-card>
-
-      <!-- @if (matchData && matchData.length > 0) {
-        @for (match of matchData; track match) {
-          <ion-card>
-            <ion-card-title>{{"Match ID: " + match.match_id }}</ion-card-title>
-            <ion-card-content >
-              <p>{{ "Game ID: " + match.game_id }}</p>
-              <p>Team1 ID: {{match.team1_id}} vs Team2 ID: {{match.team2_id}}</p>
-            </ion-card-content>
-          </ion-card>
-        }
-      } -->
-    </div>
-  </div>
-
-  <!-- @if (gameData &&
-  gameData.length > 0) {
-  <swiper-container
-    class="mySwiper"
-    pagination-clickable="true"
-    space-between="20"
-    slides-per-view="3"
-  >
-    @for (game of gameData; track game) {
-    <swiper-slide>
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title>{{ game.name }}</ion-card-title>
-          <ion-card-subtitle>{{ game.genre }}</ion-card-subtitle>
-        </ion-card-header>
-      </ion-card>
-    </swiper-slide>
-    }
-  </swiper-container>
-  } -->
-
-  <!-- @if (matchData &&
-  matchData.length > 0) {
-  <swiper-container
-    class="mySwiper"
-    pagination-clickable="true"
-    space-between="20"
-    slides-per-view="3"
-  > -->
-  <!-- @for (match of matchData; track match) {
-    <swiper-slide>
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title>{{ match.name }}</ion-card-title>
-          <ion-card-subtitle>{{ match.genre }}</ion-card-subtitle>
-        </ion-card-header>
-      </ion-card>
-    </swiper-slide>
-    } -->
-  <!-- </swiper-container>
-  } -->
-</ion-content>
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar style="--background: #121212; color: white">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+        <ion-button fill="clear" class="header-title">ESPORTS</ion-button>
+      </ion-title>
+      <ion-buttons slot="end">
+        <ion-button>
+          <ion-icon slot="icon-only" name="search"></ion-icon>
+        </ion-button>
+        <ion-button>
+          <ion-icon slot="icon-only" name="person"></ion-icon>
+        </ion-button>
+        <ion-popover #popover [isOpen]="isOpen" (didDismiss)="isOpen = false">
+          <ng-template>
+            <ion-content class="ion-padding">
+              <!-- <ion-button (click)="navigateTo('deposit')">Deposit</ion-button>
+              <ion-button (click)="navigateTo('withdraw')">Withdraw</ion-button>
+              <ion-button (click)="navigateTo('account')">Account</ion-button>
+              <ion-button (click)="navigateTo('profile')">Profile</ion-button>
+              <ion-button (click)="navigateTo('transaction-history')"
+                >Transaction History</ion-button
+              >
+              <ion-button (click)="navigateTo('bet-history')"
+                >Bet History</ion-button
+              > -->
+            </ion-content>
+          </ng-template>
+        </ion-popover>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-router-outlet></ion-router-outlet>
+</div>

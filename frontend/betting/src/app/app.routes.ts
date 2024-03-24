@@ -12,7 +12,8 @@ export const routes: Routes = [
   },
   {
     path: 'user-dashboard',
-    loadComponent: () => import('./user-dashboard/user-dashboard.page').then( m => m.UserDashboardPage)
+    loadComponent: () => import('./user-dashboard/user-dashboard.page').then( m => m.UserDashboardPage),
+    loadChildren: () => import('./user-dashboard/user-dashboard.routes').then( m => m.routes)
   },
 
 ];

@@ -6,7 +6,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 // import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
-import {TestComponent} from '../components/test/test.component';
 import { LoginModalComponent } from '../components/login-modal/login-modal.component';
 import { SignupModalComponent } from '../components/signup-modal/signup-modal.component';
 
@@ -15,7 +14,7 @@ import { SignupModalComponent } from '../components/signup-modal/signup-modal.co
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [IonInput, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonSearchbar, IonButtons, IonItem, IonIcon, IonModal, FormsModule, TestComponent, LoginModalComponent],
+  imports: [IonInput, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonSearchbar, IonButtons, IonItem, IonIcon, IonModal, FormsModule, LoginModalComponent],
 })
 export class HomePage {
   private api  = inject(ApiService);

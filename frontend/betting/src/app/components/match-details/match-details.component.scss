@@ -1,0 +1,65 @@
+.match-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6rem;
+  }
+  
+  .team-card {
+    background-color: #1b1c20;
+    border-radius: 20px;
+    border: 1px solid black;
+  }
+  
+  .logo {
+    width: 60px;
+    height: auto;
+  }
+  
+  .time-vs {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-style: italic;
+    font-weight: 900;
+  
+    :nth-child(1) {
+      color: #504f54;
+    }
+  
+    :nth-child(2) {
+      color: white;
+    }
+  }
+  
+  .team-card-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2.5rem;
+    color: white;
+  
+    p {
+      font-weight: 600;
+    }
+  
+    ion-button {
+      --background: #6f0ad5;
+      font-weight: bold;
+      font-size: 1.2rem;
+      font-style: italic;
+    }
+  }
+  
+  .bet-selection {
+    --border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    --background: #6f0ad5;
+  }
+  
+  .bet-selection-icon {
+    scale: 3;
+    color: black;
+  }
+  
