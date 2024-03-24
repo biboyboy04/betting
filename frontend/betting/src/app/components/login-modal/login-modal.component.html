@@ -14,32 +14,40 @@
   <div class="modal-container">
     <img class="logo" src="assets/logo.png" alt="logo" />
     <form class="login-form-container">
-      <ion-item class="border-radius">
+      <ion-radio-group value="player" [(ngModel)]="userData.userType">
+        <div class="user-type-container">
+          <ion-item>
+            <ion-radio value="player" labelPlacement="stacked"
+              >Player</ion-radio
+            >
+          </ion-item>
+          <ion-item>
+            <ion-radio value="employee" labelPlacement="stacked"
+              >Employee</ion-radio
+            >
+          </ion-item>
+        </div>
+      </ion-radio-group>
+
+      <ion-item>
         <ion-input
-          label="Email"
-          labelPlacement="stacked"
+          label="Username"
+          labelPlacement="floating"
           type="text"
-          placeholder="Your name"
-          [(ngModel)]="name"
+          [(ngModel)]="userData.username"
         ></ion-input>
       </ion-item>
       <div class="password-go-container">
-        <ion-item >
+        <ion-item>
           <ion-input
-          fill="extend"
             label="Password"
-            labelPlacement="stacked"
+            labelPlacement="floating"
             type="text"
-            placeholder="Your name"
-            [(ngModel)]="name"
+            [(ngModel)]="userData.password"
           ></ion-input>
         </ion-item>
-        <ion-button type="submit">
-          Go!
-        </ion-button>
+        <ion-button type="submit"> Go! </ion-button>
       </div>
-
-
     </form>
   </div>
 </ion-content>

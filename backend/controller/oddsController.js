@@ -5,7 +5,7 @@ import { handleResponse } from '../utility.js';
 class oddsController {
     static async add(req, res) {
         //refactor oddsModel
-        const { id } = req.params;
+        const { id } = req.body;
         if (!id) {
             return res.status(400).json({ message: "All fields are required" });
         }

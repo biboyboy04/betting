@@ -1,0 +1,56 @@
+.match-card {
+  width: auto;
+}
+
+ion-col {
+  display: flex;
+  justify-content: center;
+}
+
+.bonus-1,
+.bonus-2,
+.bonus-3 {
+  background-size: cover;
+  background-position: top;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 400px;
+  border-radius: 15px;
+  box-shadow: none;
+  height: 200px;
+  color: white;
+  position: relative;
+  text-align: center;
+  border: 1px solid black;
+
+  p {
+    font-size: 1rem;
+  }
+
+  ion-button {
+    --border-width: 1px;
+  }
+}
+
+.bonus-1 {
+  background-image: url("../../assets/images/first_pic.png");
+}
+
+.bonus-2 {
+  background-image: url("../../assets/images/second_pic.png");
+}
+
+.bonus-3 {
+  background-image: url("../../assets/images/third_pic.png");
+
+  ion-card-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+}
+
+.match-container {
+  margin-top: 100px;
+}

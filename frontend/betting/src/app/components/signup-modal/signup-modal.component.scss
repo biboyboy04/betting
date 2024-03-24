@@ -3,9 +3,18 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
-  height: 100%;
+  gap: 40px;
+  // height extending outisde of miodal
+  // height: 100%;
+  padding: 2rem 1rem;
+  border-radius: 10px;
 }
+
+ion-modal {
+  --border-radius: 10px;
+  border-radius: 10px;
+}
+
 
 .login-form-container {
   display: flex;
@@ -14,27 +23,29 @@
   justify-content: center;
   align-items: center;
   max-width: 300px;
+}
 
-  ion-item {
-    --border-radius: 10px;
-    width: 100%;
-  }
+ion-item{
+  --border-radius: 10px;
+  width: 100%;
 }
 
 ion-radio-group {
   width: 100%;
   background-color: white;
+}
+
+.border-radius {
   border-radius: 10px;
 }
 
-
 .user-type-container {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-  }
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
 
 .password-go-container {
   display: flex;

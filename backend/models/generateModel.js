@@ -58,6 +58,7 @@ class Generate {
 
             // this is to ensure that team1 and team2 have different ID's as we are using RNG
             // re assinging another id if team1_id is same as team2_id
+            // refactor: add ? on allTeamId[randomTeam2Index]['team_id'] to ensure it doenst error out if the value is undefined
             let team2_id;
             do {
                 const randomTeam2Index = getRandomIndex(allTeamId.length);

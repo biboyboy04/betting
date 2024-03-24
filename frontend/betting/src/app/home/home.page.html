@@ -6,13 +6,14 @@
     <div slot="end" class="login-signup-container">
       <ion-button
         id="sign-in"
+        (click)="openSignUpModal()"
         shape="round"
         slot="end"
         fill="outline"
         color="light"
-        >Sign in</ion-button
+        >Sign up</ion-button
       >
-      <ion-button (click)="openModal()" id="login" class="color-purple" shape="round" slot="end"
+      <ion-button (click)="openLoginModal()" id="login" class="color-purple" shape="round" slot="end"
         >Login</ion-button
       >
     </div>
