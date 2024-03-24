@@ -53,4 +53,12 @@ ion-col {
 
 .match-container {
   margin-top: 100px;
+
+}
+
+.matches {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
 }
