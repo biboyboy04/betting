@@ -35,6 +35,7 @@ export default (passport) => {
         );
     }));
 
+    // serialzie runs on login
     passport.serializeUser((user, done) => {
         if (user.player_id) {
             done(null, { userType: "player", id: user.player_id });
@@ -44,6 +45,7 @@ export default (passport) => {
     });
 
     //refactor: is it ok to add userType on deserialization
+    // deserialize run on every current user requests
     passport.deserializeUser((user, done) => {
         if (user.userType === "player") {
             playerModel.getById(user.id).then((result) => {

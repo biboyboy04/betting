@@ -3,11 +3,12 @@ import { handleResponse } from '../utility.js';
 
 class PlayerController {
     static async add(req, res) {
-        const { username, password, email, first_name, last_name, date_of_birth, nationality, balance } = req.body;
-        if (!username || !password || !email || !first_name || !last_name || !date_of_birth || !nationality || !balance) {
+        const { username, password, email, first_name, last_name, date_of_birth, nationality } = req.body;
+        console.log(req.body)
+        if (!username || !password || !email || !first_name || !last_name || !date_of_birth || !nationality ) {
             return res.status(400).json({ message: "All fields are required" });
         }
-        handleResponse(res, playerModel.add(username, email, password, first_name, last_name, date_of_birth, nationality, balance), 201);
+        handleResponse(res, playerModel.add(username, email, password, first_name, last_name, date_of_birth, nationality), 201);
     }
 
     static async addMany(req, res) {
