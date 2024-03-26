@@ -1,0 +1,111 @@
+.landing-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-image: url('../../assets/landing.jpg');
+  background-size: cover;
+  color: white;
+}
+
+
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  scale: 0.7;
+  margin-top: 12px;
+}
+
+.login-signup-container {
+  display: flex;
+  gap: 10px;
+  padding: 1rem;
+}
+
+.color-purple {
+  --background: #6F0AD5;
+}
+
+.landing-content {
+  width: 90%;
+  max-width: 600px;
+  text-align: center;
+
+}
+
+.landing-content h1 {
+  font-size: 42px;
+  font-weight: bold;
+}
+
+.landing-content h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.colored-outline{
+  font-weight: bold;
+  background: linear-gradient(
+    to right,
+    #544ae6,
+    #A7BB32
+  );
+  -webkit-background-clip: text;
+  -webkit-text-stroke: 0.15em transparent;
+}
+
+.landing-content p {
+  font-size: 18px;
+  margin-bottom: 30px;
+  
+}
+
+ion-searchbar.custom{
+  display: relative;
+  --background: white;
+  --color: black;
+  --icon-color: white;
+  --border-radius: 10px;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.left-side-background {
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 0;
+  width: 20%;
+  max-width: 100px;
+  height: 100%;
+  background-color: #6F0AD5;
+  z-index: 1;
+  border-radius: 6px 10px 10px 6px;
+  margin: 0;
+}
+
+.left-side-background ion-icon {
+  font-size: 24px;
+  color: white;
+}
+
+.left-side-background p {
+  font-weight: 100;
+  padding: 0;
+  margin: 0;
+}

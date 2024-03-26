@@ -6,31 +6,31 @@ import generateModel from '../models/generateModel.js';
 
 class GenerateController {
     static async generateUsers(req, res) {
-        const numberOfPlayers = req.params.numberOfPlayers;
-        if (!numberOfPlayers || isNaN(numberOfPlayers) || numberOfPlayers < 1) {
+        const {number_of_players} = req.body;
+        if (!number_of_players || isNaN(number_of_players) || number_of_players < 1) {
             return res.status(400).json({ message: "Invalid number of users" });
         }
-        const players = generateModel.generatePlayerData(numberOfPlayers);
+        const players = generateModel.generatePlayerData(number_of_players);
         handleResponse(res, playerModel.addMany(players), 201);
     }
 
     static async generateMatches(req, res) {
-        const numberOfMatches = req.params.numberOfMatches;
-        if (!numberOfMatches || isNaN(numberOfMatches) || numberOfMatches < 1) {
+        const {number_of_matches} = req.body;
+        if (!number_of_matches || isNaN(number_of_matches) || number_of_matches < 1) {
             res.status(400).send({ message: "Invalid number of users" })
         }
 
-        const matches = await generateModel.generateMatchData(numberOfMatches);
+        const matches = await generateModel.generateMatchData(number_of_matches);
         handleResponse(res, matchModel.addMany(matches), 201);
     } 
 
     static async generateBets(req, res) {
-        const numberOfBets = req.params.numberOfBets;
-        if (!numberOfBets || isNaN(numberOfBets) || numberOfBets < 1) {
+        const {number_of_bets} = req.body;
+        if (!number_of_bets || isNaN(number_of_bets) || number_of_bets < 1) {
             res.status(400).send({ message: "Invalid number of users" })
         }
 
-        const bets = await generateModel.generateBetData(numberOfBets);
+        const bets = await generateModel.generateBetData(number_of_bets);
         handleResponse(res, betModel.addMany(bets), 201);
     }
 

@@ -1,0 +1,55 @@
+.modal-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  height: 100%;
+}
+
+.login-form-container {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 300px;
+
+  ion-item {
+    --border-radius: 10px;
+    width: 100%;
+  }
+}
+
+ion-radio-group {
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+}
+
+
+.user-type-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+.password-go-container {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+
+  ion-item {
+    flex: 1;
+  }
+
+  ion-button {
+    height: 100%;
+    font-size: 1rem;
+    --border-radius: 10px;
+    --background: #6f0ad5;
+  }
+}

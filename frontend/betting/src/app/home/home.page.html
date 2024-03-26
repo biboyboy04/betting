@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-toolbar class="flex-center" color="dark">
+    <ion-buttons slot="start">
+      <img class="logo" src="assets/logo.png" alt="logo" />
+    </ion-buttons>
+    <div slot="end" class="login-signup-container">
+      <ion-button
+        id="sign-in"
+        (click)="openSignUpModal()"
+        shape="round"
+        slot="end"
+        fill="outline"
+        color="light"
+        >Sign up</ion-button
+      >
+      <ion-button
+        (click)="openLoginModal()"
+        id="login"
+        class="color-purple"
+        shape="round"
+        slot="end"
+        >Login</ion-button
+      >
+    </div>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+  <div class="landing-container">
+    <div class="landing-content">
+      <h1>
+        Lets Talks <br />
+        Esports Buddy
+      </h1>
+      <h2 class="colored-outline">Best Esports Betting Site</h2>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Sed sed risus
+        pretium quam vulputate. Placerat duis ultricies lacus sed turpis
+        tincidunt id aliquet risus
+      </p>
+      <ion-searchbar class="custom" placeholder="Search">
+        <ion-button class="left-side-background color-purple">
+          <!-- <ion-icon slot="start" name="search-outline"></ion-icon>  -->
+          Go!
+        </ion-button>
+      </ion-searchbar>
+    </div>
+  </div>
+  <!-- <app-login-modal [isOpen]="showModal"  (closeModal)="closeModal()"></app-login-modal> -->
+  <!-- <ion-modal trigger="login" (willDismiss)="onWillDismiss($event)">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar color="dark">
+          <ion-buttons slot="start">
+            <ion-button (click)="cancel()">Cancel</ion-button>
+          </ion-buttons>
+          <ion-title>Welcome</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content color="dark">
+        <div class="modal-container">
+          <img class="logo" src="assets/logo.png" alt="logo" />
+          <ion-item>
+            <ion-input
+              label="Email"
+              labelPlacement="stacked"
+              type="text"
+              placeholder="Your name"
+              [(ngModel)]="name"
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input
+              label="Password"
+              labelPlacement="stacked"
+              type="text"
+              placeholder="Your name"
+              [(ngModel)]="name"
+            ></ion-input>
+          </ion-item>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal> -->
+</ion-content>

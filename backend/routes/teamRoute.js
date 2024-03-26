@@ -9,3 +9,5 @@ router.put('/:id', teamController.update);
 router.delete('/:id', teamController.delete);
 
 export default router;
+
+

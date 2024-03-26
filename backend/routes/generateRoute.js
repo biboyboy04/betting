@@ -2,10 +2,10 @@ import express from 'express';
 import generateController from '../controller/generateController.js';
 const router = express.Router();
 
-router.get('/player/:numberOfPlayers', generateController.generateUsers);
-router.get('/match/:numberOfMatches', generateController.generateMatches);
-router.get('/bet/:numberOfBets', generateController.generateBets);
-router.get('/winner', generateController.generateWinners);
+router.post('/player', generateController.generateUsers);
+router.post('/match', generateController.generateMatches);
+router.post('/bet', generateController.generateBets);
+router.put('/winner', generateController.generateWinners);
 // put for generateWInner? as we are just updating/??
 
 

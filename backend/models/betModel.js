@@ -21,7 +21,7 @@ class Bet {
                             }
                         );
                     });
-                    // this is for updating the player balance and loggin the bet transaction
+                    // this is for updating the player balance and logging the bet transaction
                     await playerModel.bet(player_id, amount);
 
                     //this is to update the odds for the match
