@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IonCard, IonButton, IonCardContent, IonIcon } from "@ionic/angular/standalone";
+import { chevronForwardOutline, chevronForwardCircleOutline } from 'ionicons/icons';
+import { addIcons } from 'ionicons';
 @Component({
   selector: 'app-match-details',
   templateUrl: './match-details.component.html',
@@ -9,7 +11,9 @@ import { IonCard, IonButton, IonCardContent, IonIcon } from "@ionic/angular/stan
 })
 export class MatchDetailsComponent  implements OnInit {
 
-  constructor() { }
+  constructor() {
+    addIcons({chevronForwardOutline, chevronForwardCircleOutline});
+   }
 
   ngOnInit() {}
 

@@ -7,7 +7,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'user-dashboard',
+    redirectTo: 'home',
     pathMatch: 'full',
   },
   {

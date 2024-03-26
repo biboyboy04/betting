@@ -14,10 +14,10 @@
   <div class="modal-container">
     <img class="logo" src="assets/logo.png" alt="logo" />
     <form class="login-form-container">
-      <ion-radio-group value="player" [(ngModel)]="userData.userType">
+      <ion-radio-group [(ngModel)]="userType" name="userType">
         <div class="user-type-container">
           <ion-item>
-            <ion-radio value="player" labelPlacement="stacked"
+            <ion-radio class="ion-no-padding" value="player" labelPlacement="stacked"
               >Player</ion-radio
             >
           </ion-item>
@@ -28,13 +28,13 @@
           </ion-item>
         </div>
       </ion-radio-group>
-
       <ion-item>
         <ion-input
           label="Username"
           labelPlacement="floating"
           type="text"
-          [(ngModel)]="userData.username"
+          name="username"
+          [(ngModel)]="username"
         ></ion-input>
       </ion-item>
       <div class="password-go-container">
@@ -42,11 +42,12 @@
           <ion-input
             label="Password"
             labelPlacement="floating"
-            type="text"
-            [(ngModel)]="userData.password"
+            type="password"
+            name="password"
+            [(ngModel)]="password"
           ></ion-input>
         </ion-item>
-        <ion-button type="submit"> Go! </ion-button>
+        <ion-button type="submit" (click)="confirm()"> Go! </ion-button>
       </div>
     </form>
   </div>

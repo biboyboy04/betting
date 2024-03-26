@@ -12,34 +12,32 @@ import { WelcomeScreenComponent } from '../components/welcome-screen/welcome-scr
   templateUrl: './user-dashboard.page.html',
   styleUrls: ['./user-dashboard.page.scss'],
   standalone: true,
-  imports: [IonApp, IonRouterOutlet, IonicModule, CommonModule, FormsModule, WelcomeScreenComponent]
+  imports: [
+    IonApp,
+    IonRouterOutlet,
+    IonicModule,
+    CommonModule,
+    FormsModule,
+    WelcomeScreenComponent,
+  ],
 })
-
 export class UserDashboardPage implements OnInit {
-
-  
   isOpen = false;
 
   gameData: any;
   matchData: any;
 
- 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   navigateToValorant() {
     console.log('Valorant');
-    this.router.navigate(['user-dashboard', 'welcome-screen']); 
+    this.router.navigate(['user-dashboard', 'welcome-screen']);
   }
 
   navigateToValorant2() {
     console.log('Valorant');
-    this.router.navigate(['user-dashboard', 'bet-selection']); 
+    this.router.navigate(['user-dashboard', 'bet-selection']);
   }
-
-
-
 }
-

@@ -1,11 +1,9 @@
 <ion-header>
   <ion-toolbar color="dark">
     <ion-buttons slot="start">
-      <ion-button (click)="cancel()">Cancel</ion-button>
-    </ion-buttons>
-    <ion-title>Welcome</ion-title>
-    <ion-buttons slot="end">
-      <ion-button [strong]="true">Confirm</ion-button>
+      <ion-button (click)="cancel()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -13,61 +11,88 @@
 <ion-content color="dark" fullscreen="">
   <div class="modal-container">
     <img class="logo" src="assets/logo.png" alt="logo" />
-    <form class="login-form-container">
+    <form [formGroup]="playerDetailsForm" class="login-form-container">
       <!-- username -->
       <ion-item>
-        <ion-label position="floating">Username</ion-label>
-        <ion-input type="text" [(ngModel)]="userData.username"></ion-input>
+        <ion-input
+          label="Username"
+          labelPlacement="floating"
+          type="text"
+          formControlName="username"
+        ></ion-input>
       </ion-item>
 
       <!-- password -->
       <ion-item>
-        <ion-label position="floating">Password</ion-label>
-        <ion-input type="password" [(ngModel)]="userData.password"></ion-input>
+        <ion-input
+          label="Password"
+          labelPlacement="floating"
+          type="password"
+          formControlName="password"
+        ></ion-input>
       </ion-item>
 
       <!-- email -->
       <ion-item>
-        <ion-label position="floating">Email</ion-label>
-        <ion-input type="email" [(ngModel)]="userData.email"></ion-input>
+        <ion-input
+          label="Email"
+          labelPlacement="floating"
+          type="email"
+          formControlName="email"
+        ></ion-input>
       </ion-item>
 
       <!-- first name -->
       <ion-item>
-        <ion-label position="floating">First Name</ion-label>
-        <ion-input type="text" [(ngModel)]="userData.firstName"></ion-input>
+        <ion-input
+          label="First Name"
+          labelPlacement="floating"
+          type="text"
+          formControlName="first_name"
+        ></ion-input>
       </ion-item>
 
       <!-- last name -->
       <ion-item>
-        <ion-label position="floating">Last Name</ion-label>
-        <ion-input type="text" [(ngModel)]="userData.lastName"></ion-input>
+        <ion-input
+          label="Last Name"
+          labelPlacement="floating"
+          type="text"
+          formControlName="last_name"
+        ></ion-input>
       </ion-item>
 
       <!-- date of birth -->
       <ion-item>
-        <ion-label position="stacked">Date of Birth</ion-label>
         <ion-datetime
+          label="Date of Birth"
+          labelPlacement="stacked"
           presentation="date"
-          displayFormat="MM/DD/YYYY"
-          [(ngModel)]="userData.dateOfBirth"
+          formControlName="date_of_birth"
         ></ion-datetime>
       </ion-item>
 
       <!-- nationality -->
       <ion-item>
-        <ion-label position="floating">Nationality</ion-label>
-        <ion-input type="text" [(ngModel)]="userData.nationality"></ion-input>
+        <ion-input
+          label="Nationality"
+          labelPlacement="floating"
+          type="text"
+          formControlName="nationality"
+        ></ion-input>
       </ion-item>
-      <!-- why expand not wokring -->
+
+      <!-- submit button -->
       <ion-button
         style="width: 100%; --background: #6f0ad5"
         shape="round"
         expand="full"
         type="submit"
+        [disabled]="playerDetailsForm.invalid"
+        (click)="signup()"
       >
-        Submit</ion-button
-      >
+        Submit
+      </ion-button>
     </form>
   </div>
 </ion-content>

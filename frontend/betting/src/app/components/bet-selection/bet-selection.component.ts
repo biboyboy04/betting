@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { IonIcon, IonContent, IonGrid, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonButton } from "@ionic/angular/standalone";
-import { addIcons } from 'ionicons';
-import { chevronForwardOutline, chevronForwardCircleOutline } from 'ionicons/icons';
 import { MatchDetailsComponent } from '../match-details/match-details.component';
 @Component({
   selector: 'app-bet-selection',
@@ -13,7 +11,7 @@ import { MatchDetailsComponent } from '../match-details/match-details.component'
 export class BetSelectionComponent  implements OnInit {
 
   constructor() {
-    addIcons({chevronForwardOutline, chevronForwardCircleOutline});
+    
    }
 
   ngOnInit() {}
