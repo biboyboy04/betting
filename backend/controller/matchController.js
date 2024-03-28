@@ -9,11 +9,16 @@ class MatchController {
         if (!game_id || !team1_id || !team2_id || !match_date_time) {
             return res.status(400).json({ message: "All fields are required" });
         }
-
-        const a = await handleResponse(res, matchModel.add(game_id, team1_id, team2_id, match_date_time), 201);
-        console.log(a, "asd")
-        // handleResponse(res, oddsModel.insertOdds(game_id, team1_id, team2_id, match_date_time), 201);
-
+        
+        try {
+            const matchResult = await matchModel.add(game_id, team1_id, team2_id, match_date_time);
+            let insertedMatchId = matchResult.insertId;
+            await oddsModel.add(insertedMatchId);
+            res.status(200).json({ message: "Match added successfully" });
+        } catch (err) {
+            console.log(err)
+            res.status(500).json(err);
+        }
     }
 
     static async getAll(req, res) {

@@ -5,10 +5,11 @@ import matchModel from './matchModel.js';
 class Odds {
     //refactor this add: pattern is not the same as others
     // must have parameters for maybe team1id and team2id, and odds?
+
+    // inserting odds for both teams in a match
     static async add(match_id) {
         try {
             const totalBets = await betModel.getTotalMatchBets(match_id);
-
             // if theres any team without bets, there's no way the other
             // team can win, as each betters gets their winnings from the losers
 
@@ -29,6 +30,7 @@ class Odds {
                 await this.insertOdds(match_id, team1_id, team1Odds);
                 await this.insertOdds(match_id, team2_id, team2Odds);
             }
+            // normal odds calculation
             else {
                 //refactor
                 const team1Total = totalBets[0]?.total_amount || 1;
@@ -48,7 +50,7 @@ class Odds {
             throw error;
         }
     }
-
+    // Inserting oddss but only on a specific match and team
     static insertOdds(match_id, team_id, odds) {
         return new Promise((resolve, reject) => {
             this.getByMatchAndTeamId(match_id, team_id).then((result) => {

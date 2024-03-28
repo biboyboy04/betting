@@ -1,7 +1,9 @@
 import db from '../config/db.js';
+import oddsModel from './oddsModel.js';
 class Match {
-    static add(game_id, team1_id, team2_id, match_date_time) {
-        return new Promise((resolve, reject) => {
+    static async add(game_id, team1_id, team2_id, match_date_time) {
+      try {
+        const match = await new Promise((resolve, reject) => {
             db.query('INSERT INTO game_match ( game_id, team1_id, team2_id, match_date_time) VALUES (?, ?, ?, ?)',
                 [game_id, team1_id, team2_id, match_date_time],
                 (err, result) => {
@@ -13,23 +15,24 @@ class Match {
                 }
             );
         });
+        let insertedMatchId = match.insertId;
+        await oddsModel.add(insertedMatchId);
+      } catch (error) {
+        
+      }
     }
 
-    static addMany(matches) {
-        // matches data format doenst match withe the data format of db
-        // so there's a need to transform the data format from [{}, {}] to [[], []]
-        const matchesArray = matches.map((match) => {
-            return [match.game_id, match.team1_id, match.team2_id, match.match_date_time]
-        })
-        return new Promise((resolve, reject) => {
-            db.query('INSERT INTO game_match ( game_id, team1_id, team2_id, match_date_time) VALUES ?', [matchesArray], (err, result) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(result);
-                }
-            });
-        })
+    static async addMany(matches) {
+        try {
+            await Promise.all(matches.map(match => {
+                const { game_id, team1_id, team2_id, match_date_time } = match;
+                return this.add(game_id, team1_id, team2_id, match_date_time);
+            }));
+            return { message: "Matches added successfully" };
+        } catch (error) {
+            console.log(error)
+            throw error;
+        }
     }
 
     static getAll() {
