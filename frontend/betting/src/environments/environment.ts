@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  // domain: 'https://betting-ew4c.onrender.com/'
+    domain: 'http://localhost:5555/'
 };
 
 /*
