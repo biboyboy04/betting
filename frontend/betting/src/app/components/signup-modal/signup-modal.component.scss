@@ -15,6 +15,19 @@ ion-modal {
   border-radius: 10px;
 }
 
+ion-datetime {
+  background-color: #2e2f33;
+  color: #f2f2f2;
+  --wheel-highlight-background: #2e2f33;
+}
+
+ion-datetime::part(wheel-item) {
+  color: #f2f2f2
+}
+
+ion-datetime::part(wheel-item active) {
+  color: #6f0ad5
+}
 
 .login-form-container {
   display: flex;

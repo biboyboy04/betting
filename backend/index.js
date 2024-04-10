@@ -25,7 +25,7 @@ const PORT = 5555;
 let app = express();
 //refeactor: check if methods and credentials are working even if they are not used
 app.use(cors({
-    origin: [process.env.APP_URL],
+    origin: [process.env.APP_URL, 'capacitor://localhost' ,'http://localhost'],
     credentials: true,
 }));
 

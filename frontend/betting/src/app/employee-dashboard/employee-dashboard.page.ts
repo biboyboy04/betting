@@ -87,11 +87,11 @@ export class EmployeeDashboardPage implements OnInit {
       url: '/employee-dashboard/transactions',
       icon: 'card'
     },
-    {
-      title: 'Customer Support',
-      url: '/employee-dashboard/customer-support',
-      icon: 'chatbubble-ellipses'
-    }
+    // {
+    //   title: 'Customer Support',
+    //   url: '/employee-dashboard/customer-support',
+    //   icon: 'chatbubble-ellipses'
+    // }
 
   ]
 }
