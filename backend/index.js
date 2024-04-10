@@ -5,7 +5,6 @@ import passport from 'passport';
 import expressSession from 'express-session';
 import cookieParser from 'cookie-parser';
 import initializePassport from "./config/passportConfig.js";
-import dotenv from 'dotenv'
 
 // import routes
 import employeeRoute from './routes/employeeRoute.js';
@@ -22,7 +21,7 @@ import generateRoute from './routes/generateRoute.js';
 
 // refactor to env
 const PORT = 5555;
-dotenv.config();
+
 let app = express();
 //refeactor: check if methods and credentials are working even if they are not used
 app.use(cors({

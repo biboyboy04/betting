@@ -26,6 +26,7 @@ class MatchController {
 
         const offset = (page - 1) * limit;
 
+        // handleResponse(res, matchModel.getTotal());
         // add unary to convert string int to real int
         handleResponse(res, matchModel.getAllDetailsPaginated(+limit, +offset))
     }
@@ -51,7 +52,13 @@ class MatchController {
     }
 
     static async getAllPendingMatch(req, res) {
-        handleResponse(res, matchModel.getAllPendingMatch());
+        const query = req.query
+        const page = query.page || 1;
+        const limit = query.limit || 25;
+
+        const offset = (page - 1) * limit;
+
+        handleResponse(res, matchModel.getAllPendingMatch(+limit, +offset));
     }
 
     static getAllFinishedMatch(req, res) {

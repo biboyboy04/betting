@@ -6,20 +6,19 @@ const db = mysql2.createPool({
     user: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
-    port:  process.env.DB_PORT,
+    port: process.env.DB_PORT,
     dateStrings: ['DATETIME', 'DATE'],
     waitForConnections: true,
-    connectionLimit: 10,
+    connectionLimit: 5,
     queueLimit: 0
 })
 
 
-db.getConnection((err) => {
+db.getConnection((err, connection) => {
     if (err) {
         throw err;
     }
     console.log('MySql Connected...');
-   
 })
 
 

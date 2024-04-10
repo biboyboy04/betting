@@ -10,6 +10,7 @@ class Odds {
     static async add(match_id) {
         try {
             const totalBets = await betModel.getTotalMatchBets(match_id);
+            console.log(totalBets, "totalBetstotalBets")
             // if theres any team without bets, there's no way the other
             // team can win, as each betters gets their winnings from the losers
 
@@ -26,7 +27,6 @@ class Odds {
                 // 1 * their bet = pseudo refund
                 const team1Odds = 1;
                 const team2Odds = 1;
-
                 await this.insertOdds(match_id, team1_id, team1Odds);
                 await this.insertOdds(match_id, team2_id, team2Odds);
             }
@@ -40,7 +40,6 @@ class Odds {
                 const team2Id = totalBets[1]?.bet_on_team_id;
 
                 const [team1Odds, team2Odds] = this.calculateOdds(team1Total, team2Total);
-
                 await this.insertOdds(match_id, team1Id, team1Odds);
                 await this.insertOdds(match_id, team2Id, team2Odds);
             }
@@ -78,14 +77,17 @@ class Odds {
     }
 
     static calculateOdds(team1_total, team2_total) {
+        team1_total = parseFloat(team1_total);
+        team2_total = parseFloat(team2_total);
 
         let team1Odds = 1 / (1 - (team1_total / (team1_total + team2_total)))
         let team2Odds = 1 / (1 - (team2_total / (team2_total + team1_total)))
 
+
         // make odds to 2 decimal places
         team1Odds = Math.round(team1Odds * 100) / 100
         team2Odds = Math.round(team2Odds * 100) / 100
-
+        
         return [team1Odds, team2Odds]
     }
 
