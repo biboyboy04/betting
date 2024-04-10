@@ -1,4 +1,4 @@
-import EmployeeModel from '../models/EmployeeModel.js';
+import employeeModel from '../models/employeeModel.js';
 import { handleResponse } from '../utility.js';
 
 class EmployeeController {
@@ -7,11 +7,11 @@ class EmployeeController {
         if (!username || !password || !email || !first_name || !last_name || !date_of_birth || !role_id) {
             return res.status(400).json({ message: "All fields are required" });
         }
-        handleResponse(res, EmployeeModel.add(username, password, email, first_name, last_name, date_of_birth, role_id), 201);
+        handleResponse(res, employeeModel.add(username, password, email, first_name, last_name, date_of_birth, role_id), 201);
     }
 
     static async getAll(req, res) {
-        handleResponse(res, EmployeeModel.getAll());
+        handleResponse(res, employeeModel.getAll());
     }
 
     static async getById(req, res) {
@@ -19,7 +19,7 @@ class EmployeeController {
         if (!id) {
             return res.status(400).json({ message: "Id is required" });
         }
-        handleResponse(res, EmployeeModel.getById(id));
+        handleResponse(res, employeeModel.getById(id));
     }
 
     static async getByUsername(req, res) {
@@ -27,7 +27,7 @@ class EmployeeController {
         if (!username) {
             return res.status(400).json({ message: "Username is required" });
         }
-        handleResponse(res, EmployeeModel.getByUsername(username));
+        handleResponse(res, employeeModel.getByUsername(username));
     }
 
     static async update(req, res) {
@@ -36,7 +36,7 @@ class EmployeeController {
         if (!employee_id || !username || !password || !email || !first_name || !last_name || !date_of_birth || !role_id) {
             return res.status(400).json({ message: "All fields are required" });
         }
-        handleResponse(res, EmployeeModel.update(employee_id, username, password, email, first_name, last_name, date_of_birth, role_id));
+        handleResponse(res, employeeModel.update(employee_id, username, password, email, first_name, last_name, date_of_birth, role_id));
     }
 
     static async delete(req, res) {
@@ -44,7 +44,7 @@ class EmployeeController {
         if (!id) {
             return res.status(400).json({ message: "Id is required" });
         }
-        handleResponse(res, EmployeeModel.delete(id));
+        handleResponse(res, employeeModel.delete(id));
     }
 }
 
