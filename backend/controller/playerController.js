@@ -2,13 +2,13 @@ import playerModel from '../models/playerModel.js';
 import { handleResponse } from '../utility.js';
 
 class PlayerController {
-    static async add(req, res) {
+    static add(req, res) {
         const { username, password, email, first_name, last_name, date_of_birth, nationality } = req.body;
         console.log(req.body)
         if (!username || !password || !email || !first_name || !last_name || !date_of_birth || !nationality ) {
             return res.status(400).json({ message: "All fields are required" });
         }
-        handleResponse(res, playerModel.add(username, email, password, first_name, last_name, date_of_birth, nationality), 201);
+        handleResponse(res, playerModel.add(username, password, email, first_name, last_name, date_of_birth, nationality), 201);
     }
 
     static async addMany(req, res) {
@@ -32,11 +32,22 @@ class PlayerController {
     }
 
 
-    static async getAll(req, res) {
-        handleResponse(res, playerModel.getAll());
+    // static async getAll(req, res) {
+    //     handleResponse(res, playerModel.getAll());
+    // }
+    
+    static getAll(req, res) {
+        const query = req.query
+        const page = query.page || 1;
+        const limit = query.limit || 25;
+
+        const offset = (page - 1) * limit;
+
+        // add unary to convert string int to real int
+        handleResponse(res, playerModel.getAllPaginated(+limit, +offset))
     }
 
-    static async getById(req, res) {
+    static getById(req, res) {
         const id = req.params.id;
         if (!id) {
             return res.status(400).json({ message: "Id is required" });
@@ -44,7 +55,11 @@ class PlayerController {
         handleResponse(res, playerModel.getById(id));
     }
 
-    static async getByUsername(req, res) {
+    static getTotal(req, res) {
+        handleResponse(res, playerModel.getTotal());
+    }
+
+    static getByUsername(req, res) {
         const username = req.params.username;
         if (!username) {
             return res.status(400).json({ message: "Username is required" });
@@ -53,16 +68,16 @@ class PlayerController {
     }
 
 
-    static async update(req, res) {
+    static update(req, res) {
         const player_id = req.params.id;
-        const { username, email, password, first_name, last_name, date_of_birth } = req.body;
-        if (!player_id || !username || !email || !password || !first_name || !last_name || !date_of_birth) {
+        const { username, email, first_name, last_name, date_of_birth, nationality, balance} = req.body;
+        if (!player_id || !username || !email  || !first_name || !last_name || !date_of_birth || !nationality || !balance) {
             return res.status(400).json({ message: "All fields are required" });
         }
-        handleResponse(res, playerModel.update(player_id, username, email, password, first_name, last_name, date_of_birth));
+        handleResponse(res, playerModel.update(player_id, username, email, first_name, last_name, date_of_birth, nationality, balance));
     }
 
-    static async delete(req, res) {
+    static delete(req, res) {
         const player_id = req.params.id;
         if (!player_id) {
             return res.status(400).json({ message: "Id is required" });
@@ -71,7 +86,7 @@ class PlayerController {
 
     }
 
-    static async deposit(req, res) {
+    static deposit(req, res) {
         const player_id = req.params.id;
         const amount = req.body.amount;
         if (!player_id || !amount) {
@@ -84,7 +99,7 @@ class PlayerController {
         handleResponse(res, playerModel.deposit(player_id, amount));
     }
 
-    static async withdraw(req, res) {
+    static withdraw(req, res) {
         const player_id = req.params.id;
         const amount = req.body.amount;
         if (!player_id || !amount) {

@@ -4,9 +4,9 @@ const router = express.Router();
 
 router.post('/', gameController.add);
 router.get('/', gameController.getAll);
-router.get('/id', gameController.getAllId);
+router.get('/id', gameController.getAllId);// is this needed?
 router.get('/byId/:id', gameController.getById);
-router.put('/:id', gameController.update);
+router.put('/', gameController.update);
 router.delete('/:id', gameController.delete);
 
 

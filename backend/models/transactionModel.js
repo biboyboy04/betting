@@ -43,6 +43,55 @@ class Transaction {
         });
     }
 
+    static getAllFiltered(type, limit, offset) {
+        return new Promise((resolve, reject) => {
+            db.query('SELECT * FROM transaction WHERE type = ? LIMIT ? OFFSET ?', [type, limit, offset],  (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
+
+    static getAllPaginated(limit, offset) {
+        return new Promise((resolve, reject) => {
+            db.query('SELECT * FROM transaction LIMIT ? OFFSET ?', [limit, offset], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
+
+    
+    static getTotal(){
+        return new Promise((resolve, reject) => {
+            db.query('SELECT COUNT(*) as total FROM transaction', (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
+
+    static getTotalFiltered(filter){
+        return new Promise((resolve, reject) => {
+            db.query('SELECT COUNT(*) as total FROM transaction WHERE type = ?',[filter], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
+
     static getById(transaction_id) {
         return new Promise((resolve, reject) => {
             db.query('SELECT * FROM transaction WHERE transaction_id = ?', [transaction_id], (err, result) => {

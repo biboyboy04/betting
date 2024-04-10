@@ -14,6 +14,32 @@ class BetController {
         handleResponse(res, betModel.getAll())
     }
 
+    static getAll(req, res) {
+        const query = req.query
+        const page = query.page || 1;
+        const limit = query.limit || 25;
+
+        const offset = (page - 1) * limit;
+
+        const type = req.params.type;
+        if (type) {
+            handleResponse(res, betModel.getAllFiltered(type, +limit, +offset));
+            return;
+        }
+
+        // add unary to convert string int to real int
+        handleResponse(res, betModel.getAllPaginated(+limit, +offset))
+    }
+
+    static getTotal(req, res) {
+        handleResponse(res, betModel.getTotal());
+    }
+
+
+    static async getAllWithMatch(req, res) {
+        handleResponse(res, betModel.getAllWithMatch())
+    }
+
     static async getById(req, res) {
         const bet_id = req.params.id;
         if (!bet_id) {

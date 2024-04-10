@@ -75,6 +75,73 @@ class Bet {
         });
     }
 
+
+    static getTotal(){
+        return new Promise((resolve, reject) => {
+            db.query('SELECT COUNT(*) as total FROM bet', (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
+
+    
+    static getAllPaginated(limit, offset) {
+        return new Promise((resolve, reject) => {
+            db.query('SELECT * FROM bet LIMIT ? OFFSET ?', [limit, offset], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
+
+    static getAllWithMatch() {
+        return new Promise((resolve, reject) => {
+            db.query('SELECT * FROM bet JOIN game_match WHERE bet.match_id = game_match.match_id', (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    const bets = result.map((bet) => {
+                        const {
+                            bet_id,
+                            player_id,
+                            match_id,
+                            amount,
+                            bet_on_team_id,
+                            game_id,
+                            team1_id,
+                            team2_id,
+                            winner_id,
+                            match_date_time
+                        } = bet;
+
+                        return {
+                            bet_id,
+                            player_id,
+                            match_id,
+                            amount,
+                            bet_on_team_id,
+                            match: {
+                                game_id,
+                                team1_id,
+                                team2_id,
+                                winner_id,
+                                match_date_time
+                            }
+                        };
+                    })
+                    resolve(bets);
+                }
+            });
+        });
+    }
+
     static getById(bet_id) {
         return new Promise((resolve, reject) => {
             db.query('SELECT * FROM bet WHERE bet_id = ?', [bet_id], (err, result) => {

@@ -3,11 +3,11 @@ import { handleResponse } from '../utility.js';
 
 class GameController {
     static async add(req, res) {
-        const { name, genre, description } = req.body;
-        if (!name || !genre || !description) {
+        const { name, genre, description, platform } = req.body;
+        if (!name || !genre || !description || !platform) {
             return res.status(400).json({ message: "All fields are required" });
         }
-        handleResponse(res, gameModel.add(name, genre, description), 201);
+        handleResponse(res, gameModel.add(name, genre, description, platform), 201);
     }
 
     static async getAll(req, res) {
@@ -29,12 +29,11 @@ class GameController {
     }
 
     static async update(req, res) {
-        const game_id = req.params.id;
-        const { name, genre, description } = req.body;
-        if (!game_id || !name || !genre || !description) {
+        const { game_id, name, genre, description, platform } = req.body;
+        if (!game_id || !name || !genre || !description || !platform) {
             return res.status(400).json({ message: "All fields are required" });
         }
-        handleResponse(res, gameModel.update(game_id, name, genre, description));
+        handleResponse(res, gameModel.update(game_id, name, genre, description, platform));
 
     }
 

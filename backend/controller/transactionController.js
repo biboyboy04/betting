@@ -10,8 +10,32 @@ class TransactionController {
         handleResponse(res, transactionModel.add(player_id, amount, transaction_type, transaction_time), 201);
     }
 
-    static async getAll(req, res) {
-        handleResponse(res, transactionModel.getAll());
+
+    static getAll(req, res) {
+        const query = req.query
+        const page = query.page || 1;
+        const limit = query.limit || 25;
+
+        const offset = (page - 1) * limit;
+
+        const type = req.params.type;
+        if (type) {
+            handleResponse(res, transactionModel.getAllFiltered(type, +limit, +offset));
+            return;
+        }
+
+        // add unary to convert string int to real int
+        handleResponse(res, transactionModel.getAllPaginated(+limit, +offset))
+    }
+    
+    static getTotal(req, res) {
+        const type = req.params.type;
+        if (type) {
+            handleResponse(res, transactionModel.getTotalFiltered(type));
+            return;
+        }
+
+        handleResponse(res, transactionModel.getTotal());
     }
 
     static async getById(req, res) {

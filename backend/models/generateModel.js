@@ -22,7 +22,7 @@ class Generate {
             const email = faker.internet.exampleEmail({ firstName: first_name, lastName: last_name });
             const date_of_birth = faker.date.birthdate().toISOString().split('T')[0];
             const nationality = faker.location.country();
-            const balance = faker.number.int({ min: 100, max: 10000 });
+            const balance = faker.number.int({ min: 9999, max: 999999 });
 
             // note: there's a short hand for key value pair. 
             // If the key that you want is the same as the var name, 

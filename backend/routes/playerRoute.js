@@ -4,6 +4,7 @@ const router = express.Router();
 
 router.post('/', playerController.add);
 router.get('/', playerController.getAll);
+router.get('/total', playerController.getTotal);
 router.get('/:id', playerController.getById);
 router.get('/byUsername/:username', playerController.getByUsername);
 router.put('/:id', playerController.update);

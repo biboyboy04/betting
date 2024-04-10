@@ -61,6 +61,30 @@ class Player {
         });
     }
 
+    static getAllPaginated(limit, offset) {
+        return new Promise((resolve, reject) => {
+            db.query('SELECT * FROM player LIMIT ? OFFSET ?', [limit, offset], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
+
+    static getTotal(){
+        return new Promise((resolve, reject) => {
+            db.query('SELECT COUNT(*) as total FROM player', (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
+
     static getAllId() {
         return new Promise((resolve, reject) => {
             db.query('SELECT player_id from player', (err, result) => {
@@ -110,10 +134,10 @@ class Player {
         });
     }
 
-    static update(player_id, username, password, email, first_name, last_name, date_of_birth, nationality, balance) {
+    static update(player_id, username, email, first_name, last_name, date_of_birth, nationality, balance) {
         return new Promise((resolve, reject) => {
-            db.query('UPDATE player SET username = ?, password = ?, email = ?, first_name = ?, last_name = ?, date_of_birth = ?, nationality = ?, balance = ? WHERE player_id = ?',
-                [username, password, email, first_name, last_name, date_of_birth, nationality, balance, player_id],
+            db.query('UPDATE player SET username = ?, email = ?, first_name = ?, last_name = ?, date_of_birth = ?, nationality = ?, balance = ? WHERE player_id = ?',
+                [username, email, first_name, last_name, date_of_birth, nationality, balance, player_id],
                 (err, result) => {
                     if (err) {
                         reject(err);

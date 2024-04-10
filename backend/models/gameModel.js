@@ -1,10 +1,10 @@
 import db from '../config/db.js';
 
 class Game {
-    static add(name, genre, description) {
+    static add(name, genre, description, platform) {
         return new Promise((resolve, reject) => {
-            db.query('INSERT INTO game (name, genre, description) VALUES (?, ?, ?)',
-                [name, genre, description],
+            db.query('INSERT INTO game (name, genre, description, platform) VALUES (?, ?, ?, ?)',
+                [name, genre, description, platform],
                 (err, result) => {
                     if (err) {
                         reject(err);
@@ -19,6 +19,19 @@ class Game {
     static getAll() {
         return new Promise((resolve, reject) => {
             db.query('SELECT * FROM game', (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
+
+    
+    static getAllPaginated(limit, offset) {
+        return new Promise((resolve, reject) => {
+            db.query('SELECT * FROM game LIMIT ? OFFSET ?', [limit, offset], (err, result) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -53,10 +66,10 @@ class Game {
         });
     }
 
-    static update(game_id, name, genre, description) {
+    static update(game_id, name, genre, description, platform) {
         return new Promise((resolve, reject) => {
-            db.query('UPDATE game SET name = ?, genre = ?, description = ? WHERE game_id = ?',
-                [name, genre, description, game_id],
+            db.query('UPDATE game SET name = ?, genre = ?, description = ?, platform = ? WHERE game_id = ?',
+                [name, genre, description, platform, game_id],
                 (err, result) => {
                     if (err) {
                         reject(err);

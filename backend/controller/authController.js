@@ -43,6 +43,7 @@ class AuthController {
     static getUser(req, res) {
         try {
             const user = req.user;
+            console.log("getuser")
             if (!user) {
                 return res.status(404).json({ message: "User not found" });
             }

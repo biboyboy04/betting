@@ -5,6 +5,7 @@ import passport from 'passport';
 import expressSession from 'express-session';
 import cookieParser from 'cookie-parser';
 import initializePassport from "./config/passportConfig.js";
+import dotenv from 'dotenv'
 
 // import routes
 import employeeRoute from './routes/employeeRoute.js';
@@ -21,16 +22,20 @@ import generateRoute from './routes/generateRoute.js';
 
 // refactor to env
 const PORT = 5555;
+dotenv.config();
 let app = express();
 //refeactor: check if methods and credentials are working even if they are not used
 app.use(cors({
     origin: ['http://localhost:4200', "http://localhost:8100"],
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+
 }));
 
 // middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// doublecheck these middlewares
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
 
 // refactor check if cookie are working even if they are not used
 app.use(expressSession({
@@ -42,7 +47,7 @@ app.use(expressSession({
     },
 }));
 
-app.use(cookieParser('mySecretKey'));
+// app.use(cookieParser('mySecretKey'));
 app.use(express.json());
 
 // passport middleware 

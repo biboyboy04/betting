@@ -4,6 +4,8 @@ const router = express.Router();
 
 router.post('/', matchController.add);
 router.get('/', matchController.getAll);
+router.get('/total', matchController.getTotal);
+router.get('/allDetails', matchController.getAllDetails);
 router.get('/pending', matchController.getAllPendingMatch);
 router.get('/pendingId', matchController.getAllPendingMatchId);
 router.get('/finished', matchController.getAllFinishedMatch);

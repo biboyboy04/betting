@@ -4,11 +4,14 @@ const router = express.Router();
 
 router.post('/', betController.add);
 router.post('/payout', betController.payout);
+router.get('/total', betController.getTotal);
 router.get('/', betController.getAll);
+router.get('/match', betController.getAllWithMatch);
 router.get('/matchWithBets', betController.getMatchWithBets); // know why this is the working route order for this route
 router.get('/:id', betController.getById);
 router.get('/byPlayerId/:id', betController.getByPlayerId);
 router.get('/byMatchId/:id', betController.getByMatchId);
+
 router.put('/:id', betController.update);
 router.delete('/:id', betController.delete);
 
