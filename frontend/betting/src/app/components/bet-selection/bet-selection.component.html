@@ -1,13 +1,22 @@
-<ion-content style="--background: #121212" class="ion-padding">
+<app-bet-menu [matchData]="selectedMatch"></app-bet-menu>
+<ion-content id="bet-selection" class="ion-padding">
   <h1>Upcoming Event</h1>
-  <app-match-details></app-match-details>
+  <br>
+  @if(matches && matches.length > 0 ){
+   @for(data of matches; track data){
+    @if(data.matches && data.matches.length > 0){
+      {{data.date}}
+        @for(match of data.matches; track match){ 
+          <app-match-card-details [matchDetail]="match" (dataEvent)="handleData($event)"></app-match-card-details>
+      }
+     }
+     <!-- For what is this again???? -->
+     <!-- @else {
+      <p>No matches Available</p>
+      } -->
+    }
+  } @else {
+    <p>Loading...</p>
+  }
   
-  <app-match-details></app-match-details>
-  <app-match-details></app-match-details>
-  
-  <app-match-details></app-match-details>
-  <app-match-details></app-match-details>
-  
-  <app-match-details></app-match-details>
-  <app-match-details></app-match-details>
 </ion-content>

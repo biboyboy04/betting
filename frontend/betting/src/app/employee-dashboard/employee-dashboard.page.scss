@@ -1,0 +1,53 @@
+.menu-item {
+  --background: #222428;
+  --border-radius: 10px;
+  background-color: #222428;
+  color: #c6c5ca;
+  --color-activated: rgb(189, 188, 188);
+  ion-icon {
+    color: #c6c5ca;
+  }
+}
+
+.selected {
+  --ripple-color: #6f0ad5;
+  --background: #a561e91c;
+  ion-icon {
+    color: #8a1ff5;
+  }
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-around;
+  gap: 0.5rem;
+  transition: all 1.3s ease;
+}
+
+.search {
+  --background: #2e2f33;
+  width: 40px;
+  height: 40px;
+  ion-icon {
+    scale: 2;
+  }
+}
+
+.search-bar {
+  --background: #2e2f33;
+  --color: white;
+  --cancel-button-color: white;
+  transition: transform 1.3s ease;
+}
+
+.add {
+  flex: 1;
+  --background: #6f0ad5;
+}

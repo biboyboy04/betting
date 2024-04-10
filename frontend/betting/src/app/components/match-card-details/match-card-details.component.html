@@ -1,0 +1,45 @@
+@if(matchDetail){
+  <div class="match-container">
+    <ion-card class="team-card">
+      <ion-card-content class="team-card-content">
+        <img
+          class="logo"
+          [src]="'assets/teams/' + matchDetail.team1.team_id + '.png'"
+          alt="logo"
+        />
+  
+        <p>{{ matchDetail.team1.name }}</p>
+  
+        <ion-button shape="round">{{ matchDetail.odds.team1.odds }}</ion-button>
+      </ion-card-content>
+    </ion-card>
+  
+    <div class="time-vs">
+      <p>{{ getTime12HourFormat(matchDetail.match_date_time) }} (GMT+8)</p>
+      <p>VS</p>
+    </div>
+  
+    <ion-card class="team-card">
+      <ion-card-content class="team-card-content">
+        <ion-button shape="round">{{ matchDetail.odds.team2.odds }}</ion-button>
+  
+        <p>{{ matchDetail.team2.name }}</p>
+  
+        <img
+          class="logo"
+          [src]="'assets/teams/' + matchDetail.team2.team_id + '.png'"
+          alt="logo"
+        />
+      </ion-card-content>
+    </ion-card>
+  
+    <ion-button (click)="sendDataToParent()" class="bet-selection">
+      <ion-icon
+        class="bet-selection-icon"
+        slot="icon-only"
+        name="chevron-forward-outline"
+      ></ion-icon>
+    </ion-button>
+  </div>
+  }@else { Loading... }
+  

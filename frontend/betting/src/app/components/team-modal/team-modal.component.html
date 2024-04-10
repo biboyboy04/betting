@@ -1,0 +1,36 @@
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{type}} Team</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <form >
+    <ion-item>
+      <ion-input
+        label="Name"
+        labelPlacement="floating"
+        type="text"
+        [(ngModel)]="teamData.name"
+        [ngModelOptions]="{standalone: true}"
+        required="true"
+      ></ion-input>
+    </ion-item>
+
+    <ion-button
+      style="width: 100%; --background: #6f0ad5"
+      shape="round"
+      expand="full"
+      type="submit"
+      (click)="submit()"
+      [disabled]="!teamData.name "
+    >
+      Submit
+    </ion-button>
+  </form>
+</ion-content>

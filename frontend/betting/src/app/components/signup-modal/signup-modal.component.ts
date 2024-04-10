@@ -32,7 +32,8 @@ import {
   FormControl,
   Validators,
 } from '@angular/forms';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { PlayerService } from 'src/app/services/player.service';
+import { NewPlayer } from 'src/app/interface/new-player';
 
 @Component({
   selector: 'app-signup-modal',
@@ -66,7 +67,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class SignupModalComponent implements OnInit {
   toast = inject(ToastController);
   route = inject(Router);
-  auth = inject(AuthenticationService);
+  playerService = inject(PlayerService);
   modalCtrl = inject(ModalController);
   isToastOpen = false;
   constructor() {
@@ -112,7 +113,29 @@ export class SignupModalComponent implements OnInit {
     this.playerDetailsForm.value.date_of_birth =
       this.playerDetailsForm.value.date_of_birth?.split('T')[0];
 
-    this.auth.signupPlayer(this.playerDetailsForm.value).subscribe(
+    const {
+      username,
+      password,
+      email,
+      first_name,
+      last_name,
+      date_of_birth,
+      nationality,
+    } = this.playerDetailsForm.value;
+
+    const newPlayer: NewPlayer = {
+      username: username!,
+      password: password!,
+      email: email!,
+      first_name: first_name!,
+      last_name: last_name!,
+      date_of_birth: date_of_birth!,
+      nationality: nationality!,
+    };
+
+    console.log(newPlayer);
+
+    this.playerService.add(newPlayer).subscribe(
       (data) => {
         console.log(data);
         this.presentSuccessToast('Successfully Signed up!');
@@ -120,17 +143,15 @@ export class SignupModalComponent implements OnInit {
       },
       (err) => {
         this.playerDetailsForm.reset();
+        console.log(err)
         this.presentErrorToast(err.error);
-       
       }
     );
   }
 
-  cancel() {
+  close() {
     return this.modalCtrl.dismiss(null, 'cancel');
   }
-
-  alertButtons = ['Action'];
 
   ngOnInit() {}
 }

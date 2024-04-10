@@ -1,65 +1,52 @@
-.match-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6rem;
+
+.game-card {
+  --background: #2e2f33;
+}
+
+img {
+  width: auto;
+  height: 40px;
+}
+ion-card-content {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.game-info {
+  display: flex;
+  align-items: center;
+  --background: #2e2f33;
+  --color: #c6c5ca;
+
+  p {
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: .9rem;
+    color: #c6c5ca;
   }
-  
-  .team-card {
-    background-color: #1b1c20;
-    border-radius: 20px;
-    border: 1px solid black;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-around;
+  gap: 0.5rem;
+  transition: all 1.3s ease;
+  margin-left: auto;
+  ion-icon {
+    color: #808081;
+    font-size: 1.5rem;
+    margin-bottom: 4px;
   }
-  
-  .logo {
-    width: 60px;
-    height: auto;
+}
+
+ion-row {
+  ion-col:nth-child(1) {
+    font-weight: bold;
+    color: #98979b;
   }
-  
-  .time-vs {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    font-style: italic;
-    font-weight: 900;
-  
-    :nth-child(1) {
-      color: #504f54;
-    }
-  
-    :nth-child(2) {
-      color: white;
-    }
+
+  ion-col:nth-child(2) {
+    font-weight: bold;
+    color: #c6c5ca;
   }
-  
-  .team-card-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2.5rem;
-    color: white;
-  
-    p {
-      font-weight: 600;
-    }
-  
-    ion-button {
-      --background: #6f0ad5;
-      font-weight: bold;
-      font-size: 1.2rem;
-      font-style: italic;
-    }
-  }
-  
-  .bet-selection {
-    --border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    --background: #6f0ad5;
-  }
-  
-  .bet-selection-icon {
-    scale: 3;
-    color: black;
-  }
-  
+}

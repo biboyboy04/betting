@@ -1,30 +1,48 @@
-<div class="match-container">
-  <ion-card class="team-card">
-    <ion-card-content class="team-card-content">
-      <img class="logo" src="assets/images/valorant.png" alt="logo" />
-      <p>SENTINELS</p>
-      <ion-button shape="round">2.0</ion-button>
-    </ion-card-content>
+@if(matchData) {
+  <ion-card class="game-card" id="main-content">
+    <ion-card-header>
+      <div class="game-info" lines="none">
+        <img [src]="'/assets/games/' + matchData.game.game_id + '.png'" alt="" />
+        <p>{{matchData.team1.name}} ({{matchData.odds.team1.odds}})</p>
+        <p>VS</p>
+        <p>{{matchData.team2.name}} ({{matchData.odds.team2.odds}})</p>
+  
+        <div class="action-buttons">
+          <ion-icon
+            (click)="handleClicked()"
+            slot="end"
+            name="ellipsis-horizontal"
+          ></ion-icon>
+        </div>
+      </div>
+    </ion-card-header>
+    <div style="width: 100%; margin-top: -20px">
+      <ion-grid class="ion-padding">
+        <ion-row>
+          <ion-col size="4">Match ID</ion-col>
+          <ion-col size="8">{{ matchData.match_id }}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4">Winner</ion-col>
+          @if(!matchData.winner_id) {
+            <ion-col size="8">Ongoing</ion-col>
+          }
+          @else {
+           @if(matchData.winner_id === matchData.team1.team_id){
+            <ion-col size="8">{{  matchData.team1.name }}</ion-col>
+            }
+            @else {
+              <ion-col size="8">{{  matchData.team2.name }}</ion-col>
+            }
+          }
+        </ion-row>
+        <ion-row>
+          <ion-col size="4">Match Date Time</ion-col>
+          <ion-col size="8">{{ matchData.match_date_time }}</ion-col>
+        </ion-row>
+
+      </ion-grid>
+    </div>
   </ion-card>
-
-  <div class="time-vs">
-    <p>12 am (GMT+8)</p>
-    <p>VS</p>
-  </div>
-
-  <ion-card class="team-card">
-    <ion-card-content class="team-card-content">
-      <ion-button shape="round">2.0</ion-button>
-      <p>SENTINELS</p>
-      <img class="logo" src="assets/images/valorant.png" alt="logo" />
-    </ion-card-content>
-  </ion-card>
-
-  <ion-button  class="bet-selection">
-    <ion-icon
-      class="bet-selection-icon"
-      slot="icon-only"
-      name="chevron-forward-outline"
-    ></ion-icon>
-  </ion-button>
-</div>
+  } @else { Loading... }
+  

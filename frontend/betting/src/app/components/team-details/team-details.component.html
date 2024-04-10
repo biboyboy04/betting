@@ -1,0 +1,20 @@
+@if(teamData) {
+  <ion-card class="team-card" id="main-content">
+    <ion-card-header>
+      <div class="team-info" lines="none">
+        <img [src]="'/assets/teams/' + teamData.team_id + '.png'" alt="" />
+        <div class="team-id-name">
+          <p>Name: {{ teamData.name }}</p>
+          <p>ID: {{ teamData.team_id }}</p>
+        </div>
+        <div class="action-buttons">
+          <ion-icon
+            (click)="handleClicked()"
+            slot="end"
+            name="ellipsis-horizontal"
+          ></ion-icon>
+        </div>
+      </div>
+    </ion-card-header>
+  </ion-card>
+  } @else { Loading... }

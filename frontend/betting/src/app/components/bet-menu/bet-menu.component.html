@@ -1,0 +1,82 @@
+@if(matchData) {
+  <ion-menu
+  style="--width: 400px"
+  side="end"
+  menuId="bet-menu"
+  contentId="bet-selection"
+>
+  <ion-header>
+    <ion-toolbar>
+      <div class="toolbar-container">
+        <ion-segment [(ngModel)]="selectedSegment">
+          <ion-segment-button class="ion-segment" value="slip">
+            <ion-label>Bet Slip</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="history">
+            <ion-label>Your Bet</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+
+        <ion-button (click)="closeBetMenu()" class="bet-selection" fill="clear">
+          <ion-icon
+            class="bet-selection-icon"
+            name="chevron-forward-circle"
+            slot="icon-only"
+          ></ion-icon>
+        </ion-button>
+      </div>
+    </ion-toolbar>
+  </ion-header>
+  @if(selectedSegment === "slip"){
+
+    <ion-content color="dark" class="ion-padding">
+      <ion-card class="ion-no-padding" style="border: 1px solid black; background: #1B1C20; border-radius: 14px 14px 0px 0px; color:white; font-weight:750;">
+        <ion-grid class="ion-no-padding" style="padding: 1.5rem;">
+          <img src="/assets/logo.png" alt="">
+          <ion-row style="align-items: center;  gap: .5rem;">
+            <ion-col size="auto" class="ion-no-padding" style="margin-top: 2px;"> 
+              <img [src]="'assets/games/'+matchData.game_id+'.png'" style="width: auto; height: 2rem;" alt="">
+            </ion-col>
+            <ion-col size="auto">{{matchData.team1.name}} VS {{matchData.team2.name}}</ion-col>
+          </ion-row>
+          <ion-row class="ion-justify-content-between" style="margin-top: 10px; padding-left: 10px;">
+            <ion-col size="auto" class="ion-no-padding " style="align-self: self-end;">{{matchData.team1.name}} <br> Match Winner</ion-col>
+            <ion-col size="auto" class="ion-no-padding" style="margin-top: 2px;"> 
+              <ion-row style="align-items: center; gap: .5rem;">
+                <ion-col size="auto" class="ion-no-padding" style="margin-top: 2px;"> 
+                  <img [src]="'assets/teams/'+matchData.team2.team_id+'.png'" style="width: auto; height: 2.1rem;" alt="">
+                </ion-col>
+                <ion-col size="auto" style="align-self: self-end; color: #6F0AD5; font-size: 1.5rem; font-style: italic;">{{matchData.odds.team1.odds}}</ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <ion-grid style="font-size: 1rem; font-style: italic;" class="ion-no-padding">
+          <ion-row class="ion-no-padding" >
+            <ion-col style="display:flex;justify-content: space-between; align-items: center; padding: 0px 1rem;  border: 1px solid black;" size="6">
+              <img style="margin-left: -10px;  width:40px; height: auto;" src="/assets/peso.png" alt="">
+              <ion-input [(ngModel)]="betAmount" style="text-align: right;" type="number" placeholder="₱ 0.00"></ion-input>
+            </ion-col>
+            <ion-col style="display:flex;gap: 5px; justify-content: space-between; align-items: center; padding: 0px 1rem;   border: 1px solid black;" size="6">
+             <p>PAYOUT</p>
+             <p>₱ {{betAmount * matchData.odds.team1.odds}}</p>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-no-padding" >
+            <ion-col style="text-align: center; padding:1rem; border: 1px solid black;">Odds have updated to <span style="color:#6F0AD5">1.38</span></ion-col>
+          </ion-row>
+          <ion-row class="ion-no-padding" style="text-align: center;" >
+            <ion-col style="padding:1rem; border: 1px solid black;" size="6">REJECT</ion-col>
+            <ion-col style="padding:1rem; border: 1px solid black; background-color: #6F0AD5;" size="6">ACCEPT</ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+    </ion-content>
+  }
+  @else {
+    <ion-content color="dark" class="ion-padding">
+      <h1>No bets...</h1>
+    </ion-content>
+  }
+</ion-menu>
+}

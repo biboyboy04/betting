@@ -2,10 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.logo {
-  margin-top: 12px;
+  padding: 5px;
 }
 
 .header-title {
@@ -35,4 +32,8 @@
 .menu-title {
   font-weight: 500;
   font-size: 1rem;
+}
+
+.clicked {
+  background-color: #6f0ad583;
 }

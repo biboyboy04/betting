@@ -1,0 +1,47 @@
+<ion-menu contentId="main-content" menuId="admin-menu">
+  <ion-content class="ion-padding" color="dark">
+    <ion-icon 
+      (click)="closeMenu()"  
+    style="font-size: 32px"
+      aria-hidden="true"
+      name="close-outline"
+    ></ion-icon>
+    <ion-list style="margin-top: 20px" class="ion-no-padding" lines="none">
+      @for(route of routes; track route) {
+      <ion-item
+        routerLink="{{route.url}}"
+        (click)="selectRoute(route.title)"
+        class="menu-item"
+        [ngClass]="{'selected': selected === route.title}"
+        button
+        routerDirection="root"
+        detail="true"
+      >
+        <ion-icon
+          aria-hidden="true"
+          slot="start"
+          [name]="route.icon"
+        ></ion-icon>
+        <ion-label>{{route.title}}</ion-label>
+      </ion-item>
+      }
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-header>
+  <ion-toolbar color="dark">
+    <div class="nav-container">
+      <ion-menu-button style="position: absolute; left: 0"></ion-menu-button>
+      <img
+        style="align-self: center; scale: 0.7"
+        src="/assets/logo.png"
+        alt=""
+      />
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content id="main-content" class="ion-padding" color="dark">
+  <ion-router-outlet></ion-router-outlet>
+</ion-content>

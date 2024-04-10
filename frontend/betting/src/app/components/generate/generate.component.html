@@ -1,0 +1,23 @@
+<ion-content class="test ion-padding" color="dark">
+  <div class="container">
+    <h1>Generate {{selected}}</h1>
+    <ion-item class="input ">
+      <ion-label position="stacked" >Number of Data</ion-label>
+      <ion-input [(ngModel)]="numberOfData" type="number" placeholder="0" min="0"  max="2"></ion-input>
+    </ion-item>
+    <ion-button (click)="handleSubmit()" [disabled]="!numberOfData || numberOfData < 1 || numberOfData > 100" class="generate-button" expand="full" shape="round">
+      Generate Data! 
+    </ion-button>
+  </div>
+</ion-content>
+<ion-footer>
+  @for(button of buttons; track button) {
+    <ion-button [ngClass]="{'selected': selected === button.title}" fill="clear" (click)="handleSelect(button.title)">
+      <div class="footer-button">
+        <ion-icon [name]="button.icon"></ion-icon>
+        <ion-label>{{button.title}}</ion-label>
+      </div>
+    </ion-button>
+  }
+
+</ion-footer>

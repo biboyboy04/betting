@@ -1,0 +1,65 @@
+<ion-action-sheet
+  [isOpen]="isActionSheetOpen"
+  [buttons]="actionSheetButtons"
+  (didDismiss)="setActionSheetOpen(false)"
+></ion-action-sheet>
+
+<ion-alert
+  [isOpen]="isAlertOpen"
+  trigger="present-alert"
+  header="Are you sure you want to delete?"
+  [buttons]="alertButtons"
+  (didDismiss)="setAlertOpen(false)"
+></ion-alert>
+
+<ion-content class="ion-padding" color="dark">
+  <h1>Matches</h1>
+  @if(!isSearch){
+  <div class="action-buttons">
+    <ion-button (click)="toggleSearch(true)" class="search">
+      <ion-icon slot="icon-only" name="search"></ion-icon>
+    </ion-button>
+    <ion-button (click)="showPlayerModal('Add')" class="add">
+      <ion-icon name="add"></ion-icon>
+      Add Match
+    </ion-button>
+  </div>
+  } @else {
+  <ion-searchbar
+    (ionInput)="handleInput($event)"
+    (ionCancel)="toggleSearch(false)"
+    debounce="250"
+    show-cancel-button="always"
+    class="search-bar ion-no-padding"
+    animated="true"
+    placeholder="Search..."
+  ></ion-searchbar>
+  }
+
+  <!-- <swiper-container class="filters" slides-per-view="3.5" >
+  @for(button of buttons; track button; let idx = $index) {
+    <swiper-slide> 
+      <ion-button [class.selected]="selected === button" (click)="handleSelect(idx)" fill="">{{button}}</ion-button>
+    </swiper-slide>
+  }
+  </swiper-container> -->
+
+  @if(filteredData){ @for(match of filteredData | paginate: {
+  itemsPerPage: 25, currentPage: p, totalItems: total }; track match) {
+  <app-match-details
+    (toggleActionSheet)="toggleActionSheet($event)"
+    [matchData]="match"
+  ></app-match-details>
+  } } @else { Loading... }
+</ion-content>
+<ion-footer translucent="true">
+  <div class="pagination-container">
+    <pagination-controls
+      [autoHide]="true"
+      previousLabel=""
+      nextLabel=""
+      class="pagination"
+      (pageChange)="handlePageChange($event)"
+    ></pagination-controls>
+  </div>
+</ion-footer>

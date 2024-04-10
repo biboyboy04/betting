@@ -1,33 +1,52 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { LoginUser } from '../interface/login-user';
+import { environment } from 'src/environments/environment';
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
-  constructor() {}
+
   private http = inject(HttpClient);
-  baseUrl = 'http://localhost:5555';
+  private endpoint = 'auth'
+  private domain:any;
+  constructor() {
+    this.domain =  environment.domain;
+   }
 
-  loginPlayer<T>(username: any, password: any): Observable<T> {
-    return this.http.post<T>(`${this.baseUrl}/player/login`,
-     {
-      username,
-      password,
-    });
-  }
-  
-  loginEmployee<T>(username: any, password: any): Observable<T> {
-    return this.http.post<T>(`${this.baseUrl}/employee/login`,
-     {
-      username,
-      password,
-    });
+  loginPlayer<T>(loginUser: LoginUser): Observable<T> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      withCredentials: true,
+    };
+
+    return this.http.post<T>(`${this.domain}${this.endpoint}/player`, loginUser, httpOptions);
   }
 
-  signupPlayer<T>(playerDetails: any):Observable<T>{
-    return this.http.post<T>(`${this.baseUrl}/player`, playerDetails);
+  loginEmployee<T>(loginUser: LoginUser): Observable<T> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      withCredentials: true,
+    };
+
+    return this.http.post<T>(
+      `${this.domain}${this.endpoint}/employee`,
+      loginUser,
+      httpOptions
+    );
   }
 
+  getUser<T>(): Observable<T> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      withCredentials: true,
+    };
+    return this.http.get<T>(`${this.domain}${this.endpoint}/getUser`, httpOptions);
+  }
 
+  logout<T>(): Observable<T> {
+    return this.http.delete<T>(`${this.domain}${this.endpoint}/logout`);
+  }
 }

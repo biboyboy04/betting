@@ -1,0 +1,52 @@
+@if(playerData) {
+  <ion-card class="player-card" id="main-content">
+    <ion-card-header>
+      <div class="player-info" lines="none">
+
+          <!-- <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" /> -->
+          <ion-avatar>
+            <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+          </ion-avatar>
+        <div class="user-id-name">
+          <p>{{ playerData.first_name }} {{playerData.last_name}}</p>
+          <p>{{ playerData.player_id }}</p>
+        </div>
+        <div class="action-buttons">
+          <ion-icon
+            (click)="handleClicked()"
+            slot="end"
+            name="ellipsis-horizontal"
+          ></ion-icon>
+        </div>
+      </div>
+    </ion-card-header>
+    <div style="width: 100%; margin-top: -20px">
+      <ion-grid class="ion-padding">
+        <ion-row>
+          <ion-col size="4">Username</ion-col>
+          <ion-col size="8">{{ playerData.username }}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4">Email</ion-col>
+          <ion-col size="8">{{ playerData.email }}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4">Date of Birth</ion-col>
+          <ion-col size="8">{{ playerData.date_of_birth }}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4">Nationality</ion-col>
+          <ion-col size="8">{{ playerData.nationality }}</ion-col>
+        </ion-row>  
+        <ion-row>
+          <ion-col size="4">Balance</ion-col>
+          <ion-col size="8">{{ playerData.balance }}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4">Date Created</ion-col>
+          <ion-col size="8">{{ playerData.date_created }}</ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-card>
+  } @else { Loading... }

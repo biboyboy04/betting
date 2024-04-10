@@ -1,48 +1,60 @@
-<ion-menu contentId="main-content">
+<!-- Manu for Game -->
+<ion-menu menuId="game-menu" contentId="main-content">
   <ion-header>
     <ion-toolbar color="dark">
-      <div class="logo-container">
+      <div (click)="showWelcomeScreen(true)" class="logo-container">
         <img class="logo" src="assets/logo.png" alt="logo" />
       </div>
     </ion-toolbar>
   </ion-header>
   <ion-content color="dark" class="ion-padding">
-    <ion-card (click)="navigateToValorant()" class="ion-no-border menu-card">
+    <ion-card
+      (click)="filterMatches(-1)"
+      [ngClass]="{'clicked': selectedGame === -1}"
+      class="ion-no-border menu-card"
+    >
       <ion-card-content class="menu-card-content">
-        <img class="menu-img" src="assets/images/valorant.png" alt="logo" />
-        <p class="menu-title">Valorant</p>
+        <img class="menu-img" [src]="'assets/games/all.png'" alt="logo" />
+        <p class="menu-title">All Games</p>
       </ion-card-content>
     </ion-card>
-
-    <ion-card (click)="navigateToValorant2()" class="ion-no-border menu-card">
-      <ion-card-content class="menu-card-content">
-        <img class="menu-img" src="assets/images/valorant.png" alt="logo" />
-        <p class="menu-title">Valorant</p>
-      </ion-card-content>
-    </ion-card>
-
     @if (gameData && gameData.length > 0) { @for (game of gameData; track game)
     {
-    <ion-item class="ion-padding">
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title>{{ game.name }}</ion-card-title>
-          <ion-card-subtitle>{{ game.genre }}</ion-card-subtitle>
-        </ion-card-header>
-      </ion-card>
-    </ion-item>
+    <ion-card
+      [ngClass]="{'clicked': selectedGame === game.game_id}"
+      (click)="filterMatches(game.game_id)"
+      class="ion-no-border menu-card"
+    >
+      <ion-card-content class="menu-card-content">
+        <img
+          class="menu-img"
+          [src]="'assets/games/' + game.game_id + '.png'"
+          alt="logo"
+        />
+        <p class="menu-title">{{game.name}}</p>
+      </ion-card-content>
+    </ion-card>
     } }
   </ion-content>
 </ion-menu>
 
+<!-- <app-bet-menu></app-bet-menu> -->
+
+<!-- Main Content -->
 <div class="ion-page" id="main-content">
   <ion-header>
     <ion-toolbar style="--background: #121212; color: white">
       <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
+        <!-- refactorable? -->
+        <ion-menu-button (click)="openGameMenu()"></ion-menu-button>
       </ion-buttons>
       <ion-title>
-        <ion-button fill="clear" class="header-title">ESPORTS</ion-button>
+        <ion-button
+          (click)="showWelcomeScreen(true)"
+          fill="clear"
+          class="header-title"
+          >ESPORTS</ion-button
+        >
       </ion-title>
       <ion-buttons slot="end">
         <ion-button>
@@ -70,5 +82,12 @@
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-content>
+    <!-- changer to router? -->
+    @if(isWelcomeScreen) {
+    <app-welcome-screen></app-welcome-screen>
+    } @else {
+    <app-bet-selection [matchData]="filteredMatches"></app-bet-selection>
+    }
+  </ion-content>
 </div>

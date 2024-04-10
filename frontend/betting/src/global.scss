@@ -27,10 +27,13 @@
 
 html {
   --ion-dynamic-font:12;
+  // --ion-background-color: #2e2f33;
+  // --ion-text-color: #f2f2f2;
 }
 
 .modal {
     --border-radius: 10px;
+
   }
 
   ion-title.toolbar-title {
@@ -40,8 +43,21 @@ html {
     --width: auto !important;
   }
   
-// add hover effect on ion-card
-ion-card:hover{
-  transition: transform 0.2s !important;
-  transform: scale(1.1) !important;
+// // add hover effect on ion-card
+// ion-card:hover{
+//   transition: transform 0.2s !important;
+//   transform: scale(1.1) !important;
+// }
+
+*, *::before, *::after {
+  box-sizing: border-box;
 }
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+-webkit-appearance: none;
+-moz-appearance: none;
+appearance: none;
+margin: 0;
+}
+

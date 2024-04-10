@@ -1,0 +1,94 @@
+ion-content,
+ion-toolbar,
+ion-action-sheet,
+ion-alert {
+  --ion-background-color: #2e2f33;
+  --ion-text-color: #f2f2f2;
+  --button-color: #f2f2f2;
+  --color: #f2f2f2;
+  --background: #2e2f33;
+}
+
+.dark {
+  --ion-background-color: #2e2f33;
+  --ion-text-color: #f2f2f2;
+  --button-color: #f2f2f2;
+  --color: #f2f2f2;
+  --background: #2e2f33;
+}
+.action-buttons {
+  display: flex;
+  justify-content: space-around;
+  gap: 0.5rem;
+  transition: all 1.3s ease;
+}
+
+.search {
+  --background: #2e2f33;
+  width: 40px;
+  height: 40px;
+  ion-icon {
+    scale: 2;
+  }
+}
+
+.search-bar {
+  --background: #2e2f33;
+  --color: white;
+  --cancel-button-color: white;
+  transition: transform 1.3s ease;
+}
+
+.add {
+  flex: 1;
+  --background: #6f0ad5;
+}
+
+ion-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.pagination-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: -36px;
+}
+
+.pagination ::ng-deep .ngx-pagination :hover {
+  background: transparent;
+}
+
+.pagination ::ng-deep .ngx-pagination .current {
+  background: #6f0ad5;
+  border-radius: 4px;
+  color: white;
+
+}
+
+.pagination ::ng-deep .ngx-pagination a {
+  color: white;
+}
+
+.filters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    ion-button {
+      --color: white;
+        width: 100%;
+        --border-color: #f2f2f2;
+        --border-size: 1px
+    }
+    swiper-slide {
+        width: 33%;
+        margin-right: 10px;
+    }
+}
+
+.selected {
+    --background: #6f0ad5;
+}

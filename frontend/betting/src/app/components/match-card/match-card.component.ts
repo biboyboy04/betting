@@ -9,6 +9,7 @@ import { IonCard, IonGrid, IonRow, IonCol, IonButton } from '@ionic/angular/stan
 })
 export class MatchCardComponent  implements OnInit {
   @Input() matchData: any;
+
   constructor() { }
 
   ngOnInit() {}

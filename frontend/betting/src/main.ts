@@ -7,7 +7,9 @@ import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { environment } from './environments/environment';
 import { provideHttpClient } from '@angular/common/http';
-
+import { register } from 'swiper/element/bundle';
+// register Swiper custom elements
+register();
 if (environment.production) {
   enableProdMode();
 }

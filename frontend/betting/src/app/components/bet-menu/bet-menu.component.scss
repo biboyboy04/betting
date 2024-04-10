@@ -1,0 +1,40 @@
+
+.toolbar-container {
+    display: flex;
+    background-color: #1B1C20;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .bet-selection {
+    --border-radius: 50%;
+    width: 56px;
+    height: 56px;
+  }
+  
+  .bet-selection-icon {
+    scale: 1.35;
+    font-weight: bold;
+    color: #6f0ad5;
+  }
+  
+  ion-segment {
+    & ion-segment-button {
+      --background: #1B1C20;
+      --background-checked: #1B1C20;
+      --color: white;
+      --color-checked: #8533d8;
+      --indicator-height: 3px;
+      --indicator-color: #6F0AD5;
+      font-size: 1rem; 
+      font-weight: bold;
+      text-transform: none;
+    }
+  
+  }
+  
+  ion-input {
+    --highlight-color-focused: #6f0ad5;
+  }
+  
+  

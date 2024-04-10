@@ -1,0 +1,39 @@
+@if(transactionData) {
+  <ion-card class="transaction-card" id="main-content">
+    <ion-card-header>
+      <div class="transaction-info" lines="none">
+        <div class="user-id-name">
+          <p>{{ transactionData.transaction_id }}</p>
+          <p>{{ transactionData.timestamp }}</p>
+        </div>
+        <div class="action-buttons">
+          <ion-icon
+            (click)="handleClicked()"
+            slot="end"
+            name="ellipsis-horizontal"
+          ></ion-icon>
+        </div>
+      </div>
+    </ion-card-header>
+    <div style="width: 100%; margin-top: -20px">
+      <ion-grid class="ion-padding">
+        <ion-row>
+          <ion-col size="4">Player ID</ion-col>
+          <ion-col size="8">{{ transactionData.player_id }}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4">Type</ion-col>
+          <ion-col size="8">{{ transactionData.type }}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4">Amount</ion-col>
+          <ion-col size="8">{{ transactionData.amount }}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4">Balance</ion-col>
+          <ion-col size="8">{{ transactionData.balance }}</ion-col>
+        </ion-row>  
+      </ion-grid>
+    </div>
+  </ion-card>
+  } @else { Loading... }

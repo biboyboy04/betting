@@ -1,11 +1,9 @@
 <ion-header>
   <ion-toolbar color="dark">
     <ion-buttons slot="start">
-      <ion-button (click)="cancel()">Cancel</ion-button>
-    </ion-buttons>
-    <ion-title>Welcome</ion-title>
-    <ion-buttons slot="end">
-      <ion-button [strong]="true">Confirm</ion-button>
+      <ion-button (click)="close()">
+        <ion-icon name="close"> </ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -13,11 +11,14 @@
 <ion-content color="dark">
   <div class="modal-container">
     <img class="logo" src="assets/logo.png" alt="logo" />
-    <form class="login-form-container">
-      <ion-radio-group [(ngModel)]="userType" name="userType">
+    <form class="login-form-container" [formGroup]="userDataForm">
+      <ion-radio-group formControlName="userType" name="userType">
         <div class="user-type-container">
           <ion-item>
-            <ion-radio class="ion-no-padding" value="player" labelPlacement="stacked"
+            <ion-radio
+              class="ion-no-padding"
+              value="player"
+              labelPlacement="stacked"
               >Player</ion-radio
             >
           </ion-item>
@@ -34,7 +35,7 @@
           labelPlacement="floating"
           type="text"
           name="username"
-          [(ngModel)]="username"
+          formControlName="username"
         ></ion-input>
       </ion-item>
       <div class="password-go-container">
@@ -44,7 +45,7 @@
             labelPlacement="floating"
             type="password"
             name="password"
-            [(ngModel)]="password"
+            formControlName="password"
           ></ion-input>
         </ion-item>
         <ion-button type="submit" (click)="confirm()"> Go! </ion-button>

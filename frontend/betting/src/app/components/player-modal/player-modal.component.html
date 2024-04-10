@@ -1,0 +1,187 @@
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{type}} Player</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <!-- [formGroup]="gameForm" -->
+  @if(type === "Edit"){
+    <form >
+      <ion-item>
+        <ion-input
+          label="Username"
+          labelPlacement="floating"
+          type="text"
+          [(ngModel)]="playerData.username"
+          [ngModelOptions]="{standalone: true}"
+          required="true"
+        ></ion-input>
+      </ion-item>
+    
+      <ion-item>
+        <ion-input
+          label="Email"
+          labelPlacement="floating"
+          type="email"
+          [(ngModel)]="playerData.email"
+          [ngModelOptions]="{standalone: true}"
+          required="true"
+        ></ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <ion-input
+          label="First Name"
+          labelPlacement="floating"
+          type="text"
+          [(ngModel)]="playerData.first_name"
+          [ngModelOptions]="{standalone: true}"
+        ></ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <ion-input
+          label="Last Name"
+          labelPlacement="floating"
+          type="text"
+          [(ngModel)]="playerData.last_name"
+          [ngModelOptions]="{standalone: true}"
+        ></ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <ion-input
+          label="Date of Birth"
+          labelPlacement="floating"
+          type="date"
+          [(ngModel)]="playerData.date_of_birth"
+          [ngModelOptions]="{standalone: true}"
+        ></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-input
+          label="Balance"
+          labelPlacement="floating"
+          type="number"
+          [(ngModel)]="playerData.balance"
+          [ngModelOptions]="{standalone: true}"
+        ></ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <ion-input
+          label="Nationality"
+          labelPlacement="floating"
+          type="text"
+          [(ngModel)]="playerData.nationality"
+          [ngModelOptions]="{standalone: true}"
+        ></ion-input>
+      </ion-item>
+      
+      <ion-button
+        style="width: 100%; --background: #6f0ad5"
+        shape="round"
+        expand="full"
+        type="submit"
+        (click)="submit()"
+        [disabled]="!playerData.username || !playerData.password || !playerData.email"
+      >
+        Submit
+      </ion-button>
+    </form>
+  }
+  @else{
+    <form>
+      <ion-item>
+        <ion-input
+          label="Username"
+          labelPlacement="floating"
+          type="text"
+          [(ngModel)]="playerData.username"
+          [ngModelOptions]="{standalone: true}"
+          required="true"
+        ></ion-input>
+      </ion-item>
+    
+      <ion-item>
+        <ion-input
+          label="Email"
+          labelPlacement="floating"
+          type="email"
+          [(ngModel)]="playerData.email"
+          [ngModelOptions]="{standalone: true}"
+          required="true"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+          label="Password"
+          labelPlacement="floating"
+          type="password"
+          [(ngModel)]="playerData.password"
+          [ngModelOptions]="{standalone: true}"
+          required="true"
+        ></ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <ion-input
+          label="First Name"
+          labelPlacement="floating"
+          type="text"
+          [(ngModel)]="playerData.first_name"
+          [ngModelOptions]="{standalone: true}"
+        ></ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <ion-input
+          label="Last Name"
+          labelPlacement="floating"
+          type="text"
+          [(ngModel)]="playerData.last_name"
+          [ngModelOptions]="{standalone: true}"
+        ></ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <ion-input
+          label="Date of Birth"
+          labelPlacement="floating"
+          type="date"
+          [(ngModel)]="playerData.date_of_birth"
+          [ngModelOptions]="{standalone: true}"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+          label="Nationality"
+          labelPlacement="floating"
+          type="text"
+          [(ngModel)]="playerData.nationality"
+          [ngModelOptions]="{standalone: true}"
+        ></ion-input>
+      </ion-item>
+      
+      <ion-button
+        style="width: 100%; --background: #6f0ad5"
+        shape="round"
+        expand="full"
+        type="submit"
+        (click)="submit()"
+        [disabled]="!playerData.username || !playerData.password || !playerData.email"
+      >
+        Submit
+      </ion-button>
+    </form>
+  }
+</ion-content>

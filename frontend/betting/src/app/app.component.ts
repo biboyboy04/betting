@@ -1,5 +1,4 @@
-import { Component, NgModule } from '@angular/core';
-
+import { Component, NgModule, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 

@@ -1,0 +1,63 @@
+
+.player-card {
+    --background: #2e2f33;
+  }
+  
+  ion-avatar {
+    width: 40px;
+    height: 40px;
+  }
+  
+  ion-card-content {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  .player-info {
+    display: flex;
+    align-items: center;
+    --background: #2e2f33;
+    --color: #c6c5ca;
+
+  }
+
+  .user-id-name {
+    display: flex;
+    flex-direction: column;
+    line-height: 0px;
+    padding: 0;
+    margin: 0;
+    margin-left: 10px;
+    font-weight: bold;
+
+    :first-child{
+        
+        color: #e1dfe6;
+    }
+  }
+  
+  .action-buttons {
+    display: flex;
+    justify-content: space-around;
+    gap: 0.5rem;
+    transition: all 1.3s ease;
+    margin-left: auto;
+    ion-icon {
+      color: #808081;
+      font-size: 1.5rem;
+      margin-bottom: 4px;
+    }
+  }
+  
+  ion-row {
+    ion-col:nth-child(1) {
+      font-weight: bold;
+      color: #98979b;
+    }
+  
+    ion-col:nth-child(2) {
+      font-weight: bold;
+      color: #c6c5ca;
+    }
+  }
+  
