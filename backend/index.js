@@ -25,9 +25,11 @@ const PORT = 5555 || process.env.PORT;
 let app = express();
 //refeactor: check if methods and credentials are working even if they are not used
 app.use(cors({
-    credentials: true,
+    origin: process.env.APP_URL, 
+    credentials: true, 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+    allowedHeaders: ['Content-Type', 'Authorization'], 
 }));
-
 // middlewares
 // doublecheck these middlewares
 // app.use(bodyParser.json());
