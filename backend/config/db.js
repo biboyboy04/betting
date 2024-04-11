@@ -14,7 +14,7 @@ const db = mysql2.createPool({
 })
 
 
-db.getConnection((err, connection) => {
+db.getConnection((err) => {
     if (err) {
         throw err;
     }

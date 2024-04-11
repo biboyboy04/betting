@@ -20,16 +20,16 @@ import generateRoute from './routes/generateRoute.js';
 
 
 // refactor to env
-const PORT = 5555;
+const PORT = 5555 || process.env.PORT; 
 
 let app = express();
 //refeactor: check if methods and credentials are working even if they are not used
 app.use(cors({
-    origin: '*',
+    origin: [process.env.APP_URL],
     credentials: true,
 }));
 
-// middleware
+// middlewares
 // doublecheck these middlewares
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
