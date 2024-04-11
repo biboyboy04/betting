@@ -58,3 +58,8 @@ ion-col {
   justify-content: center;
   gap: 2rem;
 }
+
+ion-button {
+  --border-color: white;
+  color: white
+}
