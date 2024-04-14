@@ -185,6 +185,8 @@ class Player {
             const type = "bet";
             const playerBalance = await this.getBalance(player_id);
             const balance = playerBalance[0].balance;
+            //refactor transaction model. Remove the logic here
+            // for reference tranasction is here mainly because of the user balance
             await transactionModel.add(player_id, type, amount, balance);
 
             return "Bet successfully";

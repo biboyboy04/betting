@@ -31,7 +31,14 @@ class PlayerController {
         }
     }
 
-
+    static bet(req, res) {
+        const {player_id, amount} = req.body;
+        if(!player_id || !amount) {
+            return res.status(400).json({message: "All fields are required"})
+        }
+        handleResponse(res, playerModel.bet(player_id, amount), 201);
+    }
+    
     // static async getAll(req, res) {
     //     handleResponse(res, playerModel.getAll());
     // }

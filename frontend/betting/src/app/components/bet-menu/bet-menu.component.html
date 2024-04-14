@@ -40,13 +40,13 @@
             <ion-col size="auto">{{matchData.team1.name}} VS {{matchData.team2.name}}</ion-col>
           </ion-row>
           <ion-row class="ion-justify-content-between" style="margin-top: 10px; padding-left: 10px;">
-            <ion-col size="auto" class="ion-no-padding " style="align-self: self-end;">{{matchData.team1.name}} <br> Match Winner</ion-col>
+            <ion-col size="auto" class="ion-no-padding " style="align-self: self-end;">{{matchData.selectedTeam === "team1" ? matchData.team1.name:matchData.team2.name }} <br> Match Winner</ion-col>
             <ion-col size="auto" class="ion-no-padding" style="margin-top: 2px;"> 
               <ion-row style="align-items: center; gap: .5rem;">
                 <ion-col size="auto" class="ion-no-padding" style="margin-top: 2px;"> 
-                  <img [src]="'assets/teams/'+matchData.team2.team_id+'.png'" style="width: auto; height: 2.1rem;" alt="">
+                  <img [src]="'assets/teams/' + (matchData.selectedTeam === 'team1' ? matchData.team1.team_id : matchData.team2.team_id) + '.png'" style="width: auto; height: 2.1rem;" alt="">
                 </ion-col>
-                <ion-col size="auto" style="align-self: self-end; color: #6F0AD5; font-size: 1.5rem; font-style: italic;">{{matchData.odds.team1.odds}}</ion-col>
+                <ion-col size="auto" style="align-self: self-end; color: #6F0AD5; font-size: 1.5rem; font-style: italic;">{{matchData.selectedTeam === "team1" ? matchData.odds.team1.odds: matchData.odds.team2.odds }}</ion-col>
               </ion-row>
             </ion-col>
           </ion-row>
@@ -55,19 +55,27 @@
           <ion-row class="ion-no-padding" >
             <ion-col style="display:flex;justify-content: space-between; align-items: center; padding: 0px 1rem;  border: 1px solid black;" size="6">
               <img style="margin-left: -10px;  width:40px; height: auto;" src="/assets/peso.png" alt="">
-              <ion-input [(ngModel)]="betAmount" style="text-align: right;" type="number" placeholder="₱ 0.00"></ion-input>
+              <ion-input [(ngModel)]="betAmount" style="text-align: right; padding-right: 1rem;" type="number" placeholder="₱ 0.00"></ion-input>
             </ion-col>
-            <ion-col style="display:flex;gap: 5px; justify-content: space-between; align-items: center; padding: 0px 1rem;   border: 1px solid black;" size="6">
+            <ion-col style="display:flex;gap: 5px; justify-content: space-between; align-items: center; padding: 1px 1rem;   border: 1px solid black;" size="6">
              <p>PAYOUT</p>
-             <p>₱ {{betAmount * matchData.odds.team1.odds}}</p>
+             <p>₱ {{(matchData.selectedTeam === "team1" ? matchData.odds.team1.odds : matchData.odds.team2.odds) * betAmount}}</p>
             </ion-col>
           </ion-row>
-          <ion-row class="ion-no-padding" >
+          <!-- <ion-row class="ion-no-padding" >
             <ion-col style="text-align: center; padding:1rem; border: 1px solid black;">Odds have updated to <span style="color:#6F0AD5">1.38</span></ion-col>
-          </ion-row>
-          <ion-row class="ion-no-padding" style="text-align: center;" >
-            <ion-col style="padding:1rem; border: 1px solid black;" size="6">REJECT</ion-col>
-            <ion-col style="padding:1rem; border: 1px solid black; background-color: #6F0AD5;" size="6">ACCEPT</ion-col>
+          </ion-row> -->
+          <ion-row class="ion-no-padding" style="color:white; text-align: center;" >
+            <ion-col class="ion-no-padding" style="background-color: #222428;">
+              <ion-button fill="clear" style="width: 100%; color:white; ">
+                REJECT
+              </ion-button>
+            </ion-col>
+            <ion-col class="ion-no-padding" style="background-color: #6F0AD5;">
+              <ion-button (click)="bet()" fill="clear" style="width: 100%; color:white; --background:#6F0AD5;">
+                ACCEPT
+              </ion-button>
+            </ion-col>
           </ion-row>
         </ion-grid>
       </ion-card>

@@ -6,6 +6,7 @@ import { LoginModalComponent } from '../components/login-modal/login-modal.compo
 import { SignupModalComponent } from '../components/signup-modal/signup-modal.component';
 import { searchOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
+import { AuthenticationService } from '../services/authentication.service';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -16,8 +17,15 @@ import { addIcons } from 'ionicons';
 export class HomePage {
 
   playerData: any;
+  authService = inject(AuthenticationService);
   constructor(private modalCtrl: ModalController) {
     addIcons({ searchOutline });
+  }
+
+ ngOnInit(){ 
+    this.authService.getUser().subscribe((data:any) => {
+      this.authService.redirectLoggedUser(data);
+    })
   }
 
   async openLoginModal() {

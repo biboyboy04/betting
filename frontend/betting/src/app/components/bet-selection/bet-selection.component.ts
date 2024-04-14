@@ -14,12 +14,8 @@ import {
   IonCardHeader,
   IonCardTitle,
   IonButton, IonFooter } from '@ionic/angular/standalone';
-import { Observable, forkJoin, map } from 'rxjs';
 import { MatchCardDetailsComponent } from '../match-card-details/match-card-details.component';
 import { MatchService } from 'src/app/services/match.service';
-import { OddsService } from 'src/app/services/odds.service';
-import { GameService } from 'src/app/services/game.service';
-import { TeamService } from 'src/app/services/team.service';
 import { BetMenuComponent } from '../bet-menu/bet-menu.component';
 import { MenuController } from '@ionic/angular/standalone';
 import { NgxPaginationModule } from 'ngx-pagination';

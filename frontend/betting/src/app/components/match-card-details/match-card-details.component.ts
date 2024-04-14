@@ -26,11 +26,10 @@ export class MatchCardDetailsComponent  implements OnInit {
 
   ngOnInit() {
     addIcons({ chevronForwardOutline, chevronForwardCircleOutline });
-    console.log(this.matchDetail.team1.name)
   }
 
-  sendDataToParent(){
-    console.log("clicked")
+  sendDataToParent(selectedTeam:any){
+   this.matchDetail.selectedTeam = selectedTeam;
     this.dataEvent.emit(this.matchDetail);
   }
 

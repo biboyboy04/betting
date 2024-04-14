@@ -112,6 +112,7 @@ let query = `
                         if (err) {
                             reject(err);
                         } else {
+     
                             // This is only on LOCAL 
                             // Theres no need to parse on deploy DB
 
@@ -119,16 +120,23 @@ let query = `
                             // parsing is needed as the key of the data
                             // has backlasehs team2": "{\"id\": 8, \"name\": \"TSM\"}",
 
-                            // const parsedRows = result.map(row => {
-                            //     return {
-                            //         ...row,
-                            //         team2: JSON.parse(row.team2),
-                            //         team1: JSON.parse(row.team1),
-                            //         game: JSON.parse(row.game),
-                            //         odds: JSON.parse(row.odds)
-                            //     };
-                            // });
-                            resolve(result);
+                            if(process.env.DB_HOST === "localhost") {
+                                const parsedRows = result.map(row => {
+                                    return {
+                                        ...row,
+                                        team2: JSON.parse(row.team2),
+                                        team1: JSON.parse(row.team1),
+                                        game: JSON.parse(row.game),
+                                        odds: JSON.parse(row.odds)
+                                    };
+                                });
+                                resolve(parsedRows);
+                            }
+                            else {
+                                resolve(result);
+
+                            }
+
                         }
                     }
                 );
@@ -213,7 +221,23 @@ let query = `
                     reject(err);
                 }
                 else {
-                    resolve(result);
+                    if(process.env.DB_HOST === "localhost") {
+                        const parsedRows = result.map(row => {
+                            return {
+                                ...row,
+                                team2: JSON.parse(row.team2),
+                                team1: JSON.parse(row.team1),
+                                game: JSON.parse(row.game),
+                                odds: JSON.parse(row.odds)
+                            };
+                        });
+                        resolve(parsedRows);
+                    }
+                    else {
+                        resolve(result);
+
+                    }
+
                 }
             });
         });

@@ -10,7 +10,7 @@
   
         <p>{{ matchDetail.team1.name }}</p>
   
-        <ion-button shape="round">{{ matchDetail.odds.team1.odds }}</ion-button>
+        <ion-button (click)="sendDataToParent('team1')"  shape="round">{{ matchDetail.odds.team1.odds }}</ion-button>
       </ion-card-content>
     </ion-card>
   
@@ -21,7 +21,7 @@
   
     <ion-card class="team-card">
       <ion-card-content class="team-card-content">
-        <ion-button shape="round">{{ matchDetail.odds.team2.odds }}</ion-button>
+        <ion-button (click)="sendDataToParent('team2')"  shape="round">{{ matchDetail.odds.team2.odds }}</ion-button>
   
         <p>{{ matchDetail.team2.name }}</p>
   
@@ -32,14 +32,6 @@
         />
       </ion-card-content>
     </ion-card>
-  
-    <ion-button (click)="sendDataToParent()" class="bet-selection">
-      <ion-icon
-        class="bet-selection-icon"
-        slot="icon-only"
-        name="chevron-forward-outline"
-      ></ion-icon>
-    </ion-button>
   </div>
   }@else { Loading... }
   

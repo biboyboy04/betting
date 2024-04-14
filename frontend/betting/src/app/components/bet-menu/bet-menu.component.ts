@@ -28,13 +28,16 @@ import {
   IonRow,
   IonCol,
   MenuController,
-  ToastController,
   IonCard,
   IonCardContent,
   IonLabel
 } from '@ionic/angular/standalone';
+import { ToastController } from '@ionic/angular/standalone';
 import { chevronForwardCircle } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
+import { PlayerService } from 'src/app/services/player.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { BetService } from 'src/app/services/bet.service'; 
 @Component({
   selector: 'app-bet-menu',
   templateUrl: './bet-menu.component.html',
@@ -68,21 +71,69 @@ import { addIcons } from 'ionicons';
 export class BetMenuComponent implements OnInit {
   @Input() matchData: any;
   private menuCtrl = inject(MenuController);
-  betAmount: number = 0.00;
+  toast = inject(ToastController)
+  authService = inject(AuthenticationService);
+  playerService = inject(PlayerService);
+  betService = inject(BetService);
+  betAmount: number = 0;
   selectedSegment = "slip"
   constructor() {}
 
   ngOnChanges(changes: SimpleChanges) {
     this.matchData = changes['matchData'].currentValue;
-    console.log(this.matchData)
+    this.betAmount = 0;
   }
 
   ngOnInit() {
     addIcons({ chevronForwardCircle });
-    console.log(this.matchData, "asdhiasuidhas")
   }
 
   closeBetMenu() {
     this.menuCtrl.close('bet-menu');
   }
+
+  async presentSuccessToast(message: string) {
+    const toast = await this.toast.create({
+      message: message,
+      position: 'top',
+      duration: 2000,
+      color: 'success',
+    });
+    toast.present();
+  }  
+
+  async presentErrorToast(message: string) {
+    const toast = await this.toast.create({
+      message: message,
+      position: 'top',
+      duration: 3000,
+      color: 'danger',
+    });
+    toast.present();
+  }
+ 
+  bet(){
+  this.authService.getUser().subscribe((data:any) => { 
+    this.playerService.bet(data.user.player_id, this.betAmount).subscribe((data) => {
+      console.log(data, "data bet");
+    })
+
+    let selectedTeamID = this.matchData.selectedTeam === "team1" ? this.matchData.team1.team_id : this.matchData.team2.team_id;
+    let newBet = {
+      player_id: data.user.player_id,
+      match_id: this.matchData.match_id,
+      amount: this.betAmount,
+      bet_on_team_id: selectedTeamID
+    }
+    this.betService.add(newBet).subscribe((data) => {
+      console.log(data);
+    })
+    
+  }, (error) => {
+    this.presentErrorToast(error);
+  }, () => {
+    console.log("finally");
+    this.closeBetMenu();
+    this.presentSuccessToast("Bet Successful");
+  })}
 }

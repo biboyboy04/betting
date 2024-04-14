@@ -3,6 +3,7 @@ import playerController from '../controller/playerController.js';
 const router = express.Router();
 
 router.post('/', playerController.add);
+router.post('/bet', playerController.bet)
 router.get('/', playerController.getAll);
 router.get('/total', playerController.getTotal);
 router.get('/:id', playerController.getById);

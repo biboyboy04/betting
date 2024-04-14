@@ -44,6 +44,7 @@ import { Game } from '../interface/game';
 import { Match } from '../interface/match';
 import { MenuController } from '@ionic/angular/standalone';
 import { BetMenuComponent } from '../components/bet-menu/bet-menu.component';
+
 @Component({
   selector: 'app-user-dashboard',
   templateUrl: './user-dashboard.page.html',
@@ -106,15 +107,13 @@ export class UserDashboardPage implements OnInit {
       chevronForwardCircleOutline,
       chevronForwardCircle,
     });
-    this.fetchUserData();
+    this.authService.getUser().subscribe((data:any) => {
+      this.authService.redirectLoggedUser(data);
+    })
+
     this.fetchGames();
     this.fetchMatches();
-  }
-
-  fetchUserData() {
-    this.authService.getUser().subscribe((data) => {
-      console.log(data, 'user db');
-    });
+    
   }
 
   fetchGames() {

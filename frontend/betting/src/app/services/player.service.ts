@@ -30,7 +30,11 @@ export class PlayerService {
   getTotal<T>():Observable<T> {
     return this.http.get<T>(`${this.domain}${this.endpoint}/total`);
   }
-
+  
+  bet<T>(playerID:any, amount:any): Observable<T>{
+    return this.http.post<T>(`${this.domain}${this.endpoint}/bet`,{player_id:playerID, amount});
+  }
+  
   update<T>(newPlayer: any):Observable<T> {
     return this.http.put<T>(`${this.domain}${this.endpoint}/${newPlayer.player_id}`, newPlayer)  ;
   }

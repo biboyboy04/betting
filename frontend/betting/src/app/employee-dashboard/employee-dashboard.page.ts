@@ -20,7 +20,7 @@ search,
 colorWand
 } from 'ionicons/icons';
 import { MenuController } from '@ionic/angular/standalone';
-
+import { AuthenticationService } from '../services/authentication.service';
 @Component({
   selector: 'app-employee-dashboard',
   templateUrl: './employee-dashboard.page.html',
@@ -33,11 +33,14 @@ export class EmployeeDashboardPage implements OnInit {
   constructor() { }
   selected: string = 'Analytics';
   menuCtrl = inject(MenuController);
-  
+ authService = inject(AuthenticationService); 
   ngOnInit() {
     addIcons({colorWand, search, add, closeOutline, people, analytics, cash, person, dice, gameController, card, chatbubbleEllipses});
-  
+    this.authService.getUser().subscribe((data:any) => {
+      this.authService.redirectLoggedUser(data);
+    })
   }
+ 
   selectRoute(selected: string) {
     this.selected = selected;
   }
