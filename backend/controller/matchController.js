@@ -21,17 +21,28 @@ class MatchController {
 
     static async getAll(req, res) {
         const query = req.query
+        console.log(query, "query");
         const page = query.page || 1;
         const limit = query.limit || 25;
+        const status = query.status || "all";
 
         const offset = (page - 1) * limit;
 
-        // handleResponse(res, matchModel.getTotal());
-        // add unary to convert string int to real int
-        handleResponse(res, matchModel.getAllDetailsPaginated(+limit, +offset))
+        switch (status) {
+            case "pending":
+                handleResponse(res, matchModel.getAllPendingMatch(+limit, +offset))
+                break;
+            case "finished":
+                handleResponse(res, matchModel.getAllFinishedMatch(+limit, +offset))
+                break;
+            default:
+                handleResponse(res, matchModel.getAllDetailsPaginated(+limit, +offset))
+                break;
+        }
+       
     }
 
-    static getTotal(req, res){
+    static getTotal(req, res) {
         handleResponse(res, matchModel.getTotal());
     }
 
@@ -82,7 +93,36 @@ class MatchController {
 
     }
 
+    
+    static getPlayerId(req, res) {
+        const player_id = req.params.id;
+
+        if (!player_id) {
+            return res.status(400).json({ message: "Player ID is required" });
+        }
+
+        handleResponse(res, matchModel.getByPlayerId(player_id));
+    }
+
     //do i need to uincluide getAllPendingMatchId, getallPendingMatchWithBets
+
+    static async updateDate(req, res) {
+        const match_id = req.params.id;
+        const { match_date_time } = req.body;
+        if (!match_id || !match_date_time) {
+            return res.status(400).json({ message: "All fields are required" });
+        }
+        handleResponse(res, matchModel.updateDate(match_id, match_date_time));
+    }
+
+    static async setWinner(req, res) {
+        const match_id = req.params.id;
+        const { winner_id } = req.body;
+        if (!match_id || !winner_id) {
+            return res.status(400).json({ message: "All fields are required" });
+        }
+        handleResponse(res, matchModel.setWinner(match_id, winner_id));
+    }
 
     static async update(req, res) {
         const match_id = req.params.id;

@@ -1,3 +1,90 @@
-<p>
-  transactions-modal works!
-</p>
+<ion-menu
+  contentId="menu-content"
+  menuId="transaction-menu"
+  side="end"
+  type="overlay"
+>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Players</ion-title>
+    </ion-toolbar>
+    <ion-searchbar (ionInput)="handleInput($event)" class="search-bar" placeholder="Search ID..." type="text" [debounce]="250"></ion-searchbar>
+  </ion-header>
+  <ion-content>
+   @for(player of filteredData; track player){
+    <!--  -->
+    <ion-item button detail="true" lines="full" (click)="handlePlayerClick(player.player_id)">
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col >
+            ID: {{player.player_id}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            Email: {{player.email}}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+  </ion-item>
+   }
+  </ion-content>
+</ion-menu>
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{type}} Transaction</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content id="menu-content" class="ion-padding">
+  <!-- [formGroup]="gameForm" -->
+  <form >
+    <ion-item (click)="showMenu('transaction-menu')">
+      <ion-input
+       label="Player ID"
+        labelPlacement="floating"
+        type="text"
+        [(ngModel)]="transactionData.playerID"
+        [ngModelOptions]="{standalone: true}"
+        required="true"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-select [interfaceOptions]="customPopoverOptions" 
+      label="Transaction Type" label-placement="fixed"
+       placeholder="Transaction Type"
+       [(ngModel)]="transactionData.type"
+       [ngModelOptions]="{standalone: true}"
+       >
+        <ion-select-option color="dark" class="select" value="withdraw">Withdraw</ion-select-option>
+        <ion-select-option value="deposit">Deposit</ion-select-option>
+        <ion-select-option value="bet">Bet</ion-select-option>
+        <ion-select-option value="win-bet">Win Bet</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-input
+        label="Amount"
+        labelPlacement="floating"
+        type="number"
+        [(ngModel)]="transactionData.amount"
+        [ngModelOptions]="{standalone: true}"
+      ></ion-input>
+    </ion-item>
+    <ion-button
+      style="width: 100%; --background: #6f0ad5"
+      shape="round"
+      expand="full"
+      type="submit"
+      (click)="submit()"
+      [disabled]="!transactionData.playerID || !transactionData.type || !transactionData.amount"
+    >
+      Submit
+    </ion-button>
+  </form>
+</ion-content>

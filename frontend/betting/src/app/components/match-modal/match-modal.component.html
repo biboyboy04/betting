@@ -1,0 +1,198 @@
+<ion-menu
+  contentId="menu-content"
+  menuId="game-menu"
+  side="end"
+  type="overlay"
+>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Games</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+   @for(game of gameData; track game){
+    <ion-item button detail="true" (click)="handleGameClick(game.game_id, game.name)">
+      <ion-avatar slot="start">
+        <img [src]="'assets/games/'+game.game_id+'.png'" />
+      </ion-avatar>
+      <ion-label>{{game.name}}</ion-label>
+  </ion-item>
+   }
+  </ion-content>
+</ion-menu>
+
+<ion-menu
+  contentId="menu-content"
+  menuId="team1-menu"
+  side="end"
+  type="overlay"
+>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Teams</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+   @for(team of teamData; track team){
+    <ion-item button detail="true" (click)="handleTeam1Click(team.team_id, team.name)">
+      <ion-avatar slot="start">
+        <img [src]="'assets/teams/'+team.team_id+'.png'" />
+      </ion-avatar>
+      <ion-label>{{team.name}}</ion-label>
+  </ion-item>
+   }
+  </ion-content>
+</ion-menu>
+
+<ion-menu
+  contentId="menu-content"
+  menuId="team2-menu"
+  side="end"
+  type="overlay"
+>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Teams</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+   @for(team of teamData; track team){
+    <ion-item button detail="true" (click)="handleTeam2Click(team.team_id, team.name)">
+      <ion-avatar slot="start">
+        <img [src]="'assets/teams/'+team.team_id+'.png'" />
+      </ion-avatar>
+      <ion-label>{{team.name}}</ion-label>
+  </ion-item>
+   }
+  </ion-content>
+</ion-menu>
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{
+      type === "Win" ? "Set Match Winner" : type + " Match"
+    }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-no-padding" id="menu-content">
+  <!-- [formGroup]="gameForm" -->
+  @switch (type) { @case ("Add") { 
+  <form>
+    <ion-item button (click)="showMenu('game-menu')"  detail="true">
+      <ion-input
+        label="Game"
+        labelPlacement="floating"
+        type="text"
+        [(ngModel)]="newMatch.game_name"
+        [ngModelOptions]="{ standalone: true }"
+        required="true"
+        readonly="true"
+      ></ion-input>
+    </ion-item>
+    <ion-item button (click)="showMenu('team1-menu')"  detail="true">
+      <ion-input
+        label="Team 1"
+        labelPlacement="floating"
+        type="text"
+        [(ngModel)]="newMatch.team1_name"
+        [ngModelOptions]="{ standalone: true }"
+        required="true"
+        readonly="true"
+      ></ion-input>
+    </ion-item>
+    <ion-item button (click)="showMenu('team2-menu')"  detail="true">
+      <ion-input
+        label="Team 2"
+        labelPlacement="floating"
+        type="text"
+        [(ngModel)]="newMatch.team2_name"
+        [ngModelOptions]="{ standalone: true }"
+        required="true"
+        readonly="true"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-datetime [(ngModel)]="newMatch.match_date_time"
+      [ngModelOptions]="{ standalone: true }"  display-format="DD.MM.YYYY HH:mm"></ion-datetime>
+     </ion-item>
+  
+      <ion-button
+        style="width: 100%; --background: #6f0ad5"
+        shape="round"
+        expand="full"
+        type="submit"
+        (click)="submit()"
+        [disabled]="
+          !newMatch.game_name || !newMatch.team1_name ||  !newMatch.team2_name||  !newMatch.match_date_time
+        "
+      >
+        Submit
+      </ion-button>
+    </form>
+  } @case ("Edit") {
+
+  <form class="edit-form">
+    <ion-datetime
+      showDefaultTitle="true"
+      [(ngModel)]="newDateTime"
+      [ngModelOptions]="{ standalone: true }"
+    >
+      <span slot="title">Select a New Match Date</span>
+    </ion-datetime>
+
+    <ion-button
+      style="width: 100%; --background: #6f0ad5"
+      shape="round"
+      expand="full"
+      type="submit"
+      (click)="updateMatchDate()"
+      [disabled]=""
+    >
+      Submit
+    </ion-button>
+  </form>
+
+  } @case ("Win") {
+  <form class="win-form">
+    <div class="win-button-container">
+      <ion-button
+        (click)="selectedWinner = data.team1.team_id"
+        [ngClass]="{
+          'selected-winner': selectedWinner === data.team1.team_id,
+          'win-button': true
+        }"
+      >
+        <div class="win-button">
+          <p>{{ data.team1.name }}</p>
+          <img [src]="'/assets/teams/' + data.team1.team_id + '.png'" alt="" />
+        </div>
+      </ion-button>
+      <ion-button
+        (click)="selectedWinner = data.team2.team_id"
+        [ngClass]="{ 'selected-winner': selectedWinner === data.team2.team_id }"
+      >
+        <div class="win-button">
+          <p>{{ data.team2.name }}</p>
+          <img [src]="'/assets/teams/' + data.team2.team_id + '.png'" alt="" />
+        </div>
+      </ion-button>
+    </div>
+    <ion-button
+      style="width: 100%; --background: #6f0ad5"
+      shape="round"
+      expand=""
+      type="submit"
+      (click)="setWinner()"
+    >
+      Submit
+    </ion-button>
+  </form>
+  } @default { Default case.
+  {{ type }}
+  } }
+</ion-content>

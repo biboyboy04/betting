@@ -38,6 +38,7 @@ import { addIcons } from 'ionicons';
 import { PlayerService } from 'src/app/services/player.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { BetService } from 'src/app/services/bet.service'; 
+import { MatchService } from 'src/app/services/match.service';
 @Component({
   selector: 'app-bet-menu',
   templateUrl: './bet-menu.component.html',
@@ -73,19 +74,29 @@ export class BetMenuComponent implements OnInit {
   private menuCtrl = inject(MenuController);
   toast = inject(ToastController)
   authService = inject(AuthenticationService);
+  matchService = inject(MatchService);
   playerService = inject(PlayerService);
   betService = inject(BetService);
   betAmount: number = 0;
   selectedSegment = "slip"
+  playerMatches:any = [];
   constructor() {}
 
   ngOnChanges(changes: SimpleChanges) {
     this.matchData = changes['matchData'].currentValue;
     this.betAmount = 0;
+    console.log(this.matchData);
   }
 
   ngOnInit() {
     addIcons({ chevronForwardCircle });
+    this.authService.getUser().subscribe((data:any) => {
+      this.matchService.getByPlayer(data.user.player_id).subscribe((data) => {
+        this.playerMatches = data;
+        console.log(data);
+      })
+    }) 
+    console.log(this.matchData, "m,asd datas");
   }
 
   closeBetMenu() {
@@ -128,11 +139,9 @@ export class BetMenuComponent implements OnInit {
     this.betService.add(newBet).subscribe((data) => {
       console.log(data);
     })
-    
   }, (error) => {
     this.presentErrorToast(error);
   }, () => {
-    console.log("finally");
     this.closeBetMenu();
     this.presentSuccessToast("Bet Successful");
   })}

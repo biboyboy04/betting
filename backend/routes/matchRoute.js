@@ -9,9 +9,12 @@ router.get('/allDetails', matchController.getAllDetails);
 router.get('/pending', matchController.getAllPendingMatch);
 router.get('/pendingId', matchController.getAllPendingMatchId);
 router.get('/finished', matchController.getAllFinishedMatch);
+router.get('/:id/player', matchController.getPlayerId);
 router.get('/:id', matchController.getById);
 router.get('/byDateAndTime/:dateTime', matchController.getByDateAndTime);
 router.get('/byGameId/:id', matchController.getByGameId);
+router.put('/:id/date', matchController.updateDate);
+router.put('/:id/winner', matchController.setWinner);
 router.put('/:id', matchController.update);
 router.delete('/:id', matchController.delete);
 

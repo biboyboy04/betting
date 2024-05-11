@@ -1,40 +1,94 @@
+.status-container {
+  display: flex;
+  align-items: center;
+}
+
+.slanted-container {
+  padding: 0px 0.5rem;
+  width: 50%;
+  clip-path: polygon(0 0, 100% 0, 64% 100%, 0% 100%);
+  display: flex;
+  align-items: center;
+  p {
+    text-align: left;
+    color: black;
+    font-size: larger;
+    font-weight: bold;
+  }
+}
+
+.amount-after {
+  padding: 0px 1rem;
+  margin-left: auto;
+  color: rgb(68, 197, 68);
+  font-size: larger;
+  font-weight: bold;
+}
+
+.lose-bg {
+  background-color: rgb(231, 44, 44);
+}
+
+.win-bg {
+  background-color: rgb(68, 197, 68);
+}
+.pending-bg {
+  background-color: rgb(223, 235, 64);
+}
+
+.win-text {
+  color: rgb(68, 197, 68);
+}
+
+.lose-text {
+  color: rgb(231, 44, 44);
+}
+
+.pending-text {
+  color: rgb(223, 235, 64);
+}
+
+.card {
+  border: 1px solid black;
+  background: #1b1c20;
+  border-radius: 14px 14px 0px 0px;
+  color: white;
+  font-weight: 750;
+}
 
 .toolbar-container {
-    display: flex;
-    background-color: #1B1C20;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .bet-selection {
-    --border-radius: 50%;
-    width: 56px;
-    height: 56px;
-  }
-  
-  .bet-selection-icon {
-    scale: 1.35;
+  display: flex;
+  background-color: #1b1c20;
+  justify-content: center;
+  align-items: center;
+}
+
+.bet-selection {
+  --border-radius: 50%;
+  width: 56px;
+  height: 56px;
+}
+
+.bet-selection-icon {
+  scale: 1.35;
+  font-weight: bold;
+  color: #6f0ad5;
+}
+
+ion-segment {
+  & ion-segment-button {
+    --background: #1b1c20;
+    --background-checked: #1b1c20;
+    --color: white;
+    --color-checked: #8533d8;
+    --indicator-height: 3px;
+    --indicator-color: #6f0ad5;
+    font-size: 1rem;
     font-weight: bold;
-    color: #6f0ad5;
+    text-transform: none;
   }
-  
-  ion-segment {
-    & ion-segment-button {
-      --background: #1B1C20;
-      --background-checked: #1B1C20;
-      --color: white;
-      --color-checked: #8533d8;
-      --indicator-height: 3px;
-      --indicator-color: #6F0AD5;
-      font-size: 1rem; 
-      font-weight: bold;
-      text-transform: none;
-    }
-  
-  }
-  
-  ion-input {
-    --highlight-color-focused: #6f0ad5;
-  }
-  
-  
+}
+
+ion-input {
+  --highlight-color-focused: #6f0ad5;
+}

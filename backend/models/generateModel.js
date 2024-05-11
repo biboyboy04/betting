@@ -110,20 +110,21 @@ class Generate {
 
     // refactor to choose choosing a number of winners only instead of all?
     static async generateWinners() {
-        // Get id's of allPendingMatchWithBets
-        const allPendingMatchWithBets = await matchModel.getAllPendingMatchWithBets();
+        // Get id's of allPendingMatch
+        const allPendingMatch = await matchModel.getAllPendingMatch(100, 1);
 
-        for (let i = 0; i < allPendingMatchWithBets.length; i++) {
-            const match_id = allPendingMatchWithBets[i]['match_id'];
-            const matchTeamId = await matchModel.getTeamsByMatchId(match_id);
-            const { team1_id, team2_id } = matchTeamId[0];
-            const randomWinnerId = (i % 2 == 0) ? team1_id : team2_id;
-            await matchModel.setWinnerAllPendingMatches(match_id, randomWinnerId);
-            await oddsModel.add(match_id);
-            // const testt = await betModel.getWinnersId(match_id, randomWinnerId);
-            const test = await betModel.payout(match_id, randomWinnerId);
-            console.log(test, "test")
-            
+        for (let i = 0; i < allPendingMatch.length; i++) {
+            try {
+                const match_id = allPendingMatch[i]['match_id'];
+                const matchTeamId = await matchModel.getTeamsByMatchId(match_id);
+                const { team1_id, team2_id } = matchTeamId[0];
+                const randomWinnerId = (i % 2 == 0) ? team1_id : team2_id;
+                await matchModel.setWinner(match_id, randomWinnerId);
+                await oddsModel.add(match_id);
+                // await betModel.payout(match_id, randomWinnerId);
+            } catch (error) {
+                return error;
+            }
         }
         return "Generated Winners Sucessfully";
     }

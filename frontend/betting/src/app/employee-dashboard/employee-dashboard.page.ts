@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import {  RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { GameDetailsComponent } from '../components/game-details/game-details.component';
 import {
 closeOutline,
@@ -17,7 +18,8 @@ chatbubbleEllipses,
 people,
 add,
 search,
-colorWand
+colorWand,
+logOut
 } from 'ionicons/icons';
 import { MenuController } from '@ionic/angular/standalone';
 import { AuthenticationService } from '../services/authentication.service';
@@ -34,19 +36,36 @@ export class EmployeeDashboardPage implements OnInit {
   selected: string = 'Analytics';
   menuCtrl = inject(MenuController);
  authService = inject(AuthenticationService); 
+  router = inject(Router);
   ngOnInit() {
-    addIcons({colorWand, search, add, closeOutline, people, analytics, cash, person, dice, gameController, card, chatbubbleEllipses});
+    addIcons({logOut, colorWand, search, add, closeOutline, people, analytics, cash, person, dice, gameController, card, chatbubbleEllipses});
+    //eto
     this.authService.getUser().subscribe((data:any) => {
       this.authService.redirectLoggedUser(data);
+     
+    }, (err) => {
+      this.authService.redirectToLandingPage();
     })
   }
  
   selectRoute(selected: string) {
     this.selected = selected;
+    this.closeMenu();
   }
 
   closeMenu() {
     this.menuCtrl.close('admin-menu');
+  }
+
+  logout() {
+    this.authService.logout().subscribe((data) => {
+      console.log(data);
+    }, (err) => {
+      console.log(err);
+    }, () => {
+      this.router.navigate(["/home"]);
+    })
+    
   }
 
   routes = [

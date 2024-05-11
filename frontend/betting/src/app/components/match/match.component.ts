@@ -24,7 +24,7 @@ import {
 import { addIcons } from 'ionicons';
 import { search, add, closeOutline } from 'ionicons/icons';
 import { ModalController } from '@ionic/angular/standalone';
-import { PlayerModalComponent } from '../player-modal/player-modal.component';
+import { MatchModalComponent } from '../match-modal/match-modal.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatchDetailsComponent } from '../match-details/match-details.component';
 import { MatchService } from 'src/app/services/match.service';
@@ -73,12 +73,12 @@ export class MatchComponent  implements OnInit {
   selectedBet: any;
   p: number = 1;
   total: any;
-  // selected = 'All';
-  // buttons = ['All', 'Deposit', 'Withdraw', 'Bet', 'Win Bet'];
+  selectedType = "All";
+  buttons = ['All', 'Pending', 'Finished'];
 
   ngOnInit() {
     addIcons({ search, add, closeOutline });
-    this.matchService.getAllDetails(this.p, 25).subscribe((data) => {
+    this.matchService.getAll("all",this.p, 25).subscribe((data) => {
       this.betData = data;
       this.filteredData = data;
       console.log(data);
@@ -89,90 +89,6 @@ export class MatchComponent  implements OnInit {
     });
   }
 
-  // handleSelect(index: number) {
-  //   this.selected = this.buttons[index];
-  //   let type = 'deposit';
-  //   switch (index) {
-  //     case 0:
-  //       this.matchService.getAll(this.p, 25).subscribe((data) => {
-  //         this.betData = data;
-  //         this.filteredData = data;
-  //         console.log(data);
-  //       });
-  //       this.matchService.getTotal().subscribe((data: any) => {
-  //         this.total = data[0].total;
-  //         console.log(data);
-  //       });
-  //       break;
-  //     case 1:
-  //       type = 'deposit';
-  //       this.matchService
-  //         .getAllFiltered(type, this.p, 25)
-  //         .subscribe((data) => {
-  //           this.betData = data;
-  //           this.filteredData = data;
-  //           console.log(data);
-  //         });
-  //       this.matchService
-  //         .getTotalFiltered(type)
-  //         .subscribe((data: any) => {
-  //           this.total = data[0].total;
-  //           console.log(data);
-  //         });
-  //       break;
-  //     case 2:
-  //       type = 'withdraw';
-  //       this.matchService
-  //         .getAllFiltered(type, this.p, 25)
-  //         .subscribe((data) => {
-  //           this.betData = data;
-  //           this.filteredData = data;
-  //           console.log(data);
-  //         });
-  //       this.matchService
-  //         .getTotalFiltered(type)
-  //         .subscribe((data: any) => {
-  //           this.total = data[0].total;
-  //           console.log(data);
-  //         });
-  //       break;
-  //     case 3:
-  //       type = 'bet';
-  //       this.matchService
-  //         .getAllFiltered(type, this.p, 25)
-  //         .subscribe((data) => {
-  //           this.betData = data;
-  //           this.filteredData = data;
-  //           console.log(data);
-  //         });
-  //       this.matchService
-  //         .getTotalFiltered(type)
-  //         .subscribe((data: any) => {
-  //           this.total = data[0].total;
-  //           console.log(data);
-  //         });
-  //       break;
-  //     case 4:
-  //       type = 'win_bet';
-  //       this.matchService
-  //         .getAllFiltered(type, this.p, 25)
-  //         .subscribe((data) => {
-  //           this.betData = data;
-  //           this.filteredData = data;
-  //           console.log(data);
-  //         });
-  //       this.matchService
-  //         .getTotalFiltered(type)
-  //         .subscribe((data: any) => {
-  //           this.total = data[0].total;
-  //           console.log(data);
-  //         });
-  //       break;
-
-  //     default:
-  //       break;
-  //   }
-  // }
 
   toggleSearch(isSearch: boolean) {
     this.isSearch = isSearch;
@@ -191,13 +107,21 @@ export class MatchComponent  implements OnInit {
 
   async showPlayerModal(type: any, data?: any) {
     const modal = await this.modalCtrl.create({
-      component: PlayerModalComponent,
+      component: MatchModalComponent,
       componentProps: {
         type: type,
         data: data,
       },
     });
     await modal.present();
+  }
+
+  handleSelect(index: number) {
+    this.selectedType = this.buttons[index];
+    this.matchService.getAll(this.selectedType.toLowerCase(), this.p, 25).subscribe((data) => {
+      this.betData = data;
+      this.filteredData = data;
+    })
   }
 
   deletePlayer(betData: any) {
@@ -221,13 +145,51 @@ export class MatchComponent  implements OnInit {
 
   handlePageChange(page: any) {
     this.p = page;
-    this.matchService.getAllDetails(page, 25).subscribe((data) => {
+    this.matchService.getAll(this.selectedType.toLowerCase(),page, 25).subscribe((data:any) => {
       this.betData = data;
       this.filteredData = data;
     });
   }
 
-  public actionSheetButtons = [
+  public actionSheetButtonsFinished = [
+    {
+      text: 'Edit',
+      handler: () => {
+        this.showPlayerModal('Edit', this.selectedBet);
+      },
+      data: {
+        action: 'edit',
+      },
+    },
+    {
+      text: 'Delete',
+      role: 'destructive',
+      data: {
+        action: 'delete',
+      },
+      handler: () => {
+        this.setAlertOpen(true);
+      },
+    },
+    {
+      text: 'Cancel',
+      role: 'cancel',
+      data: {
+        action: 'cancel',
+      },
+    },
+  ];
+
+  public actionSheetButtonsPending = [
+    {
+      text: 'Set Winner',
+      handler: () => {
+        this.showPlayerModal('Win', this.selectedBet);
+      },
+      data: {
+        action: 'edit',
+      },
+    },
     {
       text: 'Edit',
       handler: () => {

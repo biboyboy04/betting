@@ -32,6 +32,7 @@ class GenerateController {
 
         const bets = await generateModel.generateBetData(number_of_bets);
         handleResponse(res, betModel.addMany(bets), 201);
+        console.log("first")
     }
 
     static async generateWinners(req, res) {

@@ -31,8 +31,20 @@ export class PlayerService {
     return this.http.get<T>(`${this.domain}${this.endpoint}/total`);
   }
   
-  bet<T>(playerID:any, amount:any): Observable<T>{
-    return this.http.post<T>(`${this.domain}${this.endpoint}/bet`,{player_id:playerID, amount});
+  bet<T>(playerId:any, amount:any): Observable<T>{
+    return this.http.put<T>(`${this.domain}${this.endpoint}/bet/${playerId}`,{amount});
+  }
+
+  winBet<T>(playerId:any, amount:any): Observable<T>{
+    return this.http.put<T>(`${this.domain}${this.endpoint}/winBet${playerId}`,{amount});
+  }
+
+  deposit<T>(playerId: any, amount:number):Observable<T> {
+    return this.http.put<T>(`${this.domain}${this.endpoint}/deposit/${playerId}`, {amount})  ;
+  }
+
+  withdraw<T>(playerId: any, amount:number):Observable<T> {
+    return this.http.put<T>(`${this.domain}${this.endpoint}/withdraw/${playerId}`, {amount})  ;
   }
   
   update<T>(newPlayer: any):Observable<T> {

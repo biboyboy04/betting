@@ -1,34 +1,40 @@
-<ion-card class="custom-card">
-  <ion-grid>
-    <ion-row>
-      <ion-col size="auto">
-        <img src="/assets/images/valorant.png" class="logo-img" alt="" />
-      </ion-col>
-      <ion-col size="auto" class="title-col">
-        <p>VCT CHAMPIONS</p>
-        <p class="subtitle">VALORANT</p>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="auto" class="team-col">
-        <p>Sentinels</p>
-        <p>Loud</p>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="">
-        <ion-button  fill="outline" shape="round">
-          2.0
-        </ion-button>
-      </ion-col>
-      <ion-col size="">
-        <p>VS</p>
-      </ion-col>
-      <ion-col size="">
-        <ion-button  fill="outline" shape="round">
-          1.0
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-card>
+@if(matchData) {
+  <ion-card class="custom-card">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="auto">
+          <img [src]="'/assets/games/'+ matchData.game.game_id+'.png'" class="logo-img" alt="" />
+        </ion-col>
+        <ion-col size="auto" class="title-col">
+          <p>VCT CHAMPIONS</p>
+          <p class="subtitle">{{matchData.game.name}}</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="auto" class="team-col">
+          <p>{{matchData.team1.name}}</p>
+          <p>{{matchData.team2.name}}</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="">
+          <ion-button  fill="outline" shape="round">
+            <p>{{matchData.odds.team1.odds}}</p>
+          </ion-button>
+        </ion-col>
+        <ion-col size="">
+          <p>VS</p>
+        </ion-col>
+        <ion-col size="">
+          <ion-button  fill="outline" shape="round">
+            <p>{{matchData.odds.team2.odds}}</p>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+  
+}
+@else {
+  Loading...
+}

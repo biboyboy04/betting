@@ -23,6 +23,7 @@ import {
   IonGrid,
   IonRow,
   IonCol, IonInput, IonFooter } from '@ionic/angular/standalone';
+  import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { WelcomeScreenComponent } from '../components/welcome-screen/welcome-screen.component';
@@ -37,6 +38,8 @@ import {
   chevronForwardCircleOutline,
   chevronForwardOutline,
   chevronForwardCircle,
+  wallet,
+  logOut
 } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { BetSelectionComponent } from '../components/bet-selection/bet-selection.component';
@@ -44,13 +47,16 @@ import { Game } from '../interface/game';
 import { Match } from '../interface/match';
 import { MenuController } from '@ionic/angular/standalone';
 import { BetMenuComponent } from '../components/bet-menu/bet-menu.component';
-
+import { ModalController } from '@ionic/angular/standalone';
+import { WalletModalComponent } from '../components/wallet-modal/wallet-modal.component';
 @Component({
   selector: 'app-user-dashboard',
   templateUrl: './user-dashboard.page.html',
   styleUrls: ['./user-dashboard.page.scss'],
   standalone: true,
-  imports: [IonFooter, IonInput, 
+  imports: [ 
+    IonFooter, 
+    IonInput, 
     IonGrid,
     IonCardTitle,
     IonCardHeader,
@@ -88,7 +94,8 @@ export class UserDashboardPage implements OnInit {
   oddsService = inject(OddsService);
   gameService = inject(GameService);
   teamService = inject(TeamService);
-
+  modalCtrl = inject(ModalController);
+  router = inject(Router);
   // private menuCtrl = inject(MenuController);
   isWelcomeScreen = true;
   isOpen = false;
@@ -106,14 +113,26 @@ export class UserDashboardPage implements OnInit {
       person,
       chevronForwardCircleOutline,
       chevronForwardCircle,
+      wallet,
+      logOut
     });
+  
     this.authService.getUser().subscribe((data:any) => {
       this.authService.redirectLoggedUser(data);
+     
+    }, (err) => {
+      this.authService.redirectToLandingPage();
     })
 
     this.fetchGames();
     this.fetchMatches();
-    
+  }
+
+  async showModal(){
+    const modal = await this.modalCtrl.create({
+      component: WalletModalComponent,
+    });
+    await modal.present();
   }
 
   fetchGames() {
@@ -122,16 +141,25 @@ export class UserDashboardPage implements OnInit {
     });
   }
 
-  fetchMatches() {
-    this.matchService.getPending().subscribe((data: Match[]) => {
+  async fetchMatches() {
+    const totalData : any = await this.matchService.getTotal().toPromise();
+    this.matchService.getAll("pending", 1, totalData[0].total).subscribe((data:any) => {
+      console.log(data, "data fetech matches");
       // store orig data
       this.matchDetails = data;
       // store grouped data by date
       // for filtering basis
       this.groupedMatches = this.groupMatchesByDate(data);
-      // changeable storage for filtering
+      // changeable storage for filtering 
       this.filteredMatches = this.groupedMatches;
     });
+  }
+
+  logout(){
+    this.authService.logout().subscribe((data) => {
+      console.log(data);
+      this.router.navigate(['/home']);
+    })
   }
 
 

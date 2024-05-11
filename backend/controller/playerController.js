@@ -32,8 +32,9 @@ class PlayerController {
     }
 
     static bet(req, res) {
-        const {player_id, amount} = req.body;
-        if(!player_id || !amount) {
+        const player_id = req.params.id;
+        const {amount} = req.body;
+        if( !amount) {
             return res.status(400).json({message: "All fields are required"})
         }
         handleResponse(res, playerModel.bet(player_id, amount), 201);
@@ -73,7 +74,6 @@ class PlayerController {
         }
         handleResponse(res, playerModel.getByUsername(username));
     }
-
 
     static update(req, res) {
         const player_id = req.params.id;
@@ -117,6 +117,20 @@ class PlayerController {
         }
 
         handleResponse(res, playerModel.withdraw(player_id, amount));
+    }
+
+    
+    static winBet(req, res) {
+        const player_id = req.params.id;
+        const amount = req.body.amount;
+        if (!player_id || !amount) {
+            return res.status(400).json({ message: "player_id and amount are required" });
+        }
+        if(isNaN(amount) || amount < 1) {
+            return res.status(400).json({ message: "Invalid amount"});
+        }
+
+        handleResponse(res, playerModel.winBet(player_id, amount));
     }
 
 }

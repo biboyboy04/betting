@@ -1,6 +1,6 @@
 <ion-action-sheet
   [isOpen]="isActionSheetOpen"
-  [buttons]="actionSheetButtons"
+  [buttons]="selectedBet?.winner_id ? actionSheetButtonsFinished : actionSheetButtonsPending"
   (didDismiss)="setActionSheetOpen(false)"
 ></ion-action-sheet>
 
@@ -35,7 +35,11 @@
     placeholder="Search..."
   ></ion-searchbar>
   }
-
+  <div class="filter-container">
+  @for(button of buttons; track button; let idx = $index) {
+    <ion-button [class.selected]="selectedType === button" (click)="handleSelect(idx)" fill="">{{button}}</ion-button>
+  }
+</div>
   <!-- <swiper-container class="filters" slides-per-view="3.5" >
   @for(button of buttons; track button; let idx = $index) {
     <swiper-slide> 

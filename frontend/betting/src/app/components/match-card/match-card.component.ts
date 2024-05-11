@@ -12,6 +12,8 @@ export class MatchCardComponent  implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.matchData, "matchData");
+  }
 
 }

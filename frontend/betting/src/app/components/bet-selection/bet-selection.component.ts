@@ -79,7 +79,7 @@ export class BetSelectionComponent implements OnInit {
   
   handlePageChange(page: any) {
     this.p = page;
-    this.matchService.getAllDetails(page, 25).subscribe((data) => {
+    this.matchService.getAll("pending",page, 25).subscribe((data) => {
       // this.betData = data;
     });
   }

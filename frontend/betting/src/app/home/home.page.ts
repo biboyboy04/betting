@@ -23,9 +23,12 @@ export class HomePage {
   }
 
  ngOnInit(){ 
-    this.authService.getUser().subscribe((data:any) => {
-      this.authService.redirectLoggedUser(data);
-    })
+  this.authService.getUser().subscribe((data:any) => {
+    this.authService.redirectLoggedUser(data);
+   
+  }, (err) => {
+    this.authService.redirectToLandingPage();
+  })
   }
 
   async openLoginModal() {

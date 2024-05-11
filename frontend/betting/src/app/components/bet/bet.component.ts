@@ -62,7 +62,6 @@ export class BetComponent  implements OnInit {
 
   constructor() { }
   betService = inject(BetService);
-  isSearch = false;
   betData: any;
   filteredData: any;
   isModalOpen = false;
@@ -173,9 +172,6 @@ export class BetComponent  implements OnInit {
   //   }
   // }
 
-  toggleSearch(isSearch: boolean) {
-    this.isSearch = isSearch;
-  }
 
   handleInput(event: any) {
     const searchValue = event.detail.value.toLowerCase();

@@ -62,3 +62,25 @@ appearance: none;
 margin: 0;
 }
 
+ion-alert {
+  button.alert-button {
+    color: white !important;
+  }
+}
+
+.popover-wide {
+  ion-radio {
+    --color-checked: red !important;
+  }
+}
+:root {
+  .popover-content {
+      left: 0 !important;
+      width: 100%;
+      color: red;
+  }
+}
+
+.popover-wide .alert-wrapper .alert-radio-group button .alert-button-inner .alert-radio-label{
+  color: white !important;
+}

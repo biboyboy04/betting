@@ -1,0 +1,58 @@
+ion-content,
+ion-toolbar {
+  --ion-background-color: #222428;
+  --ion-text-color: #f2f2f2;
+}
+
+ion-datetime {
+    --background: #2e2f33;
+    --wheel-highlight-background: #f2f2f2;
+
+}
+
+ion-datetime::part(time-button) {
+    background-color: #2e2f33;
+  }
+
+.edit-form {
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.win-form {
+    display: flex; 
+flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.win-button-container {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    ion-button {
+        width: 50%;
+        height: auto;
+    }
+}
+
+.win-button {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+
+    img{
+        width: 50px;
+        height: auto;
+    }
+}
+
+.selected-winner {
+    --background: #6F0AD5;
+}

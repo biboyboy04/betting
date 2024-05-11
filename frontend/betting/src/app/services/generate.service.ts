@@ -10,6 +10,7 @@ export class GenerateService {
   private http = inject(HttpClient);
   private endpoint = 'generate'
   private domain:any;
+  
   constructor() {
     this.domain =  environment.domain;
    }

@@ -29,6 +29,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { TransactionsService } from 'src/app/services/transactions.service';
 import { TransactionsDetailsComponent } from '../transactions-details/transactions-details.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { TransactionsModalComponent } from '../transactions-modal/transactions-modal.component';
 
 @Component({
   selector: 'app-transactions',
@@ -193,7 +194,7 @@ export class TransactionsComponent implements OnInit {
 
   async showPlayerModal(type: any, data?: any) {
     const modal = await this.modalCtrl.create({
-      component: PlayerModalComponent,
+      component: TransactionsModalComponent,
       componentProps: {
         type: type,
         data: data,

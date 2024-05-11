@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Wallet</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content >
+  <ion-content class="test ion-padding" color="dark">
+    <div class="container">
+      <h1>Wallet balance</h1>
+      <ion-item class="input">
+        <ion-input readonly="true" [value]="userBalance" type="number"></ion-input>
+      </ion-item>
+      <div class="button-container">
+        <ion-button (click)="presentWithdraw()" class="generate-button"  shape="round">
+          Withdraw
+        </ion-button>
+        <ion-button (click)="presentDeposit()"  class="generate-button"  shape="round">
+          Deposit
+        </ion-button>
+      </div>
+    </div>
+  </ion-content>
+</ion-content>
+<!-- <ion-footer>
+  @for(button of buttons; track button) {
+    <ion-button [ngClass]="{'selected': selected === button.title}" fill="clear" (click)="handleSelect(button.title)">
+      <div class="footer-button">
+        <ion-icon [name]="button.icon"></ion-icon>
+        <ion-label>{{button.title}}</ion-label>
+      </div>
+    </ion-button>
+  }
+</ion-footer> -->

@@ -92,3 +92,12 @@ ion-footer {
 .selected {
     --background: #6f0ad5;
 }
+
+.filter-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ion-button {
+    width: 33%;
+  }
+}

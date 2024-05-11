@@ -12,11 +12,12 @@
           <p>{{ playerData.player_id }}</p>
         </div>
         <div class="action-buttons">
-          <ion-icon
-            (click)="handleClicked()"
-            slot="end"
+          <ion-button (click)="handleClicked()" fill="" >
+            <ion-icon
+            slot="icon-only"
             name="ellipsis-horizontal"
           ></ion-icon>
+          </ion-button>
         </div>
       </div>
     </ion-card-header>

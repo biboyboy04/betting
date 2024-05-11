@@ -20,7 +20,7 @@ import generateRoute from './routes/generateRoute.js';
 
 
 // refactor to env
-const PORT = 5555 || process.env.PORT; 
+const PORT =  process.env.PORT || 5555; 
 
 let app = express();
 //refeactor: check if methods and credentials are working even if they are not used

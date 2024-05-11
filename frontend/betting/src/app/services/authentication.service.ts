@@ -73,6 +73,11 @@ export class AuthenticationService {
   }
 
   logout<T>(): Observable<T> {
-    return this.http.delete<T>(`${this.domain}${this.endpoint}/logout`);
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      withCredentials: true,
+    };
+
+    return this.http.delete<T>(`${this.domain}${this.endpoint}/logout`, httpOptions);
   }
 }

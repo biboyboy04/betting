@@ -22,7 +22,7 @@ class Bet {
                         );
                     });
                     // this is for updating the player balance and logging the bet transaction
-                    await playerModel.bet(player_id, amount);
+                    // await playerModel.bet(player_id, amount);
 
                     //this is to update the odds for the match
                     await oddsModel.add(match_id);
@@ -250,16 +250,47 @@ class Bet {
         });
     }
 
-    static async payout(match_id, randomWinnerId) {
+    static setBalanceAfter(bet_id, amount_after) {
+        return new Promise((resolve, reject) => {
+            db.query('UPDATE bet SET amount_after = ? WHERE bet_id = ?', [amount_after, bet_id], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
+
+    static setStatus(bet_id, status) {
+        return new Promise((resolve, reject) => {
+            db.query('UPDATE bet SET status = ? WHERE bet_id = ?', [status, bet_id], (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
+
+
+    static async payout(match_id, winnerId) {
         try {
-            const winners = await this.getWinners(match_id, randomWinnerId);
+            const winners = await this.getWinners(match_id, winnerId);
             for (const winner of winners) {
                 const matchOdds = await oddsModel.getByMatchAndTeamId(winner.match_id, winner.bet_on_team_id);
                 const winnings = winner.amount * matchOdds[0].odds;
+                console.log(winner, "winner");
+                await this.setBalanceAfter(winner.bet_id, winnings)
                 await playerModel.winBet(winner.player_id, winnings);
             }
-            console.log(winners, "winners");
 
+           const bets = await this.getByMatchId(match_id);
+           for (const bet of bets) {
+            await this.setStatus(bet.bet_id, "finished");
+           }
+            console.log(winners, "winners");
         } catch (error) {
             console.log(error);
         }

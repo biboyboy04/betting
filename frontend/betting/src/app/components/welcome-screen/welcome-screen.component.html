@@ -38,12 +38,11 @@
     <h1>Upcoming Events</h1>
     <div class="matches">
       <!-- integrate api data -->
-      <app-match-card></app-match-card>
-      <app-match-card></app-match-card>
-      <app-match-card></app-match-card>
-      <app-match-card></app-match-card>
-      <app-match-card></app-match-card>
-      <app-match-card></app-match-card>
+@if(matchData) {
+  @for(match of matchData; track match) {
+    <app-match-card [matchData]="match"></app-match-card>
+  }
+}
       <!-- @if (matchData && matchData.length > 0) {
             @for (match of matchData; track match) {
               <ion-card>
