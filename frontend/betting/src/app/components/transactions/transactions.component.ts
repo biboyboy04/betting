@@ -231,32 +231,7 @@ export class TransactionsComponent implements OnInit {
   }
 
   public actionSheetButtons = [
-    {
-      text: 'Edit',
-      handler: () => {
-        this.showPlayerModal('Edit', this.selectedPlayer);
-      },
-      data: {
-        action: 'edit',
-      },
-    },
-    {
-      text: 'Delete',
-      role: 'destructive',
-      data: {
-        action: 'delete',
-      },
-      handler: () => {
-        this.setAlertOpen(true);
-      },
-    },
-    {
-      text: 'Cancel',
-      role: 'cancel',
-      data: {
-        action: 'cancel',
-      },
-    },
+    
   ];
 
   public alertButtons = [

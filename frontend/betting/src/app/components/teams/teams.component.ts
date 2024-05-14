@@ -87,16 +87,6 @@ export class TeamsComponent  implements OnInit {
       },
     },
     {
-      text: 'Delete',
-      role: 'destructive',
-      data: {
-        action: 'delete',
-      },
-      handler: () => {
-        this.setAlertOpen(true);
-      },
-    },
-    {
       text: 'Cancel',
       role: 'cancel',
       data: {

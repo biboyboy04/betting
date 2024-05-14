@@ -90,9 +90,13 @@ export class WalletModalComponent  implements OnInit {
           text: 'Confirm',
           handler: (alertData) => {
             this.authService.getUser().subscribe((data:any) => {
+              if(data.user.balance < alertData.amount) {
+                this.presentErrorToast ('Withraw amount is greater than balance')
+                return;
+              }
               this.playerService.withdraw(data.user.player_id,alertData.amount).subscribe((data) => {
                 this.userBalance -= +alertData.amount;
-                this.presentSuccessToast("Deposit Success!")
+                this.presentSuccessToast("Withdraw Success!")
               })
               
              })
@@ -113,6 +117,15 @@ export class WalletModalComponent  implements OnInit {
     toast.present();
   }
 
+  async presentErrorToast(message: string) {
+    const toast = await this.toast.create({
+      message: message,
+      position: 'top',
+      duration: 2000,
+      color: 'danger',
+    });
+    toast.present();
+  }
   // handleSubmit() {
   //   switch (this.selected) {
   //     case 'Players':

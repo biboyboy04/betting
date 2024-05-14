@@ -161,16 +161,7 @@ export class MatchComponent  implements OnInit {
         action: 'edit',
       },
     },
-    {
-      text: 'Delete',
-      role: 'destructive',
-      data: {
-        action: 'delete',
-      },
-      handler: () => {
-        this.setAlertOpen(true);
-      },
-    },
+  
     {
       text: 'Cancel',
       role: 'cancel',
@@ -197,16 +188,6 @@ export class MatchComponent  implements OnInit {
       },
       data: {
         action: 'edit',
-      },
-    },
-    {
-      text: 'Delete',
-      role: 'destructive',
-      data: {
-        action: 'delete',
-      },
-      handler: () => {
-        this.setAlertOpen(true);
       },
     },
     {
